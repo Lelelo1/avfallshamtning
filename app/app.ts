@@ -38,5 +38,8 @@ be executed on iOS.
 */
 
 /* running tns run ios generates js files for each ts/tsx file.
- They can be removed. -> run with: tns run ios --bundle --syncAllFiles --device 919ead2494a426d628884a9cc72e611613836d25
+ They can be removed. -> run with: 
+ tns run ios --bundle --syncAllFiles --device 919ead2494a426d628884a9cc72e611613836d25
  */
+
+// create android emulator https://docs.nativescript.org/tooling/android-virtual-devices
