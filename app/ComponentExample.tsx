@@ -5,6 +5,7 @@ import { Button } from "tns-core-modules/ui/button/button";
 import { TextField } from "tns-core-modules/ui/text-field/text-field";
 import { device } from "tns-core-modules/platform/platform";
 
+import InputArea from './InputArea';
 // import { StackLayout, Button, TextField } from "react-nativescript/dist/client/ElementRegistry";
 
 export default class ComponentExample extends React.Component {
@@ -24,166 +25,14 @@ export default class ComponentExample extends React.Component {
     }
 
     render() {
-        return (
-            <$StackLayout>
-                <$Button text="test" backgroundColor={new Color('purple')} 
-                onLoaded={(ev) => {
-                    const b = ev.object as Button;
-
-                }}
-                />
-                <$TextField 
-                    onLoaded={(ev) => {
-                        const textField = ev.object as TextField;
-                        textField.setAutofillHintContentType(AutofillHintContentType.name);
-
-                    }}
-                    style={{ backgroundColor: new Color('silver') }}
-                />
-                <$TextField 
-                    onLoaded={(ev) => {
-                        const textField = ev.object as TextField;
-                        textField.setAutofillHintContentType(AutofillHintContentType.surname);
-
-                    }}
-                    style={{ backgroundColor: new Color('silver') }}
-                />
-                <$TextField 
-                    onLoaded={(ev) => {
-                        const textField = ev.object as TextField;
-                        textField.setAutofillHintContentType(AutofillHintContentType.mobileNumber);
-
-                    }}
-                    style={{ backgroundColor: new Color('silver') }}
-                />
-                <$TextField 
-                    onLoaded={(ev) => {
-                        const textField = ev.object as TextField;
-                        textField.setAutofillHintContentType(AutofillHintContentType.email);
-
-                    }}
-                    style={{ backgroundColor: new Color('silver') }}
-                />
-                <$TextField 
-                    onLoaded={(ev) => {
-                        const textField = ev.object as TextField;
-                        textField.setAutofillHintContentType(AutofillHintContentType.address);
-
-                    }}
-                    style={{ backgroundColor: new Color('silver') }}
-                />
-                <$TextField 
-                    onLoaded={(ev) => {
-                        const textField = ev.object as TextField;
-                        textField.setAutofillHintContentType(AutofillHintContentType.postalCode);
-
-                    }}
-                    style={{ backgroundColor: new Color('silver') }}
-                />
-                <$TextField 
-                    onLoaded={(ev) => {
-                        const textField = ev.object as TextField;
-                        textField.setAutofillHintContentType(AutofillHintContentType.place);
-
-                    }}
-                    style={{ backgroundColor: new Color('silver') }}
-                />
-            </$StackLayout>
-        )
-        
+        return <InputArea />
     }
     
 }
 
-enum AutofillHintContentType {
-    name = "name",
-    surname = "surname",
-    mobileNumber = "mobileNumber",
-    email = "email",
-    address = "address",
-    postalCode = "postalCode",
-    place = "place"
-}
 
-declare module "tns-core-modules/ui/text-field/text-field" {
-    interface TextField {
-        setAutofillHintContentType(contentType: AutofillHintContentType);
-    }
-    // what name should i use?!
-    
-    // can't use enum when places here from ComponentExample class
-}
-TextField.prototype.setAutofillHintContentType = function(this: TextField, contentType: AutofillHintContentType) {
 
-    const name = AutofillHintContentType.name;
-    const surname = AutofillHintContentType.surname;
-    const mobileNumber = AutofillHintContentType.mobileNumber;
-    const email = AutofillHintContentType.email;
-    const address = AutofillHintContentType.address;
-    const postalCode = AutofillHintContentType.postalCode;
-    const place = AutofillHintContentType.place;
 
-    switch(contentType) {
-        case name: {
-            if(device.os == "iOS") {
-                console.log(`setting up ios ${name} textfield`);          
-            } else if (device.os == "Android") {
-                console.log(`setting up android ${name} textfield`);
-            }
-            break;
-        }
-        case surname: {
-            if(device.os == "iOS") {
-                console.log(`setting up ios ${surname} textfield`);          
-            } else if (device.os == "Android") {
-                console.log(`setting up android ${surname} textfield`);
-            }
-            break;
-        }
-        case mobileNumber: {
-            if(device.os == "iOS") {
-                console.log(`setting up ios ${mobileNumber} textfield`);          
-            } else if (device.os == "Android") {
-                console.log(`setting up android ${mobileNumber} textfield`);
-            }
-            break;
-        }
-        case email: {
-            if(device.os == "iOS") {
-                console.log(`setting up ios ${email} textfield`);          
-            } else if (device.os == "Android") {
-                console.log(`setting up android ${email} textfield`);
-            }
-            break;
-        }
-        case address: {
-            if(device.os == "iOS") {
-                console.log(`setting up ios ${address} textfield`);          
-            } else if (device.os == "Android") {
-                console.log(`setting up android ${address} textfield`);
-            }
-            break;
-        }
-        case postalCode: {
-            if(device.os == "iOS") {
-                console.log(`setting up ios ${postalCode} textfield`);          
-            } else if (device.os == "Android") {
-                console.log(`setting up android ${postalCode} textfield`);
-            }
-            break;
-        }
-        case place: {
-            if(device.os == "iOS") {
-                console.log(`setting up ios ${place} textfield`);          
-            } else if (device.os == "Android") {
-                console.log(`setting up android ${place} textfield`);
-            }
-            break;
-        }
-        
-    }
-    
-}
 
 
 // console.log(`hello ${y} yo`); <- works

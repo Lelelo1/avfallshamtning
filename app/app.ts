@@ -5,7 +5,7 @@ In NativeScript, the app.ts file is the entry point to your application.
 You can use this file to perform app-level initialization, but the primary
 purpose of the file is to pass control to the app’s first module.
 */
-
+/*
 declare var module: any;
 if(module.hot){
     // self accept.
@@ -16,11 +16,18 @@ if(module.hot){
     );
 }
 (global as any).__DEV__ = false;
+*/
+
 import * as React from "react";
 import * as ReactNativeScript from "react-nativescript";
-import HotApp, { rootRef } from "./AppContainer";
 
+/* HMR no longer supprted
+import HotApp, { rootRef } from "./AppContainer";
 ReactNativeScript.start(React.createElement(HotApp, {}, null), rootRef);
+*/
+
+import AppContainer, { rootRef } from './AppContainer';
+ReactNativeScript.start(React.createElement(AppContainer, {}, null), rootRef);
 
  // module.hot.addStatusHandler(status => {
     //     console.log(`Change in status for app.ts.`, status);
