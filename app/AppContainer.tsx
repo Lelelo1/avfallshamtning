@@ -12,14 +12,19 @@ import ComponentExample from "./ComponentExample";
 // See the testComponents directory for many examples of components (and ref-forwarding).
 //where p is props s is state
 
-// when added -> save -> wait -> restart app it crash with: file:///app/vendor.js:37591:79: JS ERROR Error: Failed to create Page with entry.create() function.
-import InputArea from "./InputArea";
+import Selection from "./Selection/Selection";
+import Record from "./Form/Record";
 import { FlexboxLayout } from "react-nativescript/dist/client/ElementRegistry";
+
 
 export const rootRef: React.RefObject<any> = React.createRef<any>();
 
 class AppContainer extends React.Component { 
     pageRef = React.createRef<Page>();
+
+    flexboxLayoutRef = React.createRef<FlexboxLayout>();
+    recordRef = React.createRef<Record>();
+
     componentDidMount() {
         console.log("didmount");
         rootRef.current.navigate({
@@ -27,18 +32,24 @@ class AppContainer extends React.Component {
                 return this.pageRef.current;
             }
         });
+        // Need to remove form, add it into cradview then add cardview
+        // console.log("flexlayy: " + this.flexboxLayoutRef.current);
+        // this.formRef.current.build(this.flexboxLayoutRef.current);
     }
+
     render() {
         return (
             <$Frame ref={rootRef}>
                 
                 <$Page
                     ref={this.pageRef}
+                    backgroundColor={new Color('#f0f0f0')}
                 >
                     <$ActionBar title="Avfallshamtning" className="action-bar"/>
                     <$ScrollView>
-                    <$FlexboxLayout iosOverflowSafeArea={false} flexDirection={'column'}>
-                        <InputArea />
+                    <$FlexboxLayout ref={this.flexboxLayoutRef} iosOverflowSafeArea={false} flexDirection={'column'}>
+                        <Selection />
+                        <Record ref={this.recordRef} />
                         <$FlexboxLayout height={200}  backgroundColor={new Color('orange')} flexDirection={'column'} />
                     </$FlexboxLayout>
                     </$ScrollView>
@@ -94,7 +105,7 @@ It can also be noted that the crash (...`undefined is not an object (evaluating 
 
 // can arguments be passed to HotApp hot()
 
-// can on/addEventHandler be done in the jsx/tsx instead of using ref?
+// can on/addEventHantnsdler be done in the jsx/tsx instead of using ref?
 // https://docs.nativescript.org/core-concepts/events
 
 // test mobx! / how does reactivity work?

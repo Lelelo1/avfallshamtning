@@ -1,11 +1,11 @@
 {
   "nativescript": {
     "id": "org.nativescript.avfallshamtning",
-    "tns-android": {
-      "version": "6.0.0"
-    },
     "tns-ios": {
       "version": "6.0.1"
+    },
+    "tns-android": {
+      "version": "6.0.0"
     }
   },
   "main": "app.js",
@@ -13,6 +13,7 @@
   "license": "SEE LICENSE IN <your-license-filename>",
   "repository": "<fill-your-repository-here>",
   "dependencies": {
+    "nativescript-cardview": "^3.2.0",
     "nativescript-theme-core": "^1.0.6",
     "react": "^16.8.6",
     "react-nativescript": "^0.10.0",
