@@ -6,7 +6,6 @@ import { TextField } from "tns-core-modules/ui/text-field/text-field";
 import { StackLayout } from "tns-core-modules/ui/layouts/stack-layout/stack-layout";
 import { Switch } from "tns-core-modules/ui/switch/switch";
 import { Button } from "tns-core-modules/ui/button/button";
-import ComponentExample from "./ComponentExample";
 // import * as Platform from "tns-core-modules/platform";
 // export const rootRef: React.RefObject<Frame> = React.createRef<Frame>(); // ReactNativeScript.start needs a ref
 // See the testComponents directory for many examples of components (and ref-forwarding).
