@@ -13,14 +13,18 @@ import { Button } from "tns-core-modules/ui/button/button";
 
 import Selection from "./Selection/Selection";
 import Record from "./Form/Record";
-import { FlexboxLayout } from "react-nativescript/dist/client/ElementRegistry";
+import { FlexboxLayout, ScrollView } from "react-nativescript/dist/client/ElementRegistry";
+import Title from "./Title/Title";
+import { reaction } from "mobx";
 
+import viewModel, { region } from "./ViewModel";
 
 export const rootRef: React.RefObject<any> = React.createRef<any>();
 
 class AppContainer extends React.Component { 
     pageRef = React.createRef<Page>();
 
+    scrollViewRef = React.createRef<ScrollView>();
     flexboxLayoutRef = React.createRef<FlexboxLayout>();
     recordRef = React.createRef<Record>();
 
@@ -34,6 +38,28 @@ class AppContainer extends React.Component {
         // Need to remove form, add it into cradview then add cardview
         // console.log("flexlayy: " + this.flexboxLayoutRef.current);
         // this.formRef.current.build(this.flexboxLayoutRef.current);
+        
+        reaction(() => viewModel.get().region, (reg, dis) => {
+            const scrollView = this.scrollViewRef.current;
+            if(reg == region.västraGötaland) {
+                console.log("reaction");
+
+                /*
+                setTimeout(() => {
+                    const uiScrollView = scrollView.ios as UIScrollView;
+                    // uiScrollView.setContentOffsetAnimated(CGPointMake(0, 100), true);
+                }, 800);
+                */
+            } else {
+                /*
+                setTimeout(() => {
+                    this.scrollViewRef.current.scrollToVerticalOffset(-200, false);
+                }, 800);
+                */
+               // this.scrollViewRef.current.scrollToVerticalOffset(0, false);
+            }
+            //dis.
+        })
     }
 
     render() {
@@ -45,13 +71,16 @@ class AppContainer extends React.Component {
                     backgroundColor={new Color('#f0f0f0')}
                 >
                     <$ActionBar title="Avfallshamtning" className="action-bar"/>
-                    <$ScrollView>
-                    <$FlexboxLayout ref={this.flexboxLayoutRef} iosOverflowSafeArea={false} flexDirection={'column'}>
-                        <Selection />
-                        <Record ref={this.recordRef} />
-                        <$FlexboxLayout height={200}  backgroundColor={new Color('orange')} flexDirection={'column'} />
-                    </$FlexboxLayout>
+                    <$StackLayout>
+                    <$ScrollView ref={this.scrollViewRef}>
+                        <$FlexboxLayout ref={this.flexboxLayoutRef} iosOverflowSafeArea={false} flexDirection={'column'}>
+                            <Title />
+                            <Selection />
+                            <Record ref={this.recordRef} />
+                            <$FlexboxLayout height={400}  backgroundColor={new Color('orange')} flexDirection={'column'} />
+                        </$FlexboxLayout>
                     </$ScrollView>
+                    </$StackLayout>
                 </$Page>
             </$Frame>
         )

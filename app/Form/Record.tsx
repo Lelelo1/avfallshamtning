@@ -22,8 +22,7 @@ export default class Record extends React.Component {
     componentDidMount() {
         this.card = this.formRef.current.build(this.containerRef.current);
         this.cardHeight = PercentLength.toDevicePixels(this.card.height);
-        this.containerRef.current.removeChild(this.card);
-        // this.cardViewHeight = .;
+        // this.containerRef.current.removeChild(this.card);
     }
 
     render() {
@@ -35,22 +34,20 @@ export default class Record extends React.Component {
         )
     }
 
-    isCardDisplayed = false;
     cardHeight = -1;
     record = (event: GestureEventData) => {
         
         const container = this.containerRef.current;
-        
-        if(!this.isCardDisplayed) {
+        console.log("kidzz: " + container.getChildIndex(new StackLayout()));
+
+        if(container.getChildIndex(this.card) === -1) {
             container.addChild(this.card);
             /* play animation */
-            this.isCardDisplayed = true;
+            
+            this.formRef.current.getUserInfo();
             
         } else {
             container.removeChild(this.card);
-            this.isCardDisplayed = false;
-        }
-        
-        
+        } 
     }
 }

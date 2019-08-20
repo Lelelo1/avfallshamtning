@@ -23,13 +23,14 @@ export default class Form extends React.Component<{},{}>{
     componentDidMount() {
         console.log("Form didMount: " + this.stackLayoutRef.current);
         
+        // ios.
+        // ios.delegate.textFieldShouldChangeCharactersInRangeReplacementString(ios, NSRange(interop.Pointer), "");
     }
 
      build(parent: StackLayout): CardView {
         // https://www.nativescript.org/blog/adding-a-material-design-cardview-to-a-nativescript-app
         const form = this.stackLayoutRef.current;
-        console.log("form: " + form);
-        
+
         parent.removeChild(form);
         const cardView = new CardView();
         cardView.content = form;
@@ -58,13 +59,23 @@ export default class Form extends React.Component<{},{}>{
         
         return cardView;
     }
-
+    getUserInfo() {
+        
+        const surname = this.surnnameTextFieldRef.current;
+        console.log("focuz: " + surname.ios);
+        surname.focus();
+        const ios = surname.ios as UITextField;
+        
+    }
     render() {
         // console.log("this: " + this);
         // style={{ flexGrow: 1, flexDirection: 'column'}}
         console.log("reeender");
         return (
-            <$StackLayout ref={this.stackLayoutRef} className={"form"}>
+            <$StackLayout
+                ref={this.stackLayoutRef}
+                className={"form"}
+            >
                 <$TextField 
                     ref={this.nameTextFieldRef}
                     onLoaded={(ev) => {
@@ -133,7 +144,6 @@ export default class Form extends React.Component<{},{}>{
                     onLoaded={(ev) => {
                         const textField = ev.object as TextField;
                         textField.setAutofillHintContentType(AutofillHintContentType.place);
-    
                     }}
                     hint={"Ort"}
                 />
