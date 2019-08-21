@@ -1,4 +1,5 @@
 // https://avfallshamtningstoragea.blob.core.windows.net/avfallshamtningblob/avfallshamtning.json
+import { Model } from "./Model";
 import { observable, when } from "mobx";
 export default class ViewModel {
     private static viewModel: ViewModel;
@@ -11,16 +12,30 @@ export default class ViewModel {
 
     constructor() {
         console.log("contructing viewmodel");
-        
-        // kolla contact
-        // get location nearest
-
+        this._fetchModel();
     }
 
-
+    private _fetchModel() {
+        fetch(res.model).then((res) => {
+            return res.json();
+        }).then((value) => {
+            this._model = value;
+        }, (reason) => {
+            console.log(reason);
+        })
+    }
 
     @observable
-    region: region = region.västraGötaland;
+    region: Region = Region.västraGötaland;
+
+    @observable 
+    private _model: Model = null
+    getModel(): Model {
+        if(this._model == null) {
+            this._fetchModel(); // just in case first fetch was not succesfull
+        }
+        return this._model;
+    } 
 
     @observable
     private _address: string = null;
@@ -38,7 +53,10 @@ export default class ViewModel {
     /* ui animations */
 
 }
-export enum region {
+export enum Region {
     västraGötaland = "västraGötaland",
     blekinge = "Blekinge"
+}
+const res = {
+    model: "https://avfallshamtningstoragea.blob.core.windows.net/avfallshamtningblob/avfallshamtning.json";
 }

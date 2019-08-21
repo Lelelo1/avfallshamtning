@@ -1,59 +1,48 @@
 import * as React from "react";
-import { $SegmentedBar, $StackLayout, $Label } from "react-nativescript";
+import { $SegmentedBar, $SegmentedBarItem ,$StackLayout, $Label,  } from "react-nativescript";
 import { StackLayout, FlexboxLayout, SegmentedBar } from "react-nativescript/dist/client/ElementRegistry";
 import { CardView } from "nativescript-cardview";
 import { SegmentedBarItem } from "tns-core-modules/ui/segmented-bar/segmented-bar";
+import CarInfo from "./CarInfo";
+import { Size } from "./size";
+import { observable } from "mobx";
+import { observer } from "mobx-react";
 
+@observer
 export default class Selection extends React.Component {
 
     private containerRef = React.createRef<StackLayout>(); 
-    
-    selections: SegmentedBarItem[] = [];
-
-    constructor(props) {
-        super(props);
-        
-        const mindreHämtning = new SegmentedBarItem();
-        mindreHämtning.title = "Mindre hämtning";
-        
-        const halvBil = new SegmentedBarItem();
-        halvBil.title = "Halv bil";
-
-        const helBil = new SegmentedBarItem();
-        helBil.title = "Hei bil";
-        
-        this.selections.push(mindreHämtning, halvBil, helBil);
-
-    }
-
+    private carInfoRef = React.createRef<CarInfo>();
+    @observable
+    selectedIndex = 0;
     componentDidMount() {
-        
-        const segmentedBar = new SegmentedBar();
-        segmentedBar.items = this.selections;
-        segmentedBar.selectedIndex = -1;
-
-        this.containerRef.current.insertChild(segmentedBar, 0);
-        
-        
+        this.carInfoRef.current.build(this.containerRef.current);
     }
 
-    build(parent: FlexboxLayout) {
-        const container = this.containerRef.current;
-        const index = parent.getChildIndex(container);
-        parent.removeChild(container);
-
-        const cardView = new CardView();
-        cardView.content = container;
-        
-        parent.insertChild(cardView, index);
-
+    getSize(): Size {
+        console.log("size: " + this.selectedIndex)
+        switch(this.selectedIndex) {
+            case 0: { return Size.quarter; }
+            case 1: { return Size.half; }
+            case 2: { return Size.full; }
+        }
     }
 
     render() {
         return (
             <$StackLayout ref={this.containerRef}>
-                <$Label text={"info area"}/>
+                <$SegmentedBar
+                    onSelectedIndexChanged={(i) => {
+                        this.selectedIndex = i.newIndex;
+                    }}
+                >
+                    <$SegmentedBarItem title={"Mindre hämtning"} />
+                    <$SegmentedBarItem title={"Halv bil"} />
+                    <$SegmentedBarItem title={"Hel bil"} />
+                </$SegmentedBar>
+                <CarInfo ref={this.carInfoRef} size={this.getSize()}/>
             </$StackLayout>
         )
     }
+
 }

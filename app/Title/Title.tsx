@@ -2,9 +2,10 @@ import * as React from "react";
 import { $FlexboxLayout, $Image, $StackLayout, $Label, $AbsoluteLayout } from "react-nativescript";
 import { Image } from "tns-core-modules/ui/image/image";
 import { Label } from "tns-core-modules/ui/label/label";
+
 import { PercentLength, Color } from "tns-core-modules/ui/page/page";
 import { FlexboxLayout, ScrollView } from "react-nativescript/dist/client/ElementRegistry";
-import viewModel, { region } from "../ViewModel";
+import viewModel, { Region } from "../ViewModel";
 import { observer } from "mobx-react";
 
 @observer
@@ -13,9 +14,9 @@ export default class Title extends React.Component {
     private imageRef = React.createRef<Image>();
     private labelRef = React.createRef<Label>();
     labelText = "Västra Götaland"
-    
+
     getImg() {
-        return viewModel.get().region == region.västraGötaland ? res.västraGötaland : res.Blekinge;
+        return viewModel.get().region == Region.västraGötaland ? res.västraGötaland : res.Blekinge;
     }
 
     render() {
@@ -29,14 +30,13 @@ export default class Title extends React.Component {
                         ref={this.imageRef}
                         src={this.getImg()}
                         backgroundColor={new Color('blue')}
-                        stretch={"aspectFill"}
+                        stretch={"aspectFit"}
                         onTap={(ev) => {
                             console.log("taaap");
-                            if(viewModel.get().region == region.västraGötaland) {
-                                viewModel.get().region = region.blekinge;
+                            if(viewModel.get().region == Region.västraGötaland) {
+                                viewModel.get().region = Region.blekinge;
                             } else {
-                                
-                                viewModel.get().region = region.västraGötaland;
+                                viewModel.get().region = Region.västraGötaland;
                             }
                         }}
                         onLoaded={(ev) => {

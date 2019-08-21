@@ -17,7 +17,7 @@ import { FlexboxLayout, ScrollView } from "react-nativescript/dist/client/Elemen
 import Title from "./Title/Title";
 import { reaction } from "mobx";
 
-import viewModel, { region } from "./ViewModel";
+import viewModel, { Region } from "./ViewModel";
 
 export const rootRef: React.RefObject<any> = React.createRef<any>();
 
@@ -25,7 +25,7 @@ class AppContainer extends React.Component {
     pageRef = React.createRef<Page>();
 
     scrollViewRef = React.createRef<ScrollView>();
-    flexboxLayoutRef = React.createRef<FlexboxLayout>();
+    stackLayoutRef = React.createRef<StackLayout>();
     recordRef = React.createRef<Record>();
 
     componentDidMount() {
@@ -41,7 +41,7 @@ class AppContainer extends React.Component {
         
         reaction(() => viewModel.get().region, (reg, dis) => {
             const scrollView = this.scrollViewRef.current;
-            if(reg == region.västraGötaland) {
+            if(reg == Region.västraGötaland) {
                 console.log("reaction");
 
                 /*
@@ -60,6 +60,8 @@ class AppContainer extends React.Component {
             }
             //dis.
         })
+
+        
     }
 
     render() {
@@ -71,22 +73,23 @@ class AppContainer extends React.Component {
                     backgroundColor={new Color('#f0f0f0')}
                 >
                     <$ActionBar title="Avfallshamtning" className="action-bar"/>
-                    <$StackLayout>
                     <$ScrollView ref={this.scrollViewRef}>
-                        <$FlexboxLayout ref={this.flexboxLayoutRef} iosOverflowSafeArea={false} flexDirection={'column'}>
+                        <$StackLayout ref={this.stackLayoutRef}>
                             <Title />
                             <Selection />
                             <Record ref={this.recordRef} />
                             <$FlexboxLayout height={400}  backgroundColor={new Color('orange')} flexDirection={'column'} />
-                        </$FlexboxLayout>
+                        </$StackLayout>
                     </$ScrollView>
-                    </$StackLayout>
                 </$Page>
             </$Frame>
         )
     }
 }
 export default AppContainer;
+
+
+// https://github.com/NativeScript/NativeScript/issues/6114 issue with FlexboxLayout (local) Image and ScrollView
 
 // export default hot(() => <AppContainer />); hotmodule not supported
 

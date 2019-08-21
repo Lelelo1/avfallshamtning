@@ -18,16 +18,16 @@
     "nativescript-cardview": "^3.2.0",
     "nativescript-contacts": "^1.6.2",
     "nativescript-theme-core": "^1.0.6",
-    "react": "^16.8.6",
-    "react-nativescript": "^0.10.0",
+    "react": "^16.9.0",
+    "react-nativescript": "^0.11.0",
     "tns-core-modules": "6.0.1",
-    "tns-platform-declarations": "^6.0.1"
+    "tns-platform-declarations": "^6.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.5.0",
     "@babel/plugin-proposal-class-properties": "^7.5.0",
     "@babel/preset-react": "^7.0.0",
-    "@types/react": "^16.8.23",
+    "@types/react": "^16.9.2",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.6",
     "fork-ts-checker-webpack-plugin": "^1.3.7",
