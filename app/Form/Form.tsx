@@ -19,7 +19,7 @@ export default class Form extends React.Component<{},{}>{
     private postalCodeTextFieldRef = React.createRef<TextField>();
     private placeTextFieldRef = React.createRef<TextField>();
 
-    defaultStyle = {}
+    
     componentDidMount() {
         console.log("Form didMount: " + this.stackLayoutRef.current);
         

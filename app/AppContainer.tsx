@@ -28,6 +28,12 @@ class AppContainer extends React.Component {
     stackLayoutRef = React.createRef<StackLayout>();
     recordRef = React.createRef<Record>();
 
+    constructor(props) {
+        super(props);
+        console.log("initing viewmodel");
+        viewModel.get();
+    }
+
     componentDidMount() {
         console.log("didmount");
         rootRef.current.navigate({

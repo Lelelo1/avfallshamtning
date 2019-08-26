@@ -3,7 +3,7 @@ import { $SegmentedBar, $SegmentedBarItem ,$StackLayout, $Label,  } from "react-
 import { StackLayout, FlexboxLayout, SegmentedBar } from "react-nativescript/dist/client/ElementRegistry";
 import { CardView } from "nativescript-cardview";
 import { SegmentedBarItem } from "tns-core-modules/ui/segmented-bar/segmented-bar";
-import CarInfo from "./CarInfo";
+import Description from "./Description";
 import { Size } from "./size";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
@@ -12,7 +12,7 @@ import { observer } from "mobx-react";
 export default class Selection extends React.Component {
 
     private containerRef = React.createRef<StackLayout>(); 
-    private carInfoRef = React.createRef<CarInfo>();
+    private carInfoRef = React.createRef<Description>();
     @observable
     selectedIndex = 0;
     componentDidMount() {
@@ -20,7 +20,6 @@ export default class Selection extends React.Component {
     }
 
     getSize(): Size {
-        console.log("size: " + this.selectedIndex)
         switch(this.selectedIndex) {
             case 0: { return Size.quarter; }
             case 1: { return Size.half; }
@@ -40,7 +39,7 @@ export default class Selection extends React.Component {
                     <$SegmentedBarItem title={"Halv bil"} />
                     <$SegmentedBarItem title={"Hel bil"} />
                 </$SegmentedBar>
-                <CarInfo ref={this.carInfoRef} size={this.getSize()}/>
+                <Description ref={this.carInfoRef} size={this.getSize()}/>
             </$StackLayout>
         )
     }

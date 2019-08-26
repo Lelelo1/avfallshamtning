@@ -1,6 +1,7 @@
 // https://avfallshamtningstoragea.blob.core.windows.net/avfallshamtningblob/avfallshamtning.json
-import { Model } from "./Model";
+import { Model, Selection, Selection2 } from "./Model";
 import { observable, when } from "mobx";
+import { Size } from "./Selection/size";
 export default class ViewModel {
     private static viewModel: ViewModel;
     static get(): ViewModel {
@@ -19,7 +20,7 @@ export default class ViewModel {
         fetch(res.model).then((res) => {
             return res.json();
         }).then((value) => {
-            this._model = value;
+            this.model = value;
         }, (reason) => {
             console.log(reason);
         })
@@ -29,12 +30,12 @@ export default class ViewModel {
     region: Region = Region.västraGötaland;
 
     @observable 
-    private _model: Model = null
+    model: Model = null
     getModel(): Model {
-        if(this._model == null) {
+        if(this.model == null) {
             this._fetchModel(); // just in case first fetch was not succesfull
         }
-        return this._model;
+        return this.model;
     } 
 
     @observable
@@ -42,12 +43,46 @@ export default class ViewModel {
     get address(): string {
         return this._address;
     }
-    
+
     /*
     set address(string address): string {
         // return this._address;
     }
     */
+
+    getSelection(size: Size): Selection {
+        // model = ViewModel.get().getModel();
+        if(this.model) {
+            switch(size) {
+                case (Size.quarter): {
+                    return this.model.Avfallshamtning.VästraGötaland.selections[0];
+                }
+                case (Size.half) : {
+                    return this.model.Avfallshamtning.VästraGötaland.selections[1];
+                }
+                case (Size.full) : {
+                    return this.model.Avfallshamtning.VästraGötaland.selections[2];
+                }
+            }
+        }
+        return null;
+    }
+    getSelection2(size: Size): Selection2 {
+        if(this.model) {
+            switch(size) {
+                case (Size.quarter): {
+                    return this.model.Avfallshamtning.Blekinge.selections[0];
+                }
+                case (Size.half) : {
+                    return this.model.Avfallshamtning.Blekinge.selections[1];
+                }
+                case (Size.full) : {
+                    return this.model.Avfallshamtning.Blekinge.selections[2];
+                }
+            }
+        }
+        return null;
+    }
 
 
     /* ui animations */

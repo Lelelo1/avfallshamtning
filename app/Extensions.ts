@@ -2,6 +2,7 @@ import { TextField } from "tns-core-modules/ui/text-field/text-field"
 import { device } from "tns-core-modules/platform/platform";
 // import { $TextField } from "react-nativescript";
 import { $TextField } from "react-nativescript/dist/client/ReactNativeScript";
+import { TextView } from "react-nativescript/dist/client/ElementRegistry";
 
 
 export enum AutofillHintContentType {
@@ -23,46 +24,7 @@ declare module "tns-core-modules/ui/text-field/text-field" {
     // what name should i use?!
     // can't use enum when places here from ComponentExample class
 }
-/*
-declare module "react-nativescript/" {
-    interface $TextField {
-        placeholder: string;
-    }
-}
-*/
-/*
-Object.defineProperty(TextField.prototype, "placeholder", {
-    get (this: TextField) {
-        if(device.os == "iOS") {
-            const uiTextField = this.ios as UITextField;
-            return uiTextField.placeholder;
-        } else if(device.os == "Android") {
-            const editText = this.android as android.widget.EditText;
-            return editText.getHint();
-        }
-    },
-    set (placeholder: string) {
-        if(device.os == "iOS") {
-            const uiTextField = this.ios as UITextField;
-            uiTextField.placeholder = placeholder;
-        } else if(device.os == "Android") {
-            const editText = this.android as android.widget.EditText;
-            editText.setHint(placeholder);
-        }
-    }
-});
-*/
-/*
-TextField.prototype.setPlaceholder = function(this: TextField, placeholder: string) {
-    if(device.os == "iOS") {
-        const uiTextField = this.ios as UITextField;
-        uiTextField.placeholder = placeholder;
-    } else if(device.os == "Android") {
-        const editText = this.android as android.widget.EditText;
-        editText.setHint(placeholder);
-    }
-}
-*/
+
 TextField.prototype.setAutofillHintContentType = function(this: TextField, contentType: AutofillHintContentType) {
 
     const name = AutofillHintContentType.name;
@@ -157,4 +119,18 @@ TextField.prototype.setAutofillHintContentType = function(this: TextField, conte
 // autofiltlHints
 // https://developer.android.com/reference/android/view/View.html#setAutofillHints(java.lang.String...) 
 
-
+declare module "react-nativescript/dist/client/ElementRegistry" {
+    interface TextView {
+        scrollEnabled(yes: boolean): void;
+    }
+}
+TextView.prototype.scrollEnabled = function(this: TextView, yes: boolean) {
+    if(device.os == "iOS") {
+        const uiTextView = this.ios as UITextView;
+        uiTextView.scrollEnabled = yes;
+    } else if (device.os == "Sndroid") {
+        const editText = this.android as android.widget.EditText;
+        editText.setVerticalScrollBarEnabled(yes);
+        editText.setHorizontalScrollBarEnabled(yes);
+    }
+}

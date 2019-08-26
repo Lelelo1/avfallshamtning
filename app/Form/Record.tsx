@@ -36,7 +36,7 @@ export default class Record extends React.Component {
 
     cardHeight = -1;
     record = (event: GestureEventData) => {
-        
+        // Might request contact info here
         const container = this.containerRef.current;
         console.log("kidzz: " + container.getChildIndex(new StackLayout()));
 
