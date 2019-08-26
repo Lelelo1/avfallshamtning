@@ -60,6 +60,6 @@ export default class Title extends React.Component {
     }
 }
 const res = {
-    västraGötaland: "res://VästraGötaland",
-    Blekinge: "res://Blekinge"
+    västraGötaland: "res://vastragotaland",
+    Blekinge: "res://blekinge"
 }

@@ -128,7 +128,7 @@ TextView.prototype.scrollEnabled = function(this: TextView, yes: boolean) {
     if(device.os == "iOS") {
         const uiTextView = this.ios as UITextView;
         uiTextView.scrollEnabled = yes;
-    } else if (device.os == "Sndroid") {
+    } else if (device.os == "Android") {
         const editText = this.android as android.widget.EditText;
         editText.setVerticalScrollBarEnabled(yes);
         editText.setHorizontalScrollBarEnabled(yes);
