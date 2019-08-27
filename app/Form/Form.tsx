@@ -6,7 +6,7 @@ import { TextField } from "tns-core-modules/ui/text-field/text-field";
 import { AutofillHintContentType } from "../Extensions";
 import { StackLayout } from "tns-core-modules/ui/layouts/stack-layout/stack-layout";
 import { FlexboxLayout } from "react-nativescript/dist/client/ElementRegistry";
-import { CardView } from "nativescript-cardview";
+import { CardView } from "@nstudio/nativescript-cardview";
 
 export default class Form extends React.Component<{},{}>{
     stackLayoutRef = React.createRef<StackLayout>();

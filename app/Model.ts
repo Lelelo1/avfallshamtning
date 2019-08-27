@@ -1,5 +1,6 @@
 export interface Selection {
     title: string;
+    price: string;
     subtitle: string;
     description: string;
 }

@@ -84,6 +84,8 @@ export default class ViewModel {
         return null;
     }
 
+    @observable
+    selectedSize: Size = null;
 
     /* ui animations */
 

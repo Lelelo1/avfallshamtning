@@ -122,6 +122,7 @@ TextField.prototype.setAutofillHintContentType = function(this: TextField, conte
 declare module "react-nativescript/dist/client/ElementRegistry" {
     interface TextView {
         scrollEnabled(yes: boolean): void;
+        noMargin() : void
     }
 }
 TextView.prototype.scrollEnabled = function(this: TextView, yes: boolean) {
@@ -132,5 +133,15 @@ TextView.prototype.scrollEnabled = function(this: TextView, yes: boolean) {
         const editText = this.android as android.widget.EditText;
         editText.setVerticalScrollBarEnabled(yes);
         editText.setHorizontalScrollBarEnabled(yes);
+    }
+}
+TextView.prototype.noMargin = function(this: TextView ) {
+    if(device.os == "iOS") { // nativescript margin does not effect iostextview
+        const uiTextView = this.ios as UITextView;
+        uiTextView.textContainerInset = UIEdgeInsetsZero;
+    } else if (device.os == "Android") {
+        const editText = this.android as android.widget.EditText;
+        // is nomargin needed for android. its padding on android.
+        editText.setPadding(0, 0, 0, 0);
     }
 }
