@@ -1,7 +1,8 @@
 // https://avfallshamtningstoragea.blob.core.windows.net/avfallshamtningblob/avfallshamtning.json
-import { Model, Selection, Selection2 } from "./Model";
+
 import { observable, when } from "mobx";
 import { Size } from "./Selection/size";
+import { Model, Selection} from "./Models/Model";
 export default class ViewModel {
     private static viewModel: ViewModel;
     static get(): ViewModel {
@@ -21,13 +22,11 @@ export default class ViewModel {
             return res.json();
         }).then((value) => {
             this.model = value;
+            console.log("model set: " + JSON.stringify(this.model));
         }, (reason) => {
             console.log(reason);
         })
     }
-
-    @observable
-    region: Region = Region.västraGötaland;
 
     @observable 
     model: Model = null
@@ -53,47 +52,40 @@ export default class ViewModel {
     getSelection(size: Size): Selection {
         // model = ViewModel.get().getModel();
         if(this.model) {
+            console.log("switch size: " + size + " and " + this.model.Avfallshamtning.selections[0]);
             switch(size) {
-                case (Size.quarter): {
-                    return this.model.Avfallshamtning.VästraGötaland.selections[0];
+                case (Size.little): {
+                    return this.model.Avfallshamtning.selections[0];
                 }
                 case (Size.half) : {
-                    return this.model.Avfallshamtning.VästraGötaland.selections[1];
+                    return this.model.Avfallshamtning.selections[1];
                 }
                 case (Size.full) : {
-                    return this.model.Avfallshamtning.VästraGötaland.selections[2];
+                    return this.model.Avfallshamtning.selections[2];
                 }
             }
         }
         return null;
     }
-    getSelection2(size: Size): Selection2 {
-        if(this.model) {
-            switch(size) {
-                case (Size.quarter): {
-                    return this.model.Avfallshamtning.Blekinge.selections[0];
-                }
-                case (Size.half) : {
-                    return this.model.Avfallshamtning.Blekinge.selections[1];
-                }
-                case (Size.full) : {
-                    return this.model.Avfallshamtning.Blekinge.selections[2];
-                }
-            }
-        }
-        return null;
-    }
-
     @observable
     selectedSize: Size = null;
 
-    /* ui animations */
 
+
+    // https://docs.nativescript.org/ui/professional-ui-components/DataForm/GettingStarted/dataform-start-source
+
+    /* make a observable PersonInfoModel object */
+
+    /* make a observable SelectionsModelobject*/
+
+        /* ui animations */
 }
 export enum Region {
-    västraGötaland = "västraGötaland",
+    göteborg = "Göteborg",
     blekinge = "Blekinge"
 }
 const res = {
     model: "https://avfallshamtningstoragea.blob.core.windows.net/avfallshamtningblob/avfallshamtning.json";
 }
+
+// code2flow visualera 

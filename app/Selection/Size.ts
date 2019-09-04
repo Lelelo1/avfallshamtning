@@ -1,5 +1,5 @@
 export enum Size {
-    "quarter" = "quarter",
+    "little" = "little",
     "half" = "half",
     "full" = "full"
 }

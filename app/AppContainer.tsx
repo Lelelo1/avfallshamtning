@@ -45,28 +45,6 @@ class AppContainer extends React.Component {
         // console.log("flexlayy: " + this.flexboxLayoutRef.current);
         // this.formRef.current.build(this.flexboxLayoutRef.current);
         
-        reaction(() => viewModel.get().region, (reg, dis) => {
-            const scrollView = this.scrollViewRef.current;
-            if(reg == Region.västraGötaland) {
-                console.log("reaction");
-
-                /*
-                setTimeout(() => {
-                    const uiScrollView = scrollView.ios as UIScrollView;
-                    // uiScrollView.setContentOffsetAnimated(CGPointMake(0, 100), true);
-                }, 800);
-                */
-            } else {
-                /*
-                setTimeout(() => {
-                    this.scrollViewRef.current.scrollToVerticalOffset(-200, false);
-                }, 800);
-                */
-               // this.scrollViewRef.current.scrollToVerticalOffset(0, false);
-            }
-            //dis.
-        })
-
         
     }
 

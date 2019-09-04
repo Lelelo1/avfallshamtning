@@ -111,41 +111,55 @@ export default class Description extends React.Component <{ size: Size }> {
         span.color = new Color('black');
         return formattedText;
     }
-    _displayPrice() {
-        const viewModel = ViewModel.get();
-        if(viewModel.region == Region.västraGötaland) {
-            const selection = viewModel.getSelection(this.props.size);
+    _displayPrice() {   
+        console.log("displayPrice");
+        const model = ViewModel.get().model;
+        if(model) {
+            const selection = ViewModel.get().getSelection(this.props.size);
             if(selection) {
-                console.log("price: " + selection.price);
-                
+                const startAvgift = Number(model.Avfallshamtning.startAvgift);
+                const grundAvgift = Number(selection.grundAvgift);
+                const price = startAvgift + grundAvgift;
+                switch(this.props.size) {
+                    case Size.little : {
+                        return price + " kr/m3";
+                    }
+                    case Size.half : {
+                        return price + " kr";
+                    }
+                    case Size.full : {
+                        return price + " kr";
+                    }
+                }   
             }
-            return selection ? selection.price : null;
-        } else if (viewModel.region == Region.blekinge) {
-            const selection = viewModel.getSelection2(this.props.size);
-            return selection ? selection.price : null;
         }
+        /*
+        const selection = viewModel.getSelection(this.props.size);
+        if(selection) {
+            switch(this.props.size) {
+                case Size.little : {
+                    return selection.grundAvgift + startAvgift + " kr/m3"
+                }
+                case Size.half : {
+                    return selection.grundAvgift + startAvgift + "kr";
+                }
+                case Size.full : {
+                    return selection.grundAvgift + startAvgift + "kr";
+                }
+            }
+        }
+        */
+       return "";
     }
     /* not needed - redundant info
     _displaySubtitle() {
         const viewModel = ViewModel.get();
-        if(viewModel.region == Region.västraGötaland) {
-            const selection = viewModel.getSelection(this.props.size);
-            return selection ? selection.subtitle : null;
-        } else if (viewModel.region == Region.blekinge) {
-            const selection = viewModel.getSelection2(this.props.size);
-            return selection ? selection.subtitle : null;;
-        }
+        
     }
     */
     _displayDescription() {
-        const viewModel = ViewModel.get();
-        if(viewModel.region == Region.västraGötaland) {
-            const selection = viewModel.getSelection(this.props.size);
+        const selection = ViewModel.get().getSelection(this.props.size);
             return selection ? selection.description : null;
-        } else if (viewModel.region == Region.blekinge) {
-            const selection = viewModel.getSelection2(this.props.size);
-            return selection ? selection.description : null;
-        }
     }
 }
 

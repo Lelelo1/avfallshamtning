@@ -1,7 +1,6 @@
 import * as React from "react";
 import { $SegmentedBar, $SegmentedBarItem ,$StackLayout, $Label,  } from "react-nativescript";
 import { StackLayout, FlexboxLayout, SegmentedBar } from "react-nativescript/dist/client/ElementRegistry";
-import { CardView } from "nativescript-cardview";
 import { SegmentedBarItem } from "tns-core-modules/ui/segmented-bar/segmented-bar";
 import Description from "./Description";
 import { Size } from "./size";
@@ -21,7 +20,7 @@ export default class Selection extends React.Component {
 
     getSize(): Size {
         switch(this.selectedIndex) {
-            case 0: { return Size.quarter; }
+            case 0: { return Size.little; }
             case 1: { return Size.half; }
             case 2: { return Size.full; }
         }
