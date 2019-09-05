@@ -48,24 +48,25 @@ export default class ViewModel {
         // return this._address;
     }
     */
-
-    getSelection(size: Size): Selection {
-        // model = ViewModel.get().getModel();
-        if(this.model) {
-            console.log("switch size: " + size + " and " + this.model.Avfallshamtning.selections[0]);
-            switch(size) {
-                case (Size.little): {
-                    return this.model.Avfallshamtning.selections[0];
-                }
-                case (Size.half) : {
-                    return this.model.Avfallshamtning.selections[1];
-                }
-                case (Size.full) : {
-                    return this.model.Avfallshamtning.selections[2];
-                }
+   private _getSelection(size: Size): Selection {
+        const { selections } = this.model.Avfallshamtning;
+        switch (size) {
+            case (Size.little) : {
+                return selections[0];
+            }
+            case (Size.half) : {
+                return selections[1];
+            }
+            case (Size.full) : {
+                return selections[2];
             }
         }
-        return null;
+   }
+    getPrice(size: Size): number {
+        return Number(this._getSelection(size).price);
+    }
+    getDescription(size: Size): string {
+        return this._getSelection(size).description;
     }
     @observable
     selectedSize: Size = null;

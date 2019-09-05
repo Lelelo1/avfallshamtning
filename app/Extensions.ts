@@ -3,7 +3,7 @@ import { device } from "tns-core-modules/platform/platform";
 // import { $TextField } from "react-nativescript";
 import { $TextField } from "react-nativescript/dist/client/ReactNativeScript";
 import { TextView } from "react-nativescript/dist/client/ElementRegistry";
-
+import { Button } from "tns-core-modules/ui/button/button";
 
 export enum AutofillHintContentType {
     name = "name",
@@ -144,4 +144,23 @@ TextView.prototype.noMargin = function(this: TextView ) {
         // is nomargin needed for android. its padding on android.
         editText.setPadding(0, 0, 0, 0);
     }
+}
+
+declare module "tns-core-modules/ui/button/button" {
+    interface Button {
+        setTextTransparent(): void
+    }
+}
+
+Button.prototype.setTextTransparent = function(this: Button) {
+    this.once(Button.loadedEvent, () => {
+        console.log(Button.loadedEvent + " zzz"); // same as "loaded"
+        if(device.os == "iOS") {
+            const uiButton = this.ios as UIButton;
+            uiButton.setTitleColorForState(UIColor.clearColor, UIControlState.Normal);
+        } else if (device.os == "Android") {
+            const androidButton = this.android as android.widget.Button;
+            androidButton.setTextColor(android.graphics.Color.TRANSPARENT);
+        }
+    })
 }

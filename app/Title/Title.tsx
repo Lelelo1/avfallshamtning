@@ -4,10 +4,10 @@ import { Image } from "tns-core-modules/ui/image/image";
 import { Label } from "tns-core-modules/ui/label/label";
 
 import { PercentLength, Color } from "tns-core-modules/ui/page/page";
-import { FlexboxLayout, ScrollView, StackLayout, GridLayout } from "react-nativescript/dist/client/ElementRegistry";
+import { FlexboxLayout, ScrollView, StackLayout, GridLayout, AbsoluteLayout } from "react-nativescript/dist/client/ElementRegistry";
 import viewModel, { Region } from "../ViewModel";
 import { observer } from "mobx-react";
-
+import { Carousel, CarouselItem } from "nativescript-carousel";
 @observer
 export default class Title extends React.Component {
 
@@ -16,30 +16,50 @@ export default class Title extends React.Component {
     private labelRef = React.createRef<Label>();
     labelText = "Västra Götaland"
 
-    getImg() {
-        return res.Göteborg;
-    }
-
-    onTop(label: Label): void {
+    onTop(label: Label, src: string): GridLayout {
         const onTop = new GridLayout();
         
         const image = new Image();
-        image.src = this.getImg();
-        image.stretch = "aspectFit";
-        
+        image.src = src;
+        image.stretch = "fill"
+        image.height = 250;
         onTop.addChild(image);
         label.horizontalAlignment = "center";
         label.color = new Color('white');
         label.fontSize = 34;
+        onTop.backgroundColor = new Color('pink');
+        // onTop.rowSpan = 0;
         onTop.addChild(label);
-        this.container.current.addChild(onTop);
+        return onTop;
     }
-
-    componentDidMount() {
+    
+    carousel(gridLayouts: GridLayout[]) {
+        const carousel = new Carousel();
+        carousel.backgroundColor = new Color('blue');
+        gridLayouts.forEach(element => {
+            const carouselItem = new CarouselItem();
+            // carouselItem.backgroundColor = new Color("green");
+            carouselItem.addChild(element);
+            carousel.addChild(carouselItem);
+        });
+        return carousel;
+    }
+    
+    
+    createImage(text: string, src: string): GridLayout {
         const label = new Label();
-        label.text = "G ö t e b o r g";
+        label.text = text;
         label.alignSelf = "center"
-        this.onTop(label);
+        return this.onTop(label, src);
+    }
+    
+    componentDidMount() {
+        const goteborg = this.createImage("G ö t e b o r g", res.Göteborg);
+        const ronneby = this.createImage("R o n n e b y", res.Ronneby);
+        const carousel = this.carousel([goteborg, ronneby]);
+        carousel.finite = true;
+        
+        this.container.current.addChild(carousel);
     }
 
     render() {
@@ -49,9 +69,7 @@ export default class Title extends React.Component {
         // get dimension to se fiting height: https://stackoverflow.com/questions/623172/how-to-get-image-size-height-width-using-javascript
 
         return (
-            <$StackLayout ref={this.container}>
-
-            </$StackLayout>
+            <$StackLayout ref={this.container} />
         )
     }
     // calculate width from given height maintining aspect ratio
@@ -72,15 +90,4 @@ const res = {
     Ronneby: "res://ronneby"
 }
 
-/*
-                <$Image
-                        ref={this.imageRef}
-                        src={this.getImg()}
-                        backgroundColor={new Color('blue')}
-                        stretch={"aspectFit"}
-                        onLoaded={(ev) => {
-                            // this.calculateImage();
-                        }}
-                    />
-                <$Label text={this.labelText} />
-*/
+// https://github.com/manijak/nativescript-carousel/issues/128

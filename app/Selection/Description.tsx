@@ -1,8 +1,9 @@
 
 import * as React from "react";
-import { $FlexboxLayout, $Label, $TextView, $StackLayout } from "react-nativescript";
+import { $FlexboxLayout, $Label, $TextView, $StackLayout, $Button, $Image } from "react-nativescript";
 import { Size } from "./size";
-import { FlexboxLayout, StackLayout, TextView } from "react-nativescript/dist/client/ElementRegistry";
+import { FlexboxLayout, StackLayout, TextView, GridLayout, Image, ActionItem } from "react-nativescript/dist/client/ElementRegistry";
+import { Button } from "tns-core-modules/ui/button/button";
 import { CardView } from "@nstudio/nativescript-cardview";
 import ViewModel,{ Region } from "../ViewModel";
 import { observer } from "mobx-react";
@@ -12,10 +13,14 @@ import "../Extensions";
 import { device } from "tns-core-modules/platform/platform";
 import { CheckBox } from '@nstudio/nativescript-checkbox';
 import { FormattedString, Span } from "tns-core-modules/text/formatted-string";
+import { Fab } from "nativescript-floatingactionbutton";
+import { TouchGestureEventData } from "tns-core-modules/ui/gestures/gestures";
+
 @observer
 export default class Description extends React.Component <{ size: Size }> {
     
     private containerRef = React.createRef<StackLayout>();
+    private bottomContainer = React.createRef<FlexboxLayout>();
     private checkBoxContainerRef = React.createRef<StackLayout>();
 
     build(parent: StackLayout) {
@@ -26,28 +31,90 @@ export default class Description extends React.Component <{ size: Size }> {
         // cardView.margin = 10;
         cardView.margin = 10;
 
-        this._buildCheckBox();
+        this._buildBottom();
         cardView.className = "cardStyle";
         cardView.borderWidth = 2;
         cardView.content = container;
         parent.addChild(cardView);
 
     }
+
+    _buildBottom() {
+        this._buildCheckBox();
+        this._buildImageButton();
+    }
+
     marginTop = 5;
     marginBottom = 10;
+    marginSide = 15;
     private _buildCheckBox(): void {
         
         const checkBox = new CheckBox();
-        checkBox.horizontalAlignment = "center"
+        checkBox.verticalAlignment = "middle";
         checkBox.borderColor = new Color('black');
-        checkBox.marginLeft = 15;
-        checkBox.marginBottom = this.marginBottom;
-        checkBox.marginTop = this.marginTop;
+
         checkBox.scaleX = 1.4;
         checkBox.scaleY = 1.4;
         
         const checkBoxContainer = this.checkBoxContainerRef.current;
         checkBoxContainer.insertChild(checkBox, 0);
+    }
+    imageButtonSize = 30;
+    imageButtonColor = new Color('purple');
+    private _buildImageButton() {
+        
+        const imageButton = new GridLayout();
+        const image = new Image();
+        image.src = "res://van";
+        const size = this.imageButtonSize;
+        image.width = size
+        image.height = size
+        
+        const button = new Button();
+        button.width = size * 1.5;
+        button.height = size * 1.2;
+        button.borderRadius = 10;
+        button.backgroundColor = this.imageButtonColor;
+        button.opacity = 0.5;
+
+        button.addEventListener("touch", (event: TouchGestureEventData) => {
+            if(event.action == "down") {
+                button.backgroundColor = new Color("transparent");
+                image.opacity = 0;
+            } else {
+                button.backgroundColor = this.imageButtonColor;
+                image.opacity = 1;
+            }
+        });
+        imageButton.addChild(image);
+        imageButton.addChild(button);
+        imageButton.horizontalAlignment = "right";
+        this.bottomContainer.current.addChild(imageButton);
+        
+       /*
+        const actionItem = new ActionItem();
+        actionItem.icon = "src://van";
+        actionItem.effectiveWidth = 30;
+        this.bottomContainer.current.addChild(actionItem);
+        */
+       /*
+       const fab = new Fab();
+       fab.icon = "res://van";
+       fab.width = 40;
+       fab.height = 40;
+// alpha color
+       this.bottomContainer.current.addChild(fab);
+       fab.addEventListener("onTap", () => {
+           console.log(" tapp");
+       })
+       */
+        // trye // tns plugin add nativescript-floatingactionbutton
+       /*
+        const button = new Button();
+        const formattedtext = new FormattedString();
+        const span = new Span();
+        span
+       */
     }
     render() {
         return (
@@ -81,23 +148,29 @@ export default class Description extends React.Component <{ size: Size }> {
                     }}
 
                     />
-                    <$StackLayout
-                        ref={this.checkBoxContainerRef}
-                        orientation={"horizontal"}
+                    <$FlexboxLayout justifyContent={"space-between"}
+                        ref={this.bottomContainer}
+                        marginTop={this.marginTop}
+                        marginBottom={this.marginBottom}
+                        marginLeft={this.marginSide}
+                        marginRight={this.marginSide}
+                        
                     >    
-                        <$Label
-                            marginLeft={3}
-                            marginBottom={this.marginBottom}
-                            marginTop={this.marginTop}
-                            text={"Välj"}
-                            formattedText={this._getFormattedText()}
-                            onLoaded={() => {
-                                
-                            }}
+                        <$StackLayout orientation={"horizontal"}
+                            ref={this.checkBoxContainerRef}
                         >
-                        </$Label>
-                            
-                    </$StackLayout>
+                            <$Label
+                                verticalAlignment={"middle"}
+                                marginLeft={3}
+                                text={"Välj"}
+                                formattedText={this._getFormattedText()}
+                                onLoaded={() => {
+                                
+                                }}
+                            >
+                            </$Label>
+                        </$StackLayout>                    
+                    </$FlexboxLayout>
             </$StackLayout>
         );
     }
@@ -111,45 +184,18 @@ export default class Description extends React.Component <{ size: Size }> {
         span.color = new Color('black');
         return formattedText;
     }
-    _displayPrice() {   
-        console.log("displayPrice");
-        const model = ViewModel.get().model;
-        if(model) {
-            const selection = ViewModel.get().getSelection(this.props.size);
-            if(selection) {
-                const startAvgift = Number(model.Avfallshamtning.startAvgift);
-                const grundAvgift = Number(selection.grundAvgift);
-                const price = startAvgift + grundAvgift;
-                switch(this.props.size) {
-                    case Size.little : {
-                        return price + " kr/m3";
-                    }
-                    case Size.half : {
-                        return price + " kr";
-                    }
-                    case Size.full : {
-                        return price + " kr";
-                    }
-                }   
+    _displayPrice() {  
+        const viewModel = ViewModel.get();
+        if(viewModel.model) {
+            const startAvgift = Number(viewModel.model.Avfallshamtning.startAvgift);
+            const price = viewModel.getPrice(this.props.size);
+            if(this.props.size == Size.little) {
+                return price + " kr/m3";
+            } else {
+                return price + " kr";
             }
         }
-        /*
-        const selection = viewModel.getSelection(this.props.size);
-        if(selection) {
-            switch(this.props.size) {
-                case Size.little : {
-                    return selection.grundAvgift + startAvgift + " kr/m3"
-                }
-                case Size.half : {
-                    return selection.grundAvgift + startAvgift + "kr";
-                }
-                case Size.full : {
-                    return selection.grundAvgift + startAvgift + "kr";
-                }
-            }
-        }
-        */
-       return "";
+        return "";
     }
     /* not needed - redundant info
     _displaySubtitle() {
@@ -158,9 +204,29 @@ export default class Description extends React.Component <{ size: Size }> {
     }
     */
     _displayDescription() {
-        const selection = ViewModel.get().getSelection(this.props.size);
-            return selection ? selection.description : null;
+        const viewModel = ViewModel.get();
+        const model = viewModel.model;
+        if(model) {
+            console.log("mzz: " + JSON.stringify(model));
+            const size = this.props.size;
+            const fastAvgift = viewModel.model.Avfallshamtning.startAvgift;
+            if (size == Size.little) {
+                 // note 
+                return viewModel.getDescription(size) + `. Till priset tillkommer en grundavgift på ${fastAvgift} kr`;
+            } else {
+                return viewModel.getDescription(size) + `. Där grundavgift på ${fastAvgift} kr ingår priset`;
+            }
+        }
     }
 }
+
+/*
+    <$Image 
+                            src={"res://van"}
+                            stretch={"fill"}
+                            height={30}
+                            width={30}
+                        />
+*/
 
 // chekbox align issue: https://github.com/nstudio/nativescript-checkbox/issues/80 solver using stacklayout
