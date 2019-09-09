@@ -2,7 +2,7 @@ import * as React from "react";
 import { CardView } from "@nstudio/nativescript-cardview";
 import { $StackLayout } from "react-nativescript";
 import { StackLayout } from "react-nativescript/dist/client/ElementRegistry";
-import { cardStyle } from "../CardSelectionStyle";
+import "../SelectionStyles";
 
 export default class CardContainer extends React.Component {
     cardContainerRef = React.createRef<StackLayout>();
@@ -15,9 +15,7 @@ export default class CardContainer extends React.Component {
 
         // wrap with card
         var cardView = new CardView();
-        cardView.className = cardStyle.className;
-        cardView.margin = cardStyle.margin;
-        cardView.borderWidth = cardStyle.borderWidth;
+        cardView.applyStyle();
         cardView.content = content;
         cardContainer.addChild(cardView);
     }

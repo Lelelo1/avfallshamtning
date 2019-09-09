@@ -14,7 +14,7 @@ import { CheckBox } from '@nstudio/nativescript-checkbox';
 import { FormattedString, Span } from "tns-core-modules/text/formatted-string";
 import { Fab } from "nativescript-floatingactionbutton";
 import { TouchGestureEventData } from "tns-core-modules/ui/gestures/gestures";
-import { cardStyle } from "../CardSelectionStyle";
+import "../SelectionStyles";
 import { Size } from "../../ViewModels/SelectionsViewModel";
 @observer
 export default class Description extends React.Component <{ size: Size }> {
@@ -30,9 +30,7 @@ export default class Description extends React.Component <{ size: Size }> {
         parent.removeChild(container);
         this._buildBottom();
         const cardView = new CardView();
-        cardView.className = cardStyle.className;
-        cardView.margin = cardStyle.margin;
-        cardView.borderWidth = cardStyle.borderWidth;
+        cardView.applyStyle();
         cardView.content = container;
         parent.addChild(cardView);
     }

@@ -1,4 +1,4 @@
-export class PersonInfoModel {
+export default class PersonInfoModel {
     name: string;
     efternam: string;
     mobilnummer: number;

@@ -2,7 +2,7 @@ import { Size } from "tns-core-modules/ui/page/page";
 import { Avfall, Hantering, Hemma } from "~/ViewModels/SelectionsViewModel";
 
  
- export class SelectionsModel {
+ export default class SelectionsModel {
     tjänst: Size; // 1/4 bil eller mindrehämtning,  halvbil, helbil
     avfall: Avfall;
     hantering: Hantering;
