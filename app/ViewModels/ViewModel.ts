@@ -1,8 +1,8 @@
 // https://avfallshamtningstoragea.blob.core.windows.net/avfallshamtningblob/avfallshamtning.json
 
 import { observable, when } from "mobx";
-import { Size } from "./Selection/size";
-import { Model, Selection} from "./Models/Model";
+import { Size } from "../ViewModels/SelectionsViewModel"
+import { Model, Selection} from "../Models/Model";
 export default class ViewModel {
     private static viewModel: ViewModel;
     static get(): ViewModel {

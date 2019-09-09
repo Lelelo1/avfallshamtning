@@ -3,7 +3,7 @@ import { $SegmentedBar, $SegmentedBarItem ,$StackLayout, $Label,  } from "react-
 import { StackLayout, FlexboxLayout, SegmentedBar } from "react-nativescript/dist/client/ElementRegistry";
 import { SegmentedBarItem } from "tns-core-modules/ui/segmented-bar/segmented-bar";
 import Description from "./Description";
-import { Size } from "./size";
+import { Size } from "../../ViewModels/SelectionsViewModel";
 import { observable } from "mobx";
 import { observer } from "mobx-react";
 

@@ -1,21 +1,21 @@
 
 import * as React from "react";
 import { $FlexboxLayout, $Label, $TextView, $StackLayout, $Button, $Image } from "react-nativescript";
-import { Size } from "./size";
 import { FlexboxLayout, StackLayout, TextView, GridLayout, Image, ActionItem } from "react-nativescript/dist/client/ElementRegistry";
 import { Button } from "tns-core-modules/ui/button/button";
 import { CardView } from "@nstudio/nativescript-cardview";
-import ViewModel,{ Region } from "../ViewModel";
+import ViewModel from "../../ViewModels/ViewModel";
 import { observer } from "mobx-react";
 import { PercentLength, Color } from "tns-core-modules/ui/page/page";
 import { observable } from "mobx";
-import "../Extensions";
+import "../../Extensions";
 import { device } from "tns-core-modules/platform/platform";
 import { CheckBox } from '@nstudio/nativescript-checkbox';
 import { FormattedString, Span } from "tns-core-modules/text/formatted-string";
 import { Fab } from "nativescript-floatingactionbutton";
 import { TouchGestureEventData } from "tns-core-modules/ui/gestures/gestures";
-
+import { cardStyle } from "../CardSelectionStyle";
+import { Size } from "../../ViewModels/SelectionsViewModel";
 @observer
 export default class Description extends React.Component <{ size: Size }> {
     
@@ -23,20 +23,18 @@ export default class Description extends React.Component <{ size: Size }> {
     private bottomContainer = React.createRef<FlexboxLayout>();
     private checkBoxContainerRef = React.createRef<StackLayout>();
 
+
     build(parent: StackLayout) {
         const container = this.containerRef.current;
         const index = parent.getChildIndex(container);
         parent.removeChild(container);
-        const cardView = new CardView();
-        // cardView.margin = 10;
-        cardView.margin = 10;
-
         this._buildBottom();
-        cardView.className = "cardStyle";
-        cardView.borderWidth = 2;
+        const cardView = new CardView();
+        cardView.className = cardStyle.className;
+        cardView.margin = cardStyle.margin;
+        cardView.borderWidth = cardStyle.borderWidth;
         cardView.content = container;
         parent.addChild(cardView);
-
     }
 
     _buildBottom() {

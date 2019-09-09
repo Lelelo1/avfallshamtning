@@ -11,13 +11,13 @@ import { Button } from "tns-core-modules/ui/button/button";
 // See the testComponents directory for many examples of components (and ref-forwarding).
 //where p is props s is state
 
-import Selection from "./Selection/Selection";
+import Selection from "./Selections/ServiceSelection/Selection";
 import Record from "./Form/Record";
 import { FlexboxLayout, ScrollView } from "react-nativescript/dist/client/ElementRegistry";
 import Title from "./Title/Title";
 import { reaction } from "mobx";
 
-import viewModel, { Region } from "./ViewModel";
+import viewModel, { Region } from "./ViewModels/ViewModel";
 
 export const rootRef: React.RefObject<any> = React.createRef<any>();
 

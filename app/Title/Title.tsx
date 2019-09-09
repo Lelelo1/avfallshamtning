@@ -1,13 +1,14 @@
 import * as React from "react";
-import { $FlexboxLayout, $Image, $StackLayout, $Label, $AbsoluteLayout, $GridLayout } from "react-nativescript";
+import { $FlexboxLayout, $Image, $StackLayout, $Label, $AbsoluteLayout, $GridLayout, $Button } from "react-nativescript";
 import { Image } from "tns-core-modules/ui/image/image";
 import { Label } from "tns-core-modules/ui/label/label";
 
 import { PercentLength, Color } from "tns-core-modules/ui/page/page";
 import { FlexboxLayout, ScrollView, StackLayout, GridLayout, AbsoluteLayout } from "react-nativescript/dist/client/ElementRegistry";
-import viewModel, { Region } from "../ViewModel";
+import viewModel, { Region } from "../ViewModels/ViewModel";
 import { observer } from "mobx-react";
 import { Carousel, CarouselItem } from "nativescript-carousel";
+// import { ItemSpec } from "tns-core-modules/ui/layouts/grid-layout/grid-layout";
 @observer
 export default class Title extends React.Component {
 
@@ -58,7 +59,7 @@ export default class Title extends React.Component {
         const ronneby = this.createImage("R o n n e b y", res.Ronneby);
         const carousel = this.carousel([goteborg, ronneby]);
         carousel.finite = true;
-        
+
         this.container.current.addChild(carousel);
     }
 
@@ -69,7 +70,11 @@ export default class Title extends React.Component {
         // get dimension to se fiting height: https://stackoverflow.com/questions/623172/how-to-get-image-size-height-width-using-javascript
 
         return (
-            <$StackLayout ref={this.container} />
+            <$StackLayout ref={this.container}>
+                <$GridLayout rows={[]} columns={[]}>
+                
+                </$GridLayout>
+            </$StackLayout>
         )
     }
     // calculate width from given height maintining aspect ratio
