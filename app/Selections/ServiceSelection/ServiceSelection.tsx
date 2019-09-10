@@ -8,7 +8,7 @@ import { observable } from "mobx";
 import { observer } from "mobx-react";
 
 @observer
-export default class Selection extends React.Component {
+export default class ServiceSelection extends React.Component {
 
     private containerRef = React.createRef<StackLayout>(); 
     private carInfoRef = React.createRef<Description>();

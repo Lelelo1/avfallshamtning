@@ -1,3 +1,4 @@
+import { observable } from "mobx";
 
 export default class SelectionsViewModel {
     private static viewModel: SelectionsViewModel;
@@ -11,6 +12,9 @@ export default class SelectionsViewModel {
     constructor() {
         console.log("contructing selectionsViewModel");
     }
+
+    @observable
+    hemma: Hemma = Hemma.nej;
 
 }
 

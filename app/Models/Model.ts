@@ -10,6 +10,8 @@ export interface Avfallshamtning {
     selections: Selection[];
     carInfo: string;
     hamtningEfter18: string;
+    placePayment: string;
+    awayPayment: string;
 }
 
 export interface Model {

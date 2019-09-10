@@ -24,12 +24,11 @@ export default class Title extends React.Component {
         image.src = src;
         image.stretch = "fill"
         image.height = 250;
+        // image.verticalAlignment = "bottom";
         onTop.addChild(image);
         label.horizontalAlignment = "center";
         label.color = new Color('white');
         label.fontSize = 34;
-        onTop.backgroundColor = new Color('pink');
-        // onTop.rowSpan = 0;
         onTop.addChild(label);
         return onTop;
     }
@@ -40,8 +39,10 @@ export default class Title extends React.Component {
         gridLayouts.forEach(element => {
             const carouselItem = new CarouselItem();
             // carouselItem.backgroundColor = new Color("green");
+            // element.iosOverflowSafeArea = false;
             carouselItem.addChild(element);
             carousel.addChild(carouselItem);
+            carousel.iosOverflowSafeArea = false; // // neccesery on ios: https://github.com/manijak/nativescript-carousel/issues/128
         });
         return carousel;
     }

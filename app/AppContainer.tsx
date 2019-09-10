@@ -11,13 +11,16 @@ import { Button } from "tns-core-modules/ui/button/button";
 // See the testComponents directory for many examples of components (and ref-forwarding).
 //where p is props s is state
 
-import Selection from "./Selections/ServiceSelection/Selection";
+import Selection from "./Selections/ServiceSelection/ServiceSelection";
 import Record from "./Form/Record";
 import { FlexboxLayout, ScrollView } from "react-nativescript/dist/client/ElementRegistry";
 import Title from "./Title/Title";
 import { reaction } from "mobx";
 
 import viewModel, { Region } from "./ViewModels/ViewModel";
+import ServiceSelection from "./Selections/ServiceSelection/ServiceSelection";
+import PaymentCard from "./Selections/HomeSelection/HomeCard";
+import HomeCard from "./Selections/HomeSelection/HomeCard";
 
 export const rootRef: React.RefObject<any> = React.createRef<any>();
 
@@ -60,9 +63,10 @@ class AppContainer extends React.Component {
                     <$ScrollView ref={this.scrollViewRef}>
                         <$StackLayout ref={this.stackLayoutRef}>
                             <Title />
-                            <Selection />
+                            <ServiceSelection />
                             <Record ref={this.recordRef} />
-                            <$FlexboxLayout height={400}  backgroundColor={new Color('orange')} flexDirection={'column'} />
+                            <HomeCard />
+                            <$FlexboxLayout height={400} flexDirection={'column'} />
                         </$StackLayout>
                     </$ScrollView>
                 </$Page>
