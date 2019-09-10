@@ -14,7 +14,7 @@ import { CheckBox } from '@nstudio/nativescript-checkbox';
 import { FormattedString, Span } from "tns-core-modules/text/formatted-string";
 import { Fab } from "nativescript-floatingactionbutton";
 import { TouchGestureEventData } from "tns-core-modules/ui/gestures/gestures";
-import "../SelectionStyles";
+import "../../Styles";
 import { Size } from "../../ViewModels/SelectionsViewModel";
 @observer
 export default class Description extends React.Component <{ size: Size }> {

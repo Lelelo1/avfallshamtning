@@ -2,12 +2,14 @@ import * as React from "react";
 import { $StackLayout, $Button, $TextField, $FlexboxLayout, $Label } from "react-nativescript";
 import { Color } from "tns-core-modules/color/color";
 import { Button } from "tns-core-modules/ui/button/button";
-import { TextField } from "tns-core-modules/ui/text-field/text-field";
 import { AutofillHintContentType } from "../Extensions";
 import { StackLayout } from "tns-core-modules/ui/layouts/stack-layout/stack-layout";
-import { FlexboxLayout } from "react-nativescript/dist/client/ElementRegistry";
+import { FlexboxLayout, TextField } from "react-nativescript/dist/client/ElementRegistry";
 import { CardView } from "@nstudio/nativescript-cardview";
+import "../Styles";
+import "./FormStyles";
 
+import { PercentLength } from "tns-core-modules/ui/page/page";
 export default class Form extends React.Component<{},{}>{
     stackLayoutRef = React.createRef<StackLayout>();
     
@@ -25,6 +27,7 @@ export default class Form extends React.Component<{},{}>{
         
         // ios.
         // ios.delegate.textFieldShouldChangeCharactersInRangeReplacementString(ios, NSRange(interop.Pointer), "");
+        const container = this.stackLayoutRef.current;
     }
 
      build(parent: StackLayout): CardView {
@@ -35,16 +38,9 @@ export default class Form extends React.Component<{},{}>{
         const cardView = new CardView();
         cardView.content = form;
 
-        // form.className = "cardContent";
-        
-        form.margin = 20;
-        form.marginTop = 0;
-
-        cardView.className = "cardStyle";
-        cardView.margin = 10;
-        cardView.marginTop = 0;
-        cardView.borderWidth = 2;
-        
+        cardView.applyStyle();
+        cardView.shadowOffsetHeight = 2;
+        cardView.shadowOffsetWidth = 1;
         /*
         cardView.margin = 10;
         cardView.borderBottomWidth = 4;
@@ -75,57 +71,46 @@ export default class Form extends React.Component<{},{}>{
             <$StackLayout
                 ref={this.stackLayoutRef}
                 className={"form"}
+                backgroundColor={new Color("#fdfff0")}
             >
-                <$TextField 
-                    ref={this.nameTextFieldRef}
-                    onLoaded={(ev) => {
-                        const textField = ev.object as TextField;
-                        textField.setAutofillHintContentType(AutofillHintContentType.name);
-                    
-                    }}
-                    hint={"Namn"}
-                    className={"input input-rounded m-t-10"}
-                    width={200}
-                    style={{ backgroundColor: new Color('#ededed'), borderColor: ('#787878') }}
-                />
+                
+                <$StackLayout>
+                    <$Button text={"Auto"} horizontalAlignment={"right"}/>
+                </$StackLayout>
 
                 <$TextField
                     ref={this.surnnameTextFieldRef}
                     onLoaded={(ev) => {
                         const textField = ev.object as TextField;
                         textField.setAutofillHintContentType(AutofillHintContentType.surname);
-    
+                        textField.applyStyle();
                     }}
                     hint={"Efternamn"}
-                    className={"input-border"}
                 />
                 <$TextField 
                     ref={this.mobileNumberTextFieldRef}
                     onLoaded={(ev) => {
                         const textField = ev.object as TextField;
                         textField.setAutofillHintContentType(AutofillHintContentType.mobileNumber);
-    
+                        textField.applyStyle();
                     }}
                     hint={"Mobilnummer"}
-                    className={"input-rounded"}
-                    style={{ placeholderColor: new Color('blue') }}
                 />
                 <$TextField
                     ref={this.emailTextFieldRef} 
                     onLoaded={(ev) => {
                         const textField = ev.object as TextField;
                         textField.setAutofillHintContentType(AutofillHintContentType.email);
-    
+                        textField.applyStyle();
                     }}
                     hint={"E-postaddress"}
-                    className={"label"}
                 />
                 <$TextField 
                     ref={this.addressTextFieldRef}
                     onLoaded={(ev) => {
                         const textField = ev.object as TextField;
                         textField.setAutofillHintContentType(AutofillHintContentType.address);
-    
+                        textField.applyStyle();
                     }}
                     hint={"Gatuadress"}
                 />
@@ -134,16 +119,16 @@ export default class Form extends React.Component<{},{}>{
                     onLoaded={(ev) => {
                         const textField = ev.object as TextField;
                         textField.setAutofillHintContentType(AutofillHintContentType.postalCode);
-    
+                        textField.applyStyle();
                     }}
                     hint={"Post nr"}
-                    className={"input-sides"}
                 />
                 <$TextField 
                     ref={this.placeTextFieldRef}
                     onLoaded={(ev) => {
                         const textField = ev.object as TextField;
                         textField.setAutofillHintContentType(AutofillHintContentType.place);
+                        textField.applyStyle();
                     }}
                     hint={"Ort"}
                 />

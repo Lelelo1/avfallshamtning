@@ -43,15 +43,16 @@ export default class HomeCard extends React.Component {
         return (
             <$StackLayout ref={this.cardContainerRef}>
                 <$StackLayout>
-                    <$FlexboxLayout justifyContent={"space-around"}>
+                    <$FlexboxLayout justifyContent={"space-between"}>
                         <$Label text={"Är du hemma vid hämtningstillfället?"} fontSize={16}/>
-                        
-                    </$FlexboxLayout>
-                    <$StackLayout>
                         <$FlexboxLayout>
-                            <$Button text={"Ja"}  backgroundColor={new Color("black")} />
+                            <$Button text={"Ja"}
+                                backgroundColor={new Color("black")}
+                            />
                             <$Button text={"Nej"} backgroundColor={new Color("silver")}/>
                         </$FlexboxLayout>
+                    </$FlexboxLayout>
+                    <$StackLayout>
                         <$Label text={this._displayPaymentInfo()}/>
                     </$StackLayout>
                 </$StackLayout>

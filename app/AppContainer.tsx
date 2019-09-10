@@ -22,6 +22,9 @@ import ServiceSelection from "./Selections/ServiceSelection/ServiceSelection";
 import PaymentCard from "./Selections/HomeSelection/HomeCard";
 import HomeCard from "./Selections/HomeSelection/HomeCard";
 
+import * as email from "nativescript-email";
+
+
 export const rootRef: React.RefObject<any> = React.createRef<any>();
 
 class AppContainer extends React.Component { 
@@ -67,6 +70,26 @@ class AppContainer extends React.Component {
                             <Record ref={this.recordRef} />
                             <HomeCard />
                             <$FlexboxLayout height={400} flexDirection={'column'} />
+                            <$Button
+                                text={"skicka begäran"} 
+                                onTap={(ev) => {
+                                    email.available().then((available) => {
+                                        if(available) {
+                                            console.log("email was available");
+                                            email.compose(
+                                                {
+                                                    subject : "app test",
+                                                    body: "I am the body of the email",
+                                                    to: ["leo.w.se@hotmail.com"]
+
+                                                }
+                                            )
+                                        } else {
+                                            console.log("emailwas not available");
+                                        }
+                                    })
+                                }}
+                            />
                         </$StackLayout>
                     </$ScrollView>
                 </$Page>

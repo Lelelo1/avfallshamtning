@@ -6,7 +6,7 @@ import { Color } from "tns-core-modules/color/color";
 import { FlexboxLayout } from "tns-core-modules/ui/layouts/flexbox-layout/flexbox-layout";
 import { Button } from "tns-core-modules/ui/button/button";
 
-import { CardView } from "nativescript-cardview";
+import { CardView } from "@nstudio/nativescript-cardview";
 import { PercentLength } from "tns-core-modules/ui/page/page";
 import { GestureEventData } from "tns-core-modules/ui/gestures/gestures";
 
@@ -27,7 +27,7 @@ export default class Record extends React.Component {
 
     render() {
         return (
-            <$StackLayout ref={this.containerRef} backgroundColor={new Color('silver')}>
+            <$StackLayout ref={this.containerRef} backgroundColor={new Color("#c4c4c4")}>
                 <$Button ref={this.recordButtonRef} text={"Personuppgifter"} onTap={this.record} />
                 <Form ref={this.formRef} />
             </$StackLayout>
