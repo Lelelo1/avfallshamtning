@@ -22,6 +22,8 @@ import ServiceSelection from "./Selections/ServiceSelection/ServiceSelection";
 import PaymentCard from "./Selections/HomeSelection/HomeCard";
 import HomeCard from "./Selections/HomeSelection/HomeCard";
 
+import "./Extensions";
+
 import * as email from "nativescript-email";
 
 
@@ -63,7 +65,14 @@ class AppContainer extends React.Component {
                     backgroundColor={new Color('#f0f0f0')}
                 >
                     <$ActionBar title="Avfallshamtning" className="action-bar"/>
-                    <$ScrollView ref={this.scrollViewRef}>
+                    <$ScrollView
+                        ref={this.scrollViewRef}
+                        onLoaded={(ev) => {
+                            const scrollView = ev.object as ScrollView;
+                            // scrollView.addMissingTouchEffectiOS(); // can't be set simulatiously with  enableScrollOverControls: https://stackoverflow.com/questions/57872731/unable-to-scroll-over-some-components-like-buttons-and-textfield-in-nativescript 
+                            scrollView.enableScrollOverControlsiOS();
+                        }}
+                    >
                         <$StackLayout ref={this.stackLayoutRef}>
                             <Title />
                             <ServiceSelection />
@@ -84,6 +93,7 @@ class AppContainer extends React.Component {
 
                                                 }
                                             )
+                                            
                                         } else {
                                             console.log("emailwas not available");
                                         }

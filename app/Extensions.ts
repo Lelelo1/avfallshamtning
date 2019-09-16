@@ -4,7 +4,7 @@ import { device } from "tns-core-modules/platform/platform";
 import { $TextField } from "react-nativescript/dist/client/ReactNativeScript";
 import { TextView } from "react-nativescript/dist/client/ElementRegistry";
 import { Button } from "tns-core-modules/ui/button/button";
-
+import { ScrollView } from "tns-core-modules/ui/scroll-view/scroll-view";
 export enum AutofillHintContentType {
     name = "name",
     surname = "surname",
@@ -163,4 +163,28 @@ Button.prototype.setTextTransparent = function(this: Button) {
             androidButton.setTextColor(android.graphics.Color.TRANSPARENT);
         }
     })
+}
+
+declare module "tns-core-modules/ui/scroll-view/scroll-view" {
+    interface ScrollView {
+        addMissingTouchEffectiOS(): void;
+        enableScrollOverControlsiOS(): void
+    }
+}
+
+ScrollView.prototype.addMissingTouchEffectiOS = function(this: ScrollView) {
+    // https://stackoverflow.com/questions/25088042/ios-button-tap-animation-in-uiscrollview
+    const uiScrollView = this.ios as UIScrollView;
+    uiScrollView.delaysContentTouches = false;
+}
+ScrollView.prototype.enableScrollOverControlsiOS = function(this: ScrollView) {
+    // https://stackoverflow.com/questions/3512563/scrollview-not-scrolling-when-dragging-on-buttons
+    const uiScrollView = this.ios as UIScrollView;
+    uiScrollView.canCancelContentTouches = true;
+    uiScrollView.touchesShouldCancelInContentView = (view) => {
+        if(view as UITextField) {
+            return true;
+        }
+        return false;;
+    }
 }

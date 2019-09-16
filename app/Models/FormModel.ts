@@ -1,12 +1,25 @@
-export default class PersonInfoModel {
-    name: string;
-    efternam: string;
+import { observable } from "mobx";
+
+export default class FormModel {
+    @observable
+    namn: string;
+    @observable
+    efternamn: string;
+    @observable
     mobilnummer: number;
+    @observable
     epostaddress: string;
+    @observable
     gatuaddress: string;
+    @observable
     postnummer: number;
+    @observable
     ort: string
 
+    constructor() {
+
+    }
+    /*
     constructor(
         name: string,
         efternamn: string,
@@ -24,4 +37,5 @@ export default class PersonInfoModel {
         this.postnummer = postnummer;
         this.ort = ort;
     }
+    */
 }

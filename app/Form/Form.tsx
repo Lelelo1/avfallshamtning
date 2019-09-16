@@ -6,10 +6,17 @@ import { AutofillHintContentType } from "../Extensions";
 import { StackLayout } from "tns-core-modules/ui/layouts/stack-layout/stack-layout";
 import { FlexboxLayout, TextField } from "react-nativescript/dist/client/ElementRegistry";
 import { CardView } from "@nstudio/nativescript-cardview";
+import FromViewModel from "../ViewModels/FormViewModel";
 import "../Styles";
 import "./FormStyles";
 
-import { PercentLength } from "tns-core-modules/ui/page/page";
+import { PercentLength, EventData } from "tns-core-modules/ui/page/page";
+import FormViewModel from "../ViewModels/FormViewModel";
+import { observer } from "mobx-react";
+import { when, reaction, autorun } from "mobx";
+import { commonStyle } from "./FormStyles";
+
+@observer
 export default class Form extends React.Component<{},{}>{
     stackLayoutRef = React.createRef<StackLayout>();
     
@@ -23,8 +30,21 @@ export default class Form extends React.Component<{},{}>{
 
     
     componentDidMount() {
-        console.log("Form didMount: " + this.stackLayoutRef.current);
-        
+        const formViewModel = FormViewModel.get()
+        const model = formViewModel.formModel;
+
+        autorun(() => {
+            const show = formViewModel.shouldDisplayTextFieldsStatus // <-- just to trigger change
+            this._setStyle(this.nameTextFieldRef.current, model.namn, show);
+            this._setStyle(this.surnnameTextFieldRef.current, model.efternamn, show);
+            this._setStyle(this.mobileNumberTextFieldRef.current, model.mobilnummer, show);
+            this._setStyle(this.emailTextFieldRef.current, model.epostaddress, show);
+            this._setStyle(this.addressTextFieldRef.current, model.gatuaddress, show);
+            this._setStyle(this.postalCodeTextFieldRef.current, model.postnummer, show);
+            this._setStyle(this.placeTextFieldRef.current, model.ort, show);
+        })
+
+
         // ios.
         // ios.delegate.textFieldShouldChangeCharactersInRangeReplacementString(ios, NSRange(interop.Pointer), "");
         const container = this.stackLayoutRef.current;
@@ -63,10 +83,22 @@ export default class Form extends React.Component<{},{}>{
         const ios = surname.ios as UITextField;
         
     }
+
+    _setStyle(textField: TextField, modelProperty: string | number, show: boolean ) {  
+
+        // other checks - like is of email format etc
+        //const evaluateProperty = modelProperty != null && modelProperty != undefined; && modelProperty != ""
+        if(modelProperty&& show) {
+            textField.borderColor = new Color("green");
+        } else if (!modelProperty && show) {
+            textField.borderColor = new Color("red");
+        } else {
+            textField.borderColor = commonStyle.borderColor;
+        }
+    }
+
     render() {
-        // console.log("this: " + this);
-        // style={{ flexGrow: 1, flexDirection: 'column'}}
-        console.log("reeender");
+
         return (
             <$StackLayout
                 ref={this.stackLayoutRef}
@@ -75,67 +107,132 @@ export default class Form extends React.Component<{},{}>{
             >
                 
                 <$StackLayout>
+                    {/* to left/ in he middle display status. icke ifyll - * ickeifylld with a checkbox icon */}
+                    {/*<$TextArea text={() => FormViewModel.get()}/>*/}
                     <$Button text={"Auto"} horizontalAlignment={"right"}/>
                 </$StackLayout>
-
+                
+                <$TextField
+                    ref={this.nameTextFieldRef}
+                    onLoaded={(ev) => {
+                        const textField = ev.object as TextField;
+                        textField.setAutofillHintContentType(AutofillHintContentType.name);
+                        textField.applyStyle(FormViewModel.get().formModel.namn);
+                    }}
+                    hint={"Namn"}
+                    text={FormViewModel.get().formModel.namn}
+                    onTextChange={(event) => {
+                        const textField = event.object as TextField;
+                        FormViewModel.get().formModel.namn = textField.text;
+                    }}
+                />
                 <$TextField
                     ref={this.surnnameTextFieldRef}
                     onLoaded={(ev) => {
                         const textField = ev.object as TextField;
                         textField.setAutofillHintContentType(AutofillHintContentType.surname);
-                        textField.applyStyle();
+                        textField.applyStyle(FormViewModel.get().formModel.efternamn);
                     }}
                     hint={"Efternamn"}
+                    text={FormViewModel.get().formModel.efternamn}
+                    onTextChange={(event) => {
+                        const textField = event.object as TextField;
+                        FormViewModel.get().formModel.efternamn = textField.text;
+                    }}
                 />
                 <$TextField 
                     ref={this.mobileNumberTextFieldRef}
                     onLoaded={(ev) => {
                         const textField = ev.object as TextField;
                         textField.setAutofillHintContentType(AutofillHintContentType.mobileNumber);
-                        textField.applyStyle();
+                        textField.applyStyle(FormViewModel.get().formModel.mobilnummer);
                     }}
                     hint={"Mobilnummer"}
+                    text={this._numberToString(FormViewModel.get().formModel.mobilnummer)}
+                    onTextChange={(event) => {
+                        const textField = event.object as TextField;
+                        const number = Number(textField.text); // when undefined creates appropirat effect / is handled
+                        FormViewModel.get().formModel.mobilnummer = number;
+                    }}
                 />
                 <$TextField
                     ref={this.emailTextFieldRef} 
                     onLoaded={(ev) => {
                         const textField = ev.object as TextField;
                         textField.setAutofillHintContentType(AutofillHintContentType.email);
-                        textField.applyStyle();
+                        textField.applyStyle(FormViewModel.get().formModel.epostaddress);
                     }}
                     hint={"E-postaddress"}
+                    text={FormViewModel.get().formModel.epostaddress}
+                    onTextChange={(event) => {
+                        const textField = event.object as TextField;
+                        FormViewModel.get().formModel.epostaddress = textField.text;
+                    }}
                 />
                 <$TextField 
                     ref={this.addressTextFieldRef}
                     onLoaded={(ev) => {
                         const textField = ev.object as TextField;
                         textField.setAutofillHintContentType(AutofillHintContentType.address);
-                        textField.applyStyle();
+                        textField.applyStyle(FormViewModel.get().formModel.epostaddress);
                     }}
                     hint={"Gatuadress"}
+                    text={FormViewModel.get().formModel.gatuaddress}
+                    onTextChange={(event) => {
+                        const textField = event.object as TextField;
+                        FormViewModel.get().formModel.gatuaddress = textField.text;
+                    }}
                 />
                 <$TextField 
                     ref={this.postalCodeTextFieldRef}
                     onLoaded={(ev) => {
                         const textField = ev.object as TextField;
                         textField.setAutofillHintContentType(AutofillHintContentType.postalCode);
-                        textField.applyStyle();
+                        textField.applyStyle(FormViewModel.get().formModel.postnummer);
                     }}
                     hint={"Post nr"}
+                    text={this._numberToString(FormViewModel.get().formModel.postnummer)}
+                    onTextChange={(event) => {
+                        const textField = event.object as TextField;
+                        const number = Number(textField.text); // when undefined creates appropirat effect / is handled
+
+                        FormViewModel.get().formModel.postnummer = number
+                    }}
                 />
                 <$TextField 
                     ref={this.placeTextFieldRef}
                     onLoaded={(ev) => {
                         const textField = ev.object as TextField;
                         textField.setAutofillHintContentType(AutofillHintContentType.place);
-                        textField.applyStyle();
+                        textField.applyStyle(FormViewModel.get().formModel.ort);
                     }}
                     hint={"Ort"}
+                    text={FormViewModel.get().formModel.ort}
+                    onTextChange={(event) => {
+                        const textField = event.object as TextField;
+                        FormViewModel.get().formModel.ort = textField.text;
+                        console.log("textField ort text: " + textField.text);
+                    }}
                 />
+                <$StackLayout>
+                    <$Button
+                        text={"Ok"}
+                        horizontalAlignment={"right"}
+                        onTap={() => {
+                            FormViewModel.get().shouldDisplayTextFieldsStatus = true;
+                            
+                        }}
+                    />
+                </$StackLayout>
             </$StackLayout>
         );
     }
-    
+    _numberToString(number: number) {
+        if(!number) return "";
+        
+        return String(number);
+    }
 }
+
 // might use https://github.com/nabil-mansouri/nativescript-nbmaterial/
 
