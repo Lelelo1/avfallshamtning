@@ -75,15 +75,6 @@ export default class Form extends React.Component<{},{}>{
         
         return cardView;
     }
-    getUserInfo() {
-        
-        const surname = this.surnnameTextFieldRef.current;
-        console.log("focuz: " + surname.ios);
-        surname.focus();
-        const ios = surname.ios as UITextField;
-        
-    }
-
     _setStyle(textField: TextField, modelProperty: string | number, show: boolean ) {  
 
         // other checks - like is of email format etc
@@ -219,7 +210,12 @@ export default class Form extends React.Component<{},{}>{
                         text={"Ok"}
                         horizontalAlignment={"right"}
                         onTap={() => {
-                            FormViewModel.get().shouldDisplayTextFieldsStatus = true;
+                            if(FormViewModel.get().formIsValid()) {
+                                FormViewModel.get().hide();
+                                FormViewModel.get().shouldDisplayTextFieldsStatus = false;
+                            } else {
+                                FormViewModel.get().shouldDisplayTextFieldsStatus = true;
+                            }
                             
                         }}
                     />

@@ -4,7 +4,7 @@ import { observable, when } from "mobx";
 import { Size } from "../ViewModels/SelectionsViewModel"
 import { Model, Selection} from "../Models/Model";
 export default class ViewModel {
-    private static viewModel: ViewModel;
+    private static viewModel: ViewModel = null;
     static get(): ViewModel {
         if(ViewModel.viewModel == null) {
             ViewModel.viewModel = new ViewModel();

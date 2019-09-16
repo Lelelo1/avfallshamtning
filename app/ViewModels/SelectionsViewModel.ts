@@ -1,7 +1,7 @@
 import { observable } from "mobx";
 
 export default class SelectionsViewModel {
-    private static viewModel: SelectionsViewModel;
+    private static viewModel: SelectionsViewModel = null;
     static get(): SelectionsViewModel {
         if(SelectionsViewModel.viewModel == null) {
             SelectionsViewModel.viewModel = new SelectionsViewModel();
