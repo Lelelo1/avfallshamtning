@@ -47,7 +47,7 @@ export default class Record extends React.Component {
             </$StackLayout>
         )
     }
-    _triggerTap():void {
+    _triggerTap(): void {
         this.recordButtonRef.current.notify({eventName: "tap", object: this.recordButtonRef.current});
     }
     cardHeight = -1;

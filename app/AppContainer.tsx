@@ -21,10 +21,12 @@ import viewModel, { Region } from "./ViewModels/ViewModel";
 import ServiceSelection from "./Selections/ServiceSelection/ServiceSelection";
 import PaymentCard from "./Selections/HomeSelection/HomeCard";
 import HomeCard from "./Selections/HomeSelection/HomeCard";
-
+import Hantering from "./Selections/OtherSelections/Hantering";
 import "./Extensions";
 
 import * as email from "nativescript-email";
+import { device } from "tns-core-modules/platform/platform";
+
 
 
 export const rootRef: React.RefObject<any> = React.createRef<any>();
@@ -69,8 +71,10 @@ class AppContainer extends React.Component {
                         ref={this.scrollViewRef}
                         onLoaded={(ev) => {
                             const scrollView = ev.object as ScrollView;
-                            // scrollView.addMissingTouchEffectiOS(); // can't be set simulatiously with  enableScrollOverControls: https://stackoverflow.com/questions/57872731/unable-to-scroll-over-some-components-like-buttons-and-textfield-in-nativescript 
-                            scrollView.enableScrollOverControlsiOS();
+                            if(device.os == "iOS") {
+                                // scrollView.addMissingTouchEffectiOS(); // can't be set simulatiously with  enableScrollOverControls: https://stackoverflow.com/questions/57872731/unable-to-scroll-over-some-components-like-buttons-and-textfield-in-nativescript 
+                                scrollView.enableScrollOverControlsiOS();
+                            }
                         }}
                     >
                         <$StackLayout ref={this.stackLayoutRef}>
@@ -78,6 +82,7 @@ class AppContainer extends React.Component {
                             <ServiceSelection />
                             <Record ref={this.recordRef} />
                             <HomeCard />
+                            <Hantering />
                             <$FlexboxLayout height={400} flexDirection={'column'} />
                             <$Button
                                 text={"skicka begäran"} 
