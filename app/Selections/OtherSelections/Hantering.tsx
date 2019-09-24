@@ -47,6 +47,9 @@ export default class Hantering extends React.Component {
         discard.text = "Kassera allt";
         discard.glyph = "\ue801";
         discard.css = "discard";
+        discard.onTap = () => {
+            console.log("selected discard/kassera");
+        }
         return discard;
     }
     recycleButton(): Content {
@@ -54,6 +57,9 @@ export default class Hantering extends React.Component {
         recycle.text = "Återvinn";
         recycle.glyph = "\uf1b8";
         recycle.css = "recycle";
+        recycle.onTap = () => {
+            console.log("selected recycle/återvinn");
+        }
         return recycle;
     }
 }

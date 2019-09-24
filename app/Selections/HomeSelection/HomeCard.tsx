@@ -7,6 +7,7 @@ import { StackLayout, FlexboxLayout, Label, Color } from "react-nativescript/dis
 import ViewModel from "~/ViewModels/ViewModel";
 import SelectionsViewModel, { Hemma } from "~/ViewModels/SelectionsViewModel";
 import { observer } from "mobx-react";
+import SelectorComponent, { Content } from "~/Components/SelectorComponent";
 
 @observer
 export default class HomeCard extends React.Component {
@@ -42,23 +43,32 @@ export default class HomeCard extends React.Component {
     render() {
         return (
             <$StackLayout ref={this.cardContainerRef}>
-                <$StackLayout>
-                    <$FlexboxLayout justifyContent={"space-between"}>
-                        <$Label text={"Är du hemma vid hämtningstillfället?"} fontSize={16}/>
-                        <$FlexboxLayout>
-                            <$Button text={"Ja"}
-                                backgroundColor={new Color("black")}
-                            />
-                            <$Button text={"Nej"} backgroundColor={new Color("silver")}/>
-                        </$FlexboxLayout>
-                    </$FlexboxLayout>
-                    <$StackLayout>
-                        <$Label text={this._displayPaymentInfo()}/>
-                    </$StackLayout>
-                </$StackLayout>
+                <$FlexboxLayout alignItems={"center"} flexDirection={"column"} margin={5}>
+                    <$Label text={"Är du hemma vid hämtningstillfället?"} fontSize={16}/>
+                    <SelectorComponent buttonContents={[this._yesButton(), this._noButton()]}/>
+                    <$Label text={this._displayPaymentInfo()}/>
+                </$FlexboxLayout>
             </$StackLayout>
         )
     }
+
+    private _yesButton(): Content {
+        const content = new Content()
+        content.text = "Ja";
+        content.onTap = () => {
+            console.log("yes/ja");
+        }
+        return content;
+    }
+    private _noButton(): Content {
+        const content = new Content();
+        content.text = "Nej";
+        content.onTap = () => {
+            console.log("no/nej");
+        }
+        return content
+    } 
+
     _displayPaymentInfo() {
         const model = ViewModel.get().model;
         if(model) {

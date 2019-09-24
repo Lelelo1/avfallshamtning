@@ -6,19 +6,26 @@ import { fromAsset } from "tns-core-modules/image-source/image-source";
 import { observable, autorun } from "mobx";
 import { observer } from "mobx-react";
 import { EventData } from "tns-core-modules/ui/frame/frame";
+import { Fragment } from "react";
 
 export class Content {
     text: string;
     css: string;
     glyph: string;
+    onTap: () => void;
 }
-const buttonRefs: React.RefObject<Button> [] = [];
+
 
 @observer
 export default class SelectorComponent extends React.Component<{buttonContents: Content[]}> {
     
     private containerRef = React.createRef<FlexboxLayout>();
-    
+    private buttonRefs: React.RefObject<Button> [] = [];
+
+    // weird home card using slectorcomponent button null;
+    private button0Ref = React.createRef<Button>();
+    private button1Ref = React.createRef<Button>();
+
     @observable
     activeIndex = 0;
     
@@ -26,18 +33,24 @@ export default class SelectorComponent extends React.Component<{buttonContents: 
     inactiveColor = new Color("silver");
 
     componentDidMount() {
-        
+        this.buttonRefs.push(this.button0Ref);
+        this.buttonRefs.push(this.button1Ref);
         autorun(() => {
             const container = this.containerRef.current;
+            console.log("index: " + this.activeIndex);
             if(this.activeIndex == 0) {
-                const activeButton = buttonRefs[0].current;
+                const activeButton = this.buttonRefs[0].current;
+                console.log("activeButton: " + activeButton);
                 activeButton.backgroundColor = this.activeColor;
-                const inactiveButton = buttonRefs[1].current;
+                const inactiveButton = this.buttonRefs[1].current;
+                console.log("inactiveButton: " + inactiveButton);
                 inactiveButton.backgroundColor = this.inactiveColor;
             } else {
-                const activeButton = buttonRefs[1].current;
+                const activeButton = this.buttonRefs[1].current;
+                console.log("activeButton: " + activeButton);
                 activeButton.backgroundColor = this.activeColor;
-                const inactiveButton = buttonRefs[0].current;
+                const inactiveButton = this.buttonRefs[0].current;
+                console.log("inactiveButton: " + inactiveButton);
                 inactiveButton.backgroundColor = this.inactiveColor;
             }   
         })
@@ -48,12 +61,8 @@ export default class SelectorComponent extends React.Component<{buttonContents: 
     
     
     render() {
-        const ref0 = React.createRef<Button>();
         const content0 = this.props.buttonContents[0];
-        buttonRefs.push(ref0);
         const content1 = this.props.buttonContents[1];
-        const ref1 = React.createRef<Button>();
-        buttonRefs.push(ref1);
         return (
             <$FlexboxLayout
                 ref={this.containerRef}
@@ -61,34 +70,71 @@ export default class SelectorComponent extends React.Component<{buttonContents: 
                 justifyContent={"space-between"}
             >
                 <$Button
-                    ref={ref0}
+                    ref={this.button0Ref}
                     onTap={() => {
                         this.activeIndex = 0
+                        content0.onTap();
                     }}
                 >
                     <$FormattedString
                         backgroundColor={new Color("transparent")}
                     >
                         <$Span text={content0.glyph} className={content0.css} />
-                        <$Span text={"  " + content0.text} />
+                        <$Span text={this._getText(content0)} />
                     </$FormattedString>
                 </$Button>
                 <$Button
-                    ref={ref1}
+                    ref={this.button1Ref}
                     onTap={() => {
                         this.activeIndex = 1;
+                        content0.onTap();
                     }}
                 >
                     <$FormattedString
                         backgroundColor={new Color("transparent")}
                     >
                         <$Span text={content1.glyph} className={content1.css} />
-                        <$Span text={" " + content1.text} />
+                        <$Span text={this._getText(content1)} />
                     </$FormattedString>
                 </$Button>
             </$FlexboxLayout>
         )
     }
+    private _getText(content: Content) {
+        if(content.glyph && content.css) {
+            return "  " + content.text; // add spacing when has button has icon
+        }
+        return content.text;
+    }
+    /*
+    _renderSpans = (content: Content): Span[] => {
+        const spans: Span[] = [];
+        
+        if(content.glyph && content.css) {
+            const icon = new Span();
+            icon.text = content.glyph;
+            icon.className = content.css
+            spans.push(icon);
+        }
+        const label = new Span();
+        label.text = content.text;
+        spans.push(label);
+
+        return spans;
+    }
+    */
+   /*
+   _renderSpans = (content: Content) => {
+       return content.glyph && content.css ? (
+           <Fragment>
+               <$Span text={content.glyph} className={content.css} />
+               <$Span text={"  " + content.text} />
+           </Fragment>
+       ) : (
+            <$Span text={content.text} />
+       )
+   }
+   */
     // can't access this when using a separate render method for button with .map
 }
 
