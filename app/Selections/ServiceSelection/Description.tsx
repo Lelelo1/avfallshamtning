@@ -16,6 +16,7 @@ import { Fab } from "nativescript-floatingactionbutton";
 import { TouchGestureEventData } from "tns-core-modules/ui/gestures/gestures";
 import "../../Styles";
 import { Size } from "../../ViewModels/SelectionsViewModel";
+import { cardStyle } from "../cardStyles";
 @observer
 export default class Description extends React.Component <{ size: Size }> {
     
@@ -123,6 +124,7 @@ export default class Description extends React.Component <{ size: Size }> {
                     text={this._displayPrice()}
                     margin={5}
                     color={new Color('black')}
+                    fontSize={cardStyle.titleSize}
                 />
                 <$TextView
                     text={this._displayDescription()}

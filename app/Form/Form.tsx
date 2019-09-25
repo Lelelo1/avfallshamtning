@@ -14,7 +14,6 @@ import { PercentLength, EventData } from "tns-core-modules/ui/page/page";
 import FormViewModel from "../ViewModels/FormViewModel";
 import { observer } from "mobx-react";
 import { when, reaction, autorun } from "mobx";
-import { commonStyle } from "./FormStyles";
 
 @observer
 export default class Form extends React.Component<{},{}>{
@@ -35,13 +34,13 @@ export default class Form extends React.Component<{},{}>{
 
         autorun(() => {
             const show = formViewModel.shouldDisplayTextFieldsStatus // <-- just to trigger change
-            this._setStyle(this.nameTextFieldRef.current, model.namn, show);
-            this._setStyle(this.surnnameTextFieldRef.current, model.efternamn, show);
-            this._setStyle(this.mobileNumberTextFieldRef.current, model.mobilnummer, show);
-            this._setStyle(this.emailTextFieldRef.current, model.epostaddress, show);
-            this._setStyle(this.addressTextFieldRef.current, model.gatuaddress, show);
-            this._setStyle(this.postalCodeTextFieldRef.current, model.postnummer, show);
-            this._setStyle(this.placeTextFieldRef.current, model.ort, show);
+            formViewModel._setStyle(this.nameTextFieldRef.current, model.namn, show);
+            formViewModel._setStyle(this.surnnameTextFieldRef.current, model.efternamn, show);
+            formViewModel._setStyle(this.mobileNumberTextFieldRef.current, model.mobilnummer, show);
+            formViewModel._setStyle(this.emailTextFieldRef.current, model.epostaddress, show);
+            formViewModel._setStyle(this.addressTextFieldRef.current, model.gatuaddress, show);
+            formViewModel._setStyle(this.postalCodeTextFieldRef.current, model.postnummer, show);
+            formViewModel._setStyle(this.placeTextFieldRef.current, model.ort, show);
         })
 
 
@@ -74,18 +73,6 @@ export default class Form extends React.Component<{},{}>{
         //parent.addChild(cardView);
         
         return cardView;
-    }
-    _setStyle(textField: TextField, modelProperty: string | number, show: boolean ) {  
-
-        // other checks - like is of email format etc
-        //const evaluateProperty = modelProperty != null && modelProperty != undefined; && modelProperty != ""
-        if(modelProperty&& show) {
-            textField.borderColor = new Color("green");
-        } else if (!modelProperty && show) {
-            textField.borderColor = new Color("red");
-        } else {
-            textField.borderColor = commonStyle.borderColor;
-        }
     }
 
     render() {

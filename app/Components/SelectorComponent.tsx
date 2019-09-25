@@ -87,7 +87,7 @@ export default class SelectorComponent extends React.Component<{buttonContents: 
                     ref={this.button1Ref}
                     onTap={() => {
                         this.activeIndex = 1;
-                        content0.onTap();
+                        content1.onTap();
                     }}
                 >
                     <$FormattedString

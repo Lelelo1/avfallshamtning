@@ -3,6 +3,7 @@ import { $StackLayout, $FlexboxLayout, $Label, $Switch } from "react-nativescrip
 import SelectorComponent, { Content } from "~/Components/SelectorComponent";
 import { StackLayout } from "react-nativescript/dist/client/ElementRegistry";
 import { CardView } from "@nstudio/nativescript-cardview";
+import { cardStyle } from "../cardStyles";
 
 
 export default class Hantering extends React.Component {
@@ -34,6 +35,7 @@ export default class Hantering extends React.Component {
                     <$Label
                         text={"Hur vill du att vi hanterar avfallet?"}
                         alignSelf={"center"}
+                        fontSize={cardStyle.titleSize}
                     />
                     <SelectorComponent
                         buttonContents={[ this.discardButton(), this.recycleButton()]}
