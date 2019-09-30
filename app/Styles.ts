@@ -13,4 +13,4 @@ CardView.prototype.applyStyle = function(this: CardView) {
     this.borderWidth = cardStyle.borderWidth;
 }
 
-const cardStyle = { className: "cardStyle" , margin: 10, borderWidth: 2, };
+const cardStyle = { className: "cardStyle" , margin: 10, borderWidth: 2 };

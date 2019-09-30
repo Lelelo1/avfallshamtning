@@ -67,7 +67,7 @@ export default class SelectorComponent extends React.Component<{buttonContents: 
             <$FlexboxLayout
                 ref={this.containerRef}
                 flexDirection={"row"}
-                justifyContent={"space-between"}
+                justifyContent={"space-around"}
             >
                 <$Button
                     ref={this.button0Ref}

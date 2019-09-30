@@ -49,7 +49,7 @@ export default class FormViewModel {
 
         // other checks - like is of email format etc
         //const evaluateProperty = modelProperty != null && modelProperty != undefined; && modelProperty != ""
-        if(modelProperty&& show) {
+        if(modelProperty && show) {
             textField.borderColor = new Color("green");
         } else if (!modelProperty && show) {
             textField.borderColor = new Color("red");

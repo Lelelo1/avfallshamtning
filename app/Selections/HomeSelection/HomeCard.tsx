@@ -53,19 +53,17 @@ export default class HomeCard extends React.Component {
 
         container.addChild(cardView);
     }
-    _paymentSpacing = 10;
+    // _paymentSpacing = 10; consider making a line/border bwteen yes/no and description area
     render() {
         return (
             <$StackLayout ref={this.cardContainerRef}>
-                <$StackLayout margin={5}>
-                    <$FlexboxLayout alignItems={"center"} flexDirection={"column"}>
-                        <$Label text={"Är du hemma vid hämtningstillfället?"} fontSize={cardStyle.titleSize}/>
-                        <SelectorComponent buttonContents={[this._yesButton(), this._noButton()]}/>
-                    </$FlexboxLayout>
+                <$FlexboxLayout margin={cardStyle.contentMargin} flexDirection={"column"}>
+                    <$Label alignSelf={"center"} text={"Är du hemma vid hämtningstillfället?"} fontSize={cardStyle.titleSize} />
+                    <SelectorComponent buttonContents={[this._yesButton(), this._noButton()]}/>
                     {
                         this._renderPaymentDescription()
                     }
-                </$StackLayout>
+                </$FlexboxLayout>
             </$StackLayout>
         )
     }
@@ -99,11 +97,11 @@ export default class HomeCard extends React.Component {
             if(vm.hemma == Hemma.ja) {
                 const description = model.Avfallshamtning.placePayment;
                 console.log("payment: " + description);
-                return <$Label marginTop={this._paymentSpacing} text={description} fontSize={this.textSize} />
+                return <$Label alignSelf={"center"} text={description} fontSize={cardStyle.descriptionSize} />
             } else if (vm.hemma == Hemma.nej) {
                 const description = model.Avfallshamtning.awayPayment;
                 console.log("payment: " + description);
-                return <AwayPayment paymentSpacing={this._paymentSpacing} description={description} />;
+                return <AwayPayment description={description} fontSize={this.textSize} />;
             }
         }
             

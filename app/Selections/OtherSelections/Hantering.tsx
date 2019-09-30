@@ -1,7 +1,7 @@
 import * as React from "react";
 import { $StackLayout, $FlexboxLayout, $Label, $Switch } from "react-nativescript";
 import SelectorComponent, { Content } from "~/Components/SelectorComponent";
-import { StackLayout } from "react-nativescript/dist/client/ElementRegistry";
+import { StackLayout, Color } from "react-nativescript/dist/client/ElementRegistry";
 import { CardView } from "@nstudio/nativescript-cardview";
 import { cardStyle } from "../cardStyles";
 
@@ -28,9 +28,8 @@ export default class Hantering extends React.Component {
                 ref={this.containerRef}
             >
                 <$FlexboxLayout
-                    margin={5}
-                    justifyContent={"center"}
                     flexDirection={"column"}
+                    margin={cardStyle.contentMargin}
                 >
                     <$Label
                         text={"Hur vill du att vi hanterar avfallet?"}

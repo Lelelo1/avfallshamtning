@@ -17,6 +17,8 @@ export default class FormModel {
     ort: string
     @observable
     personnummer?: number;
+    @observable
+    anvisning?: string;
     constructor() {
 
     }
