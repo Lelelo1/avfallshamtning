@@ -9,9 +9,10 @@ import SelectionsViewModel, { Hemma } from "~/ViewModels/SelectionsViewModel";
 import { observer } from "mobx-react";
 import SelectorComponent, { Content } from "~/Components/SelectorComponent";
 import { autorun } from "mobx";
-import { commonStyle } from "~/Form/FormStyles";
+
 import { cardStyle } from "../cardStyles";
-import { PercentLength } from "tns-core-modules/ui/page/page";
+
+import AwayPayment from "./AwayPayment"; 
 
 @observer
 export default class HomeCard extends React.Component {
@@ -22,7 +23,7 @@ export default class HomeCard extends React.Component {
     private switchRef = React.createRef<Switch>();
     */
 
-    private personNummerTextField = React.createRef<TextField>();
+    private personNummerTextFieldRef = React.createRef<TextField>();
 
     textSize = 16; // consider making a global style attribute
 
@@ -52,15 +53,19 @@ export default class HomeCard extends React.Component {
 
         container.addChild(cardView);
     }
-
+    _paymentSpacing = 10;
     render() {
         return (
             <$StackLayout ref={this.cardContainerRef}>
-                <$FlexboxLayout alignItems={"center"} flexDirection={"column"} margin={5}>
-                    <$Label text={"Är du hemma vid hämtningstillfället?"} fontSize={cardStyle.titleSize}/>
-                    <SelectorComponent buttonContents={[this._yesButton(), this._noButton()]}/>
-                    {this._renderPaymentDescriptionArea()}
-                </$FlexboxLayout>
+                <$StackLayout margin={5}>
+                    <$FlexboxLayout alignItems={"center"} flexDirection={"column"}>
+                        <$Label text={"Är du hemma vid hämtningstillfället?"} fontSize={cardStyle.titleSize}/>
+                        <SelectorComponent buttonContents={[this._yesButton(), this._noButton()]}/>
+                    </$FlexboxLayout>
+                    {
+                        this._renderPaymentDescription()
+                    }
+                </$StackLayout>
             </$StackLayout>
         )
     }
@@ -86,7 +91,7 @@ export default class HomeCard extends React.Component {
         return content
     } 
 
-    private _renderPaymentDescriptionArea() {
+    _renderPaymentDescription() {
         const model = ViewModel.get().model;
         if(model) {
             const vm = SelectionsViewModel.get();
@@ -94,39 +99,14 @@ export default class HomeCard extends React.Component {
             if(vm.hemma == Hemma.ja) {
                 const description = model.Avfallshamtning.placePayment;
                 console.log("payment: " + description);
-                return this._renderPlacePayment(description);
+                return <$Label marginTop={this._paymentSpacing} text={description} fontSize={this.textSize} />
             } else if (vm.hemma == Hemma.nej) {
                 const description = model.Avfallshamtning.awayPayment;
                 console.log("payment: " + description);
-                return this._renderAwayPayment(description);
+                return <AwayPayment paymentSpacing={this._paymentSpacing} description={description} />;
             }
         }
-        return null;   
-    }
-    _paymentSpacing = 10;
-    private _renderPlacePayment(description: string) {
-        return (
-            <$Label marginTop={this._paymentSpacing} text={description} fontSize={this.textSize} />
-        )
-    }
-    private _renderAwayPayment(description: string) {
-        return (
-            <$FlexboxLayout marginTop={this._paymentSpacing} flexDirection={"column"}>
-                <$FlexboxLayout justifyContent={"center"} flexDirection={"column"}>
-                    <$Label text={description} fontSize={cardStyle.descriptionSize} />
-                    <$Label marginTop={2} text={"var vänlig ange personummer"} fontSize={11} />
-                </$FlexboxLayout>
-                <$FlexboxLayout justifyContent={"space-between"} flexDirection={"row"}>
-                    <$TextField 
-                        ref={this.personNummerTextField}
-                        borderColor={commonStyle.borderColor}
-                        hint={"Personnummer"}
-                        margin={0}
-                    />
-                    <$Button text={"ok"} margin={0} /> 
-                </$FlexboxLayout>
-            </$FlexboxLayout>
-        );
+            
     }
 }
 // set personummer textfieid style

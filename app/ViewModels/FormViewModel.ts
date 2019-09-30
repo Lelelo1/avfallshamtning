@@ -45,7 +45,7 @@ export default class FormViewModel {
         this.hidden = true;
     }
 
-    _setStyle(textField: TextField, modelProperty: string | number, show: boolean ) {  
+    setStyle(textField: TextField, modelProperty: string | number, show: boolean ) {  
 
         // other checks - like is of email format etc
         //const evaluateProperty = modelProperty != null && modelProperty != undefined; && modelProperty != ""

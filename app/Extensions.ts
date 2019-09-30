@@ -12,7 +12,8 @@ export enum AutofillHintContentType {
     email = "email",
     address = "address",
     postalCode = "postalCode",
-    place = "place"
+    place = "place",
+    personnummer = "personnummer"
 }
 
 declare module "tns-core-modules/ui/text-field/text-field" {
@@ -34,6 +35,7 @@ TextField.prototype.setAutofillHintContentType = function(this: TextField, conte
     const address = AutofillHintContentType.address;
     const postalCode = AutofillHintContentType.postalCode;
     const place = AutofillHintContentType.place;
+    const personnummer = AutofillHintContentType.personnummer;
 
     let uiTextField: UITextField = null;
     if(device.os == "iOS") {
@@ -108,7 +110,15 @@ TextField.prototype.setAutofillHintContentType = function(this: TextField, conte
             }
             break;
         }
-        
+        case personnummer: {
+            /* apple/google doesn't save personnummer/ personal identity number*/
+            if(device.os == "iOS") {
+                console.log(`setting up ios ${personnummer} textfield`);
+                     
+            } else if (device.os == "Android") {
+                console.log(`setting up android ${personnummer} textfield`);
+            }
+        }
     }
 }
 

@@ -34,13 +34,13 @@ export default class Form extends React.Component<{},{}>{
 
         autorun(() => {
             const show = formViewModel.shouldDisplayTextFieldsStatus // <-- just to trigger change
-            formViewModel._setStyle(this.nameTextFieldRef.current, model.namn, show);
-            formViewModel._setStyle(this.surnnameTextFieldRef.current, model.efternamn, show);
-            formViewModel._setStyle(this.mobileNumberTextFieldRef.current, model.mobilnummer, show);
-            formViewModel._setStyle(this.emailTextFieldRef.current, model.epostaddress, show);
-            formViewModel._setStyle(this.addressTextFieldRef.current, model.gatuaddress, show);
-            formViewModel._setStyle(this.postalCodeTextFieldRef.current, model.postnummer, show);
-            formViewModel._setStyle(this.placeTextFieldRef.current, model.ort, show);
+            formViewModel.setStyle(this.nameTextFieldRef.current, model.namn, show);
+            formViewModel.setStyle(this.surnnameTextFieldRef.current, model.efternamn, show);
+            formViewModel.setStyle(this.mobileNumberTextFieldRef.current, model.mobilnummer, show);
+            formViewModel.setStyle(this.emailTextFieldRef.current, model.epostaddress, show);
+            formViewModel.setStyle(this.addressTextFieldRef.current, model.gatuaddress, show);
+            formViewModel.setStyle(this.postalCodeTextFieldRef.current, model.postnummer, show);
+            formViewModel.setStyle(this.placeTextFieldRef.current, model.ort, show);
         })
 
 
@@ -126,7 +126,7 @@ export default class Form extends React.Component<{},{}>{
                         textField.applyStyle(FormViewModel.get().formModel.mobilnummer);
                     }}
                     hint={"Mobilnummer"}
-                    text={this._numberToString(FormViewModel.get().formModel.mobilnummer)}
+                    text={numberToString(FormViewModel.get().formModel.mobilnummer)}
                     onTextChange={(event) => {
                         const textField = event.object as TextField;
                         const number = Number(textField.text); // when undefined creates appropirat effect / is handled
@@ -169,7 +169,7 @@ export default class Form extends React.Component<{},{}>{
                         textField.applyStyle(FormViewModel.get().formModel.postnummer);
                     }}
                     hint={"Post nr"}
-                    text={this._numberToString(FormViewModel.get().formModel.postnummer)}
+                    text={numberToString(FormViewModel.get().formModel.postnummer)}
                     onTextChange={(event) => {
                         const textField = event.object as TextField;
                         const number = Number(textField.text); // when undefined creates appropirat effect / is handled
@@ -210,11 +210,11 @@ export default class Form extends React.Component<{},{}>{
             </$StackLayout>
         );
     }
-    _numberToString(number: number) {
-        if(!number) return "";
-        
-        return String(number);
-    }
+}
+
+export function numberToString(number: number) {
+    if(!number) return "";
+    return String(number);
 }
 
 // might use https://github.com/nabil-mansouri/nativescript-nbmaterial/

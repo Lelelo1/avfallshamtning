@@ -16,7 +16,7 @@ export default class FormModel {
     @observable
     ort: string
     @observable
-    personnummber: number;
+    personnummer?: number;
     constructor() {
 
     }
