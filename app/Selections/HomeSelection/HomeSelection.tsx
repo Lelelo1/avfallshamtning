@@ -15,7 +15,7 @@ import { cardStyle } from "../cardStyles";
 import AwayPayment from "./AwayPayment"; 
 
 @observer
-export default class HomeCard extends React.Component {
+export default class HomeSelection extends React.Component {
 
     private cardContainerRef = React.createRef<StackLayout>();
     /*
@@ -44,7 +44,7 @@ export default class HomeCard extends React.Component {
     */
     _buildCardView() {
         const container = this.cardContainerRef.current;
-        var content = container.getChildAt(0);
+        const content = container.getChildAt(0);
         container.removeChild(content);
 
         const cardView = new CardView();
@@ -72,7 +72,6 @@ export default class HomeCard extends React.Component {
         const content = new Content()
         content.text = "Ja";
         content.onTap = () => {
-            console.log("yes/ja");
             const vm = SelectionsViewModel.get();
             vm.hemma = Hemma.ja;
         }
@@ -82,7 +81,6 @@ export default class HomeCard extends React.Component {
         const content = new Content();
         content.text = "Nej";
         content.onTap = () => {
-            console.log("no/nej");
             const vm = SelectionsViewModel.get();
             vm.hemma = Hemma.nej;
         }

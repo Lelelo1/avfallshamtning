@@ -17,8 +17,12 @@ export class Content {
 
 
 @observer
-export default class SelectorComponent extends React.Component<{buttonContents: Content[]}> {
+export default class SelectorComponent extends React.Component<{buttonContents: Content[], selectedIndex?: number}> {
     
+    static defaultProps = {
+        selectedIndex: 0
+    }
+
     private containerRef = React.createRef<FlexboxLayout>();
     private buttonRefs: React.RefObject<Button> [] = [];
 
@@ -27,7 +31,7 @@ export default class SelectorComponent extends React.Component<{buttonContents: 
     private button1Ref = React.createRef<Button>();
 
     @observable
-    activeIndex = 0;
+    activeIndex = this.props.selectedIndex;
     
     activeColor = new Color("black");
     inactiveColor = new Color("silver");
@@ -37,20 +41,15 @@ export default class SelectorComponent extends React.Component<{buttonContents: 
         this.buttonRefs.push(this.button1Ref);
         autorun(() => {
             const container = this.containerRef.current;
-            console.log("index: " + this.activeIndex);
             if(this.activeIndex == 0) {
                 const activeButton = this.buttonRefs[0].current;
-                console.log("activeButton: " + activeButton);
                 activeButton.backgroundColor = this.activeColor;
                 const inactiveButton = this.buttonRefs[1].current;
-                console.log("inactiveButton: " + inactiveButton);
                 inactiveButton.backgroundColor = this.inactiveColor;
             } else {
                 const activeButton = this.buttonRefs[1].current;
-                console.log("activeButton: " + activeButton);
                 activeButton.backgroundColor = this.activeColor;
                 const inactiveButton = this.buttonRefs[0].current;
-                console.log("inactiveButton: " + inactiveButton);
                 inactiveButton.backgroundColor = this.inactiveColor;
             }   
         })

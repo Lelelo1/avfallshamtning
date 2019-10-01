@@ -19,13 +19,14 @@ import { reaction } from "mobx";
 
 import viewModel, { Region } from "./ViewModels/ViewModel";
 import ServiceSelection from "./Selections/ServiceSelection/ServiceSelection";
-import PaymentCard from "./Selections/HomeSelection/HomeCard";
-import HomeCard from "./Selections/HomeSelection/HomeCard";
-import Hantering from "./Selections/OtherSelections/Hantering";
+
 import "./Extensions";
 
 import * as email from "nativescript-email";
 import { device } from "tns-core-modules/platform/platform";
+import ManagementSelection from "./Selections/OtherSelections/ManagementSelection";
+import HomeSelection from "./Selections/HomeSelection/HomeSelection";
+import GarbageTypeSelection from "./Selections/OtherSelections/GarbageTypeSelection";
 
 
 
@@ -81,8 +82,9 @@ class AppContainer extends React.Component {
                             <Title />
                             <ServiceSelection />
                             <Record ref={this.recordRef} />
-                            <HomeCard />
-                            <Hantering />
+                            <HomeSelection />
+                            <ManagementSelection />
+                            <GarbageTypeSelection />
                             <$FlexboxLayout height={400} flexDirection={'column'} />
                             <$Button
                                 text={"skicka begäran"} 

@@ -15,6 +15,8 @@ export default class SelectionsViewModel {
 
     @observable
     hemma: Hemma = Hemma.ja;
+    @observable
+    avfall: Avfall;
 
 }
 

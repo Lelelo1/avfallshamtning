@@ -6,7 +6,7 @@ import { CardView } from "@nstudio/nativescript-cardview";
 import { cardStyle } from "../cardStyles";
 
 
-export default class Hantering extends React.Component {
+export default class ManagementSelection extends React.Component {
 
     containerRef = React.createRef<StackLayout>();
 
