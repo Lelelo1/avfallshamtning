@@ -16,6 +16,7 @@ import { StackLayout, TextField, Color } from "react-nativescript/dist/client/El
 import FormViewModel from "~/ViewModels/FormViewModel";
 import { autorun, observable } from "mobx";
 import { observer } from "mobx-react";
+import { device } from "tns-core-modules/platform/platform";
 
 @observer
 export default class TimeSelection extends React.Component {
@@ -64,7 +65,25 @@ export default class TimeSelection extends React.Component {
                             FormViewModel.get().formModel.tid = textField.text;
                         }}
                         />
-                    <$TextView textAlignment={"center"} editable={false} text={"så återkommer till dig inom 2 arbetsdagar med en bokningsbekräftelse"} fontSize={cardStyle.descriptionSize}/>
+                    <$TextView
+                        textAlignment={"center"}
+                        editable={false}
+                        text={"så återkommer till dig inom 2 arbetsdagar med en bokningsbekräftelse"}
+                        fontSize={cardStyle.descriptionSize}
+                        onLoaded={(ev) => {
+                            const textView = ev.object as TextView;
+                            // disabliing scroll
+                            textView.scrollEnabled(false);
+                            if(device.os == "Android") {
+                                const editText = textView.android as android.widget.EditText;
+                                // removes line under text
+                                editText.setBackground(null);
+                            }
+                        
+                            // removing default margin set (ios)
+                            textView.noMargin();
+                        }}
+                        />
                 </$FlexboxLayout>
             </$StackLayout>
         );
