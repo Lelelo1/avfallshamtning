@@ -57,8 +57,7 @@ export default class SelectorComponent extends React.Component<{buttonContents: 
     }
 
     // iconTextSpace = 8; Can't. Using empty space in text instead...
-    
-    
+
     render() {
         const content0 = this.props.buttonContents[0];
         const content1 = this.props.buttonContents[1];
@@ -75,7 +74,6 @@ export default class SelectorComponent extends React.Component<{buttonContents: 
                         content0.onTap();
                     }}
                     margin={0}
-                    borderWidth={0.1}
                 >
                     <$FormattedString
                         backgroundColor={new Color("transparent")}
@@ -91,7 +89,7 @@ export default class SelectorComponent extends React.Component<{buttonContents: 
                         content1.onTap();
                     }}
                     margin={0}
-                    borderWidth={0.1}
+
                 >
                     <$FormattedString
                         backgroundColor={new Color("transparent")}
