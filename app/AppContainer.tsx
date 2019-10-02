@@ -27,6 +27,7 @@ import { device } from "tns-core-modules/platform/platform";
 import ManagementSelection from "./Selections/OtherSelections/ManagementSelection";
 import HomeSelection from "./Selections/HomeSelection/HomeSelection";
 import GarbageTypeSelection from "./Selections/OtherSelections/GarbageTypeSelection";
+import TimeSelection from "./Selections/TimeSelection/TimeSelection";
 
 
 
@@ -85,6 +86,7 @@ class AppContainer extends React.Component {
                             <HomeSelection />
                             <ManagementSelection />
                             <GarbageTypeSelection />
+                            <TimeSelection />
                             <$FlexboxLayout height={400} flexDirection={'column'} />
                             <$Button
                                 text={"skicka begäran"} 

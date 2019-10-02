@@ -74,6 +74,7 @@ export default class SelectorComponent extends React.Component<{buttonContents: 
                         this.activeIndex = 0
                         content0.onTap();
                     }}
+                    margin={0}
                 >
                     <$FormattedString
                         backgroundColor={new Color("transparent")}
@@ -88,6 +89,7 @@ export default class SelectorComponent extends React.Component<{buttonContents: 
                         this.activeIndex = 1;
                         content1.onTap();
                     }}
+                    margin={0}
                 >
                     <$FormattedString
                         backgroundColor={new Color("transparent")}
