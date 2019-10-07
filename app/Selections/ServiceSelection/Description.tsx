@@ -15,7 +15,7 @@ import { FormattedString, Span } from "tns-core-modules/text/formatted-string";
 import { Fab } from "nativescript-floatingactionbutton";
 import { TouchGestureEventData } from "tns-core-modules/ui/gestures/gestures";
 import "../../Styles";
-import { Size } from "../../ViewModels/SelectionsViewModel";
+import { Size } from "../../Models/SelectionsModel"
 import { cardStyle } from "../cardStyles";
 @observer
 export default class Description extends React.Component <{ size: Size }> {
