@@ -10,6 +10,7 @@ import { observer } from "mobx-react";
 
 import { cardStyle } from "../cardStyles";
 import { numberToString } from "~/Form/Form";
+import SelectionsViewModel from "~/ViewModels/SelectionsViewModel";
 
 
 @observer
@@ -24,8 +25,8 @@ export default class AwayPayment extends React.Component<{description: string, f
         const personnummerTextField = this.personnummerTextFieldRef.current;
         const anvisningTextField = this.anvisningTextFieldRef.current;
         autorun(() => {
-            const formViewModel = FormViewModel.get();
-            const show = formViewModel.shouldDisplayTextFieldsStatus // <-- just to trigger change. Might separate into difference variables
+            const selectionsViewModel = SelectionsViewModel.get();
+            const show = selectionsViewModel.shouldDisplayTextFieldsStatus // <-- just to trigger change. Might separate into difference variables
             formViewModel.setStyle(personnummerTextField, model.personnummer, show);
             formViewModel.setStyle(anvisningTextField, model.anvisning, show);
         })

@@ -12,7 +12,7 @@ import { CardView } from "@nstudio/nativescript-cardview";
 import { cardStyle } from "../cardStyles";
 import SelectorComponent, { Content } from "~/Components/SelectorComponent";
 import SelectionsViewModel, { Hemma, Avfall } from "~/ViewModels/SelectionsViewModel";
-import { StackLayout, TextField, Color } from "react-nativescript/dist/client/ElementRegistry";
+import { StackLayout, TextField, Color, TextView } from "react-nativescript/dist/client/ElementRegistry";
 import FormViewModel from "~/ViewModels/FormViewModel";
 import { autorun, observable } from "mobx";
 import { observer } from "mobx-react";
@@ -28,8 +28,8 @@ export default class TimeSelection extends React.Component {
         const formViewModel = FormViewModel.get()
         const model = formViewModel.formModel;
         autorun(() => {
-            const formViewModel = FormViewModel.get();
-            const show = formViewModel.shouldDisplayTextFieldsStatus // <-- just to trigger change. Might separate into difference variables
+            const selectionsViewModel = SelectionsViewModel.get();
+            const show = selectionsViewModel.shouldDisplayTextFieldsStatus// <-- just to trigger change. Might separate into difference variables
             formViewModel.setStyle(this.timeTextField.current, model.tid, show);
         })
 
@@ -49,7 +49,7 @@ export default class TimeSelection extends React.Component {
         return (
             <$StackLayout ref={this.cardContainerRef} className={"form"} >
                 <$FlexboxLayout flexDirection={"column"} margin={cardStyle.contentMargin}>
-                    <$Label alignSelf={"center"} text={"Ange önskad hätmingsdag och ca tid"} fontSize={cardStyle.titleSize}/>
+                    <$Label alignSelf={"center"} text={"Ange önskad hämtningsdag och ca tid"} fontSize={cardStyle.titleSize}/>
                     <$TextField
                         ref={this.timeTextField}
                         hint={"hämtningsdag och ca tid"}

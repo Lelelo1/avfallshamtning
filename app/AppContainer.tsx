@@ -28,6 +28,8 @@ import ManagementSelection from "./Selections/OtherSelections/ManagementSelectio
 import HomeSelection from "./Selections/HomeSelection/HomeSelection";
 import GarbageTypeSelection from "./Selections/OtherSelections/GarbageTypeSelection";
 import TimeSelection from "./Selections/TimeSelection/TimeSelection";
+import FormViewModel from "./ViewModels/FormViewModel";
+import SelectionsViewModel from "./ViewModels/SelectionsViewModel";
 
 
 
@@ -91,6 +93,10 @@ class AppContainer extends React.Component {
                             <$Button
                                 text={"skicka begäran"} 
                                 onTap={(ev) => {
+                                    // if any info is not been entered
+                                    FormViewModel.get().shouldDisplayTextFieldsStatus = true;
+                                    SelectionsViewModel.get().shouldDisplayTextFieldsStatus = true;
+                                    /*
                                     email.available().then((available) => {
                                         if(available) {
                                             console.log("email was available");
@@ -107,6 +113,7 @@ class AppContainer extends React.Component {
                                             console.log("emailwas not available");
                                         }
                                     })
+                                    */
                                 }}
                             />
                         </$StackLayout>

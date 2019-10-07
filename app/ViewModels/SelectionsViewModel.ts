@@ -18,6 +18,9 @@ export default class SelectionsViewModel {
     @observable
     avfall: Avfall;
 
+    @observable
+    shouldDisplayTextFieldsStatus = false;
+
 }
 
 export enum Size {
