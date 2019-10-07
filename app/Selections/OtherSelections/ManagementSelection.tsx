@@ -4,7 +4,8 @@ import SelectorComponent, { Content } from "~/Components/SelectorComponent";
 import { StackLayout, Color } from "react-nativescript/dist/client/ElementRegistry";
 import { CardView } from "@nstudio/nativescript-cardview";
 import { cardStyle } from "../cardStyles";
-
+import SelectionsViewModel from "~/ViewModels/SelectionsViewModel";
+import { Hantering } from "~/Models/SelectionsModel";
 
 export default class ManagementSelection extends React.Component {
 
@@ -49,7 +50,8 @@ export default class ManagementSelection extends React.Component {
         discard.glyph = "\ue801";
         discard.css = "discard";
         discard.onTap = () => {
-            console.log("selected discard/kassera");
+            const model = SelectionsViewModel.get().selectionsModel;
+            model.hantering = Hantering.kassera;
         }
         return discard;
     }
@@ -59,7 +61,8 @@ export default class ManagementSelection extends React.Component {
         recycle.glyph = "\uf1b8";
         recycle.css = "recycle";
         recycle.onTap = () => {
-            console.log("selected recycle/återvinn");
+            const model = SelectionsViewModel.get().selectionsModel;
+            model.hantering = Hantering.återvinn;
         }
         return recycle;
     }

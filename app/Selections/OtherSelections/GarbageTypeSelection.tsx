@@ -5,8 +5,8 @@ import { StackLayout } from "react-nativescript/dist/client/ElementRegistry";
 import { CardView } from "@nstudio/nativescript-cardview";
 import { cardStyle } from "../cardStyles";
 import SelectorComponent, { Content } from "~/Components/SelectorComponent";
-import SelectionsViewModel, { Hemma, Avfall } from "~/ViewModels/SelectionsViewModel";
-
+import SelectionsViewModel from "~/ViewModels/SelectionsViewModel";
+import { Avfall } from "~/Models/SelectionsModel";
 export default class GarbageTypeSelection extends React.Component {
     cardContainerRef = React.createRef<StackLayout>();
 
@@ -40,8 +40,8 @@ export default class GarbageTypeSelection extends React.Component {
         const content = new Content()
         content.text = "Ja";
         content.onTap = () => {
-            const vm = SelectionsViewModel.get();
-            vm.avfall = Avfall.farligt;
+            const model = SelectionsViewModel.get().selectionsModel;
+            model.avfall = Avfall.farligt;
         }
         return content;
     }
@@ -49,8 +49,8 @@ export default class GarbageTypeSelection extends React.Component {
         const content = new Content();
         content.text = "Nej";
         content.onTap = () => {
-            const vm = SelectionsViewModel.get();
-            vm.avfall = Avfall.ofarligt;
+            const model = SelectionsViewModel.get().selectionsModel;
+            model.avfall = Avfall.ofarligt;
         }
         return content
     } 

@@ -11,7 +11,7 @@ import { $StackLayout, $FlexboxLayout, $Label, $TextField, $TextView} from "reac
 import { CardView } from "@nstudio/nativescript-cardview";
 import { cardStyle } from "../cardStyles";
 import SelectorComponent, { Content } from "~/Components/SelectorComponent";
-import SelectionsViewModel, { Hemma, Avfall } from "~/ViewModels/SelectionsViewModel";
+import SelectionsViewModel from "~/ViewModels/SelectionsViewModel";
 import { StackLayout, TextField, Color, TextView } from "react-nativescript/dist/client/ElementRegistry";
 import FormViewModel from "~/ViewModels/FormViewModel";
 import { autorun, observable } from "mobx";
@@ -26,7 +26,7 @@ export default class TimeSelection extends React.Component {
         this._buildCardView();
 
         const formViewModel = FormViewModel.get()
-        const model = formViewModel.formModel;
+        const model = SelectionsViewModel.get().selectionsModel;
         autorun(() => {
             const selectionsViewModel = SelectionsViewModel.get();
             const show = selectionsViewModel.shouldDisplayTextFieldsStatus// <-- just to trigger change. Might separate into difference variables
@@ -56,13 +56,13 @@ export default class TimeSelection extends React.Component {
                         onLoaded={(ev) => {
                             const textField = ev.object as TextField;
                             // textField.setAutofillHintContentType(AutofillHintContentType.time);
-                            textField.applyStyle(FormViewModel.get().formModel.tid);
+                            textField.applyStyle(SelectionsViewModel.get().selectionsModel.tid);
                         }}
                         margin={0}
-                        text={FormViewModel.get().formModel.tid}
+                        text={SelectionsViewModel.get().selectionsModel.tid}
                         onTextChange={(event) => {
                             const textField = event.object as TextField;
-                            FormViewModel.get().formModel.tid = textField.text;
+                            SelectionsViewModel.get().selectionsModel.tid = textField.text;
                         }}
                         />
                     <$TextView

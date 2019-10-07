@@ -1,9 +1,10 @@
 import { observable } from "mobx";
+import SelectionsModel, { Size, Hemma } from "~/Models/SelectionsModel";
 
 export default class SelectionsViewModel {
     private static viewModel: SelectionsViewModel = null;
     static get(): SelectionsViewModel {
-        if(SelectionsViewModel.viewModel == null) {
+        if(SelectionsViewModel.viewModel === null) {
             SelectionsViewModel.viewModel = new SelectionsViewModel();
         }
         return SelectionsViewModel.viewModel;
@@ -11,32 +12,22 @@ export default class SelectionsViewModel {
 
     constructor() {
         console.log("contructing selectionsViewModel");
+        this.selectionsModel = new SelectionsModel();
+        this.selectionsModel.tjänst = Size.little
     }
 
-    @observable
-    hemma: Hemma = Hemma.ja;
-    @observable
-    avfall: Avfall;
-
+    selectionsModel: SelectionsModel;
+   
     @observable
     shouldDisplayTextFieldsStatus = false;
 
-}
-
-export enum Size {
-    "little" = "little",
-    "half" = "half",
-    "full" = "full"
-}
-export enum Avfall {
-    ofarligt = "ofarligt",
-    farligt = "farligt"
-}
-export enum Hantering {
-    kassera = "kassera",
-    återvinn = "återvinn"
-}
-export enum Hemma {
-    ja = "ja",
-    nej = "nej"
+    selectionsIsValid() {
+        let isValid = true;
+        if(this.selectionsModel.hemma = Hemma.nej) {
+            if(!this.selectionsModel.personnummer) isValid = false;
+            if(!this.selectionsModel.anvisning) isValid = false;
+        }
+        if(!this.selectionsModel.tid) isValid = false;
+        return isValid;
+    }
 }

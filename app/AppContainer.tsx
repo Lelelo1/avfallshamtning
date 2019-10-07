@@ -30,6 +30,7 @@ import GarbageTypeSelection from "./Selections/OtherSelections/GarbageTypeSelect
 import TimeSelection from "./Selections/TimeSelection/TimeSelection";
 import FormViewModel from "./ViewModels/FormViewModel";
 import SelectionsViewModel from "./ViewModels/SelectionsViewModel";
+import { postModel, test1 } from "./Models/Post";
 
 
 
@@ -93,17 +94,32 @@ class AppContainer extends React.Component {
                             <$Button
                                 text={"skicka begäran"} 
                                 onTap={(ev) => {
-                                    // if any info is not been entered
-                                    FormViewModel.get().shouldDisplayTextFieldsStatus = true;
-                                    SelectionsViewModel.get().shouldDisplayTextFieldsStatus = true;
                                     /*
+                                    if(!FormViewModel.get().formIsValid() || !SelectionsViewModel.get().selectionsIsValid()) {
+                                        // show a toast "uppgifter saknas" or something like it
+                                        
+                                        if(!SelectionsViewModel.get().selectionsIsValid()) {
+                                            SelectionsViewModel.get().shouldDisplayTextFieldsStatus = true;
+                                            console.log("selectionsViewModel was not valid");
+                                        }
+                                        if(!FormViewModel.get().formIsValid()) {
+                                            // scroll to form button open form 
+                                            FormViewModel.get().shouldDisplayTextFieldsStatus = true;
+                                            console.log("form was not valid");
+                                        }
+                                        return;
+                                    }
+                                    */
+                                    const formModel = FormViewModel.get().formModel;
+                                    const selectionsModel = SelectionsViewModel.get().selectionsModel;
+
                                     email.available().then((available) => {
                                         if(available) {
                                             console.log("email was available");
                                             email.compose(
                                                 {
                                                     subject : "app test",
-                                                    body: "I am the body of the email",
+                                                    body: JSON.stringify(test1 + ""),
                                                     to: ["leo.w.se@hotmail.com"]
 
                                                 }
@@ -113,7 +129,7 @@ class AppContainer extends React.Component {
                                             console.log("emailwas not available");
                                         }
                                     })
-                                    */
+                                    
                                 }}
                             />
                         </$StackLayout>

@@ -17,4 +17,3 @@ export interface Avfallshamtning {
 export interface Model {
     Avfallshamtning: Avfallshamtning;
 }
-

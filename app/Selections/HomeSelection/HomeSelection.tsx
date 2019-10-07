@@ -5,7 +5,7 @@ import { $StackLayout, $Label, $Switch, $FlexboxLayout, $Button, $TextField } fr
 import { Switch } from "tns-core-modules/ui/switch/switch";
 import { StackLayout, FlexboxLayout, Label, Color, TextField } from "react-nativescript/dist/client/ElementRegistry";
 import ViewModel from "~/ViewModels/ViewModel";
-import SelectionsViewModel, { Hemma } from "~/ViewModels/SelectionsViewModel";
+import SelectionsViewModel from "~/ViewModels/SelectionsViewModel";
 import { observer } from "mobx-react";
 import SelectorComponent, { Content } from "~/Components/SelectorComponent";
 import { autorun } from "mobx";
@@ -13,6 +13,7 @@ import { autorun } from "mobx";
 import { cardStyle } from "../cardStyles";
 
 import AwayPayment from "./AwayPayment"; 
+import { Hemma } from "~/Models/SelectionsModel";
 
 @observer
 export default class HomeSelection extends React.Component {
@@ -72,8 +73,8 @@ export default class HomeSelection extends React.Component {
         const content = new Content()
         content.text = "Ja";
         content.onTap = () => {
-            const vm = SelectionsViewModel.get();
-            vm.hemma = Hemma.ja;
+            const model = SelectionsViewModel.get().selectionsModel;
+            model.hemma = Hemma.ja;
         }
         return content;
     }
@@ -81,8 +82,8 @@ export default class HomeSelection extends React.Component {
         const content = new Content();
         content.text = "Nej";
         content.onTap = () => {
-            const vm = SelectionsViewModel.get();
-            vm.hemma = Hemma.nej;
+            const model = SelectionsViewModel.get().selectionsModel;
+            model.hemma = Hemma.nej;
         }
         return content
     } 
@@ -90,13 +91,13 @@ export default class HomeSelection extends React.Component {
     _renderPaymentDescription() {
         const model = ViewModel.get().model;
         if(model) {
-            const vm = SelectionsViewModel.get();
-            console.log("vm hemma: " + vm.hemma);
-            if(vm.hemma == Hemma.ja) {
+            const selectionsModel = SelectionsViewModel.get().selectionsModel;
+            console.log("vm hemma: " + selectionsModel.hemma);
+            if(selectionsModel.hemma == Hemma.ja) {
                 const description = model.Avfallshamtning.placePayment;
                 console.log("payment: " + description);
                 return <$Label alignSelf={"center"} text={description} fontSize={cardStyle.descriptionSize} />
-            } else if (vm.hemma == Hemma.nej) {
+            } else if (selectionsModel.hemma == Hemma.nej) {
                 const description = model.Avfallshamtning.awayPayment;
                 console.log("payment: " + description);
                 return <AwayPayment description={description} fontSize={this.textSize} />;

@@ -15,12 +15,6 @@ export default class FormModel {
     postnummer: number;
     @observable
     ort: string
-    @observable
-    personnummer?: number;
-    @observable
-    anvisning?: string;
-    @observable
-    tid: string;
     constructor() {
 
     }
