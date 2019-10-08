@@ -49,7 +49,12 @@ export default class TimeSelection extends React.Component {
         return (
             <$StackLayout ref={this.cardContainerRef} className={"form"} >
                 <$FlexboxLayout flexDirection={"column"} margin={cardStyle.contentMargin}>
-                    <$Label alignSelf={"center"} text={"Ange önskad hämtningsdag och ca tid"} fontSize={cardStyle.titleSize}/>
+                    <$Label
+                        alignSelf={"center"}
+                        text={"Ange önskad hämtningsdag och ca tid"}
+                        fontSize={cardStyle.titleSize}
+                        margin={cardStyle.childrenSpacing}
+                    />
                     <$TextField
                         ref={this.timeTextField}
                         hint={"hämtningsdag och ca tid"}
@@ -58,12 +63,12 @@ export default class TimeSelection extends React.Component {
                             // textField.setAutofillHintContentType(AutofillHintContentType.time);
                             textField.applyStyle(SelectionsViewModel.get().selectionsModel.tid);
                         }}
-                        margin={0}
                         text={SelectionsViewModel.get().selectionsModel.tid}
                         onTextChange={(event) => {
                             const textField = event.object as TextField;
                             SelectionsViewModel.get().selectionsModel.tid = textField.text;
                         }}
+                        margin={cardStyle.childrenSpacing}
                         />
                     <$TextView
                         textAlignment={"center"}
@@ -83,6 +88,7 @@ export default class TimeSelection extends React.Component {
                             // removing default margin set (ios)
                             textView.noMargin();
                         }}
+                        margin={cardStyle.littleDescriptionSpacing}
                         />
                 </$FlexboxLayout>
             </$StackLayout>

@@ -36,9 +36,11 @@ export default class ManagementSelection extends React.Component {
                         text={"Hur vill du att vi hanterar avfallet?"}
                         alignSelf={"center"}
                         fontSize={cardStyle.titleSize}
+                        margin={cardStyle.childrenSpacing}
                     />
                     <SelectorComponent
                         buttonContents={[ this.discardButton(), this.recycleButton()]}
+                        margin={cardStyle.childrenSpacing}
                     />
                 </$FlexboxLayout>
             </$StackLayout>

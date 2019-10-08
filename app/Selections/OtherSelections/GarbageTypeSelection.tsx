@@ -30,8 +30,17 @@ export default class GarbageTypeSelection extends React.Component {
         return (
             <$StackLayout ref={this.cardContainerRef} className={"form"}>
                 <$FlexboxLayout margin={cardStyle.contentMargin} flexDirection={"column"} >
-                    <$Label alignSelf={"center"} text={"Innehåller avfallet något farligt?"} fontSize={cardStyle.titleSize}/>
-                    <SelectorComponent buttonContents={[this._yesButton(), this._noButton()]} selectedIndex={1}/>
+                    <$Label
+                        alignSelf={"center"} 
+                        text={"Innehåller avfallet något farligt?"}
+                        fontSize={cardStyle.titleSize}
+                        margin={cardStyle.childrenSpacing}
+                    />
+                    <SelectorComponent
+                        buttonContents={[this._yesButton(), this._noButton()]}
+                        selectedIndex={1}
+                        margin={cardStyle.childrenSpacing}
+                    />
                 </$FlexboxLayout>
             </$StackLayout>
         )

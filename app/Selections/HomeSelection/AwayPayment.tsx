@@ -15,7 +15,7 @@ import { Hemma } from "~/Models/SelectionsModel";
 
 
 @observer
-export default class AwayPayment extends React.Component<{description: string, fontSize: number}>{
+export default class AwayPayment extends React.Component<{description: string, fontSize: number, margin: number}>{
     
     personnummerTextFieldRef = React.createRef<TextField>();
     anvisningTextFieldRef = React.createRef<TextField>();
@@ -41,9 +41,20 @@ export default class AwayPayment extends React.Component<{description: string, f
     }
     render() {
         return (
-            <$StackLayout className={"form"}>
-                <$Label horizontalAlignment={"center"} text={this.props.description} fontSize={cardStyle.descriptionSize} />
-                <$Label horizontalAlignment={"center"} marginTop={2} text={"var vänlig ange personnummer"} fontSize={12} />
+            <$StackLayout className={"form"} margin={this.props.margin}>
+                <$Label
+                    horizontalAlignment={"center"}
+                    text={this.props.description}
+                    fontSize={cardStyle.descriptionSize}
+                    margin={cardStyle.childrenSpacing}
+                />
+                <$Label
+                    horizontalAlignment={"center"}
+                    marginTop={2}
+                    text={"var vänlig ange personnummer"}
+                    fontSize={12}
+                    margin={cardStyle.littleDescriptionSpacing}
+                />
                 <$TextField 
                     ref={this.personnummerTextFieldRef}
                     borderColor={commonStyle.borderColor}
@@ -55,8 +66,14 @@ export default class AwayPayment extends React.Component<{description: string, f
 
                         SelectionsViewModel.get().selectionsModel.personnummer = textField.text;
                     }}
+                    margin={cardStyle.childrenSpacing}
                 />
-                <$Label horizontalAlignment={"center"} marginTop={2} text={"och en anvisning till var avfallet kommer att finnas"} fontSize={12} />
+                <$Label 
+                    horizontalAlignment={"center"}
+                    text={"och en anvisning till var avfallet kommer att finnas"}
+                    fontSize={12}
+                    margin={cardStyle.littleDescriptionSpacing}
+                />
                 <$TextField 
                     ref={this.anvisningTextFieldRef}
                     borderColor={commonStyle.borderColor}
@@ -66,6 +83,7 @@ export default class AwayPayment extends React.Component<{description: string, f
                         const textField = event.object as TextField;
                         SelectionsViewModel.get().selectionsModel.anvisning = textField.text;
                     }}
+                    margin={cardStyle.childrenSpacing}
                 />
             </$StackLayout>
             

@@ -17,7 +17,7 @@ export class Content {
 
 
 @observer
-export default class SelectorComponent extends React.Component<{buttonContents: Content[], selectedIndex?: number}> {
+export default class SelectorComponent extends React.Component<{buttonContents: Content[], selectedIndex?: number, margin?: number}> {
     
     static defaultProps = {
         selectedIndex: 0
@@ -66,6 +66,7 @@ export default class SelectorComponent extends React.Component<{buttonContents: 
                 ref={this.containerRef}
                 flexDirection={"row"}
                 justifyContent={"space-around"}
+                margin={this.props.margin ? this.props.margin : 0}
             >
                 <$Button
                     ref={this.button0Ref}
