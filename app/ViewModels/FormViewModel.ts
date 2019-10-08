@@ -32,7 +32,7 @@ export default class FormViewModel {
         const model = FormViewModel.get().formModel;
 
         if(model.namn && model.efternamn && model.mobilnummer &&
-             model.epostaddress && model.gatuaddress && model.postnummer && model.ort) {
+             /*model.epostaddress*/ model.gatuaddress && model.postnummer && model.ort) {
                  return true;
              }
         return false;

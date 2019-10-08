@@ -6,13 +6,13 @@ export default class FormModel {
     @observable
     efternamn: string;
     @observable
-    mobilnummer: number;
+    mobilnummer: string;
     @observable
     epostaddress: string;
     @observable
     gatuaddress: string;
     @observable
-    postnummer: number;
+    postnummer: string;
     @observable
     ort: string
     constructor() {

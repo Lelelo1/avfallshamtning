@@ -8,7 +8,7 @@ export default class SelectionsModel {
    @observable
    hemma: Hemma = Hemma.ja;
    @observable
-   personnummer?: number;
+   personnummer?: string;
    @observable
    anvisning?: string;
 

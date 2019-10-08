@@ -48,12 +48,12 @@ export default class AwayPayment extends React.Component<{description: string, f
                     ref={this.personnummerTextFieldRef}
                     borderColor={commonStyle.borderColor}
                     hint={"Personnummer"}
-                    text={numberToString(SelectionsViewModel.get().selectionsModel.personnummer)}
+                    text={SelectionsViewModel.get().selectionsModel.personnummer}
                     onTextChange={(event) => {
                         const textField = event.object as TextField;
-                        const number = Number(textField.text); // when undefined creates appropirat effect / is handled
+                        // const number = Number(textField.text); // when undefined creates appropirat effect / is handled
 
-                        SelectionsViewModel.get().selectionsModel.personnummer = number
+                        SelectionsViewModel.get().selectionsModel.personnummer = textField.text;
                     }}
                 />
                 <$Label horizontalAlignment={"center"} marginTop={2} text={"och en anvisning till var avfallet kommer att finnas"} fontSize={12} />

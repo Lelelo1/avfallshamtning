@@ -31,6 +31,7 @@ import TimeSelection from "./Selections/TimeSelection/TimeSelection";
 import FormViewModel from "./ViewModels/FormViewModel";
 import SelectionsViewModel from "./ViewModels/SelectionsViewModel";
 import { postModel, test1 } from "./Models/Post";
+import { Hemma } from "./Models/SelectionsModel";
 
 
 
@@ -119,7 +120,7 @@ class AppContainer extends React.Component {
                                             email.compose(
                                                 {
                                                     subject : "app test",
-                                                    body: postModel(null, null),
+                                                    body: postModel(formModel, selectionsModel, (selectionsModel.hemma == Hemma.ja)),
                                                     to: ["leo.w.se@hotmail.com"]
 
                                                 }

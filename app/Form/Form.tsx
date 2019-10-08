@@ -37,7 +37,7 @@ export default class Form extends React.Component<{},{}>{
             formViewModel.setStyle(this.nameTextFieldRef.current, model.namn, show);
             formViewModel.setStyle(this.surnnameTextFieldRef.current, model.efternamn, show);
             formViewModel.setStyle(this.mobileNumberTextFieldRef.current, model.mobilnummer, show);
-            formViewModel.setStyle(this.emailTextFieldRef.current, model.epostaddress, show);
+            /* formViewModel.setStyle(this.emailTextFieldRef.current, model.epostaddress, show); */
             formViewModel.setStyle(this.addressTextFieldRef.current, model.gatuaddress, show);
             formViewModel.setStyle(this.postalCodeTextFieldRef.current, model.postnummer, show);
             formViewModel.setStyle(this.placeTextFieldRef.current, model.ort, show);
@@ -126,14 +126,15 @@ export default class Form extends React.Component<{},{}>{
                         textField.applyStyle(FormViewModel.get().formModel.mobilnummer);
                     }}
                     hint={"Mobilnummer"}
-                    text={numberToString(FormViewModel.get().formModel.mobilnummer)}
+                    text={FormViewModel.get().formModel.mobilnummer}
                     onTextChange={(event) => {
                         const textField = event.object as TextField;
-                        const number = Number(textField.text); // when undefined creates appropirat effect / is handled
-                        FormViewModel.get().formModel.mobilnummer = number;
+                        // const number = Number(textField.text); // when undefined creates appropirat effect / is handled
+                        FormViewModel.get().formModel.mobilnummer = textField.text;
                     }}
                 />
-                <$TextField
+                {/* 
+                    <$TextField
                     ref={this.emailTextFieldRef} 
                     onLoaded={(ev) => {
                         const textField = ev.object as TextField;
@@ -147,6 +148,8 @@ export default class Form extends React.Component<{},{}>{
                         FormViewModel.get().formModel.epostaddress = textField.text;
                     }}
                 />
+                */}
+                
                 <$TextField 
                     ref={this.addressTextFieldRef}
                     onLoaded={(ev) => {
@@ -169,12 +172,12 @@ export default class Form extends React.Component<{},{}>{
                         textField.applyStyle(FormViewModel.get().formModel.postnummer);
                     }}
                     hint={"Post nr"}
-                    text={numberToString(FormViewModel.get().formModel.postnummer)}
+                    text={FormViewModel.get().formModel.postnummer}
                     onTextChange={(event) => {
                         const textField = event.object as TextField;
-                        const number = Number(textField.text); // when undefined creates appropirat effect / is handled
+                        // const number = Number(textField.text); // when undefined creates appropirat effect / is handled
 
-                        FormViewModel.get().formModel.postnummer = number
+                        FormViewModel.get().formModel.postnummer = textField.text;
                     }}
                 />
                 <$TextField 

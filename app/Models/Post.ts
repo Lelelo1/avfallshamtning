@@ -23,18 +23,28 @@ const test1: Property[] = [
     new Property("Jag är hemma när ni kommer?", "Nej")
 ];
 
-export const postModel = (person: PersonInfoModel, selections: SelectionsModel ) => {
+export const postModel = (person: PersonInfoModel, selections: SelectionsModel, isHome = true ) => {
     const postPropertyList: Property[] = [
         new Property("Namn", person.namn),
         new Property("Efternamn", person.efternamn),
-        new Property("Mobilnummer", person.mobilnummer + ""),
+        /* mejladdress not needed */
+        new Property("Mobilnummer", person.mobilnummer),
         new Property("Gatuaddress", person.gatuaddress),
-        new Property("Post nr", person.ort),
+        new Property("Post nr", person.postnummer),
+        new Property("Ort", person.ort),
         new Property("Jag vill boka", selections.formattedTjänst()),
         new Property("Hämtningen innehåller farligt avfall", selections.formattedAvfall()),
         new Property("Ange önskad hämtningsdag och ca tid" , selections.formattedTid()),
         new Property("Jag är hemma när ni kommer?", selections.formattedHemma())
     ];
+    if(!isHome) {
+        postPropertyList.push(
+            new Property("Ge en anvisning om var vi kan hitta avfallet", selections.anvisning)
+            );
+        postPropertyList.push(
+            new Property("Personnummer för fakturering", selections.personnummer)
+        );
+    }
     
     return formattedPost(postPropertyList);
 }
