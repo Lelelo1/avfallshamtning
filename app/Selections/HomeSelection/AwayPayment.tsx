@@ -11,6 +11,7 @@ import { observer } from "mobx-react";
 import { cardStyle } from "../cardStyles";
 import { numberToString } from "~/Form/Form";
 import SelectionsViewModel from "~/ViewModels/SelectionsViewModel";
+import { Hemma } from "~/Models/SelectionsModel";
 
 
 @observer
@@ -27,8 +28,11 @@ export default class AwayPayment extends React.Component<{description: string, f
             const selectionsViewModel = SelectionsViewModel.get();
             const model = selectionsViewModel.selectionsModel;
             const show = selectionsViewModel.shouldDisplayTextFieldsStatus // <-- just to trigger change. Might separate into difference variables
-            formViewModel.setStyle(personnummerTextField, model.personnummer, show);
-            formViewModel.setStyle(anvisningTextField, model.anvisning, show);
+            if(selectionsViewModel.selectionsModel.hemma == Hemma.nej) {
+                console.log("hemma: " + selectionsViewModel.selectionsModel.hemma);
+                formViewModel.setStyle(personnummerTextField, model.personnummer, show);
+                formViewModel.setStyle(anvisningTextField, model.anvisning, show);
+            }
         })
         // on loaded not firing for some reason - native component is already ready
         // textField.setAutofillHintContentType(AutofillHintContentType.personnummer);

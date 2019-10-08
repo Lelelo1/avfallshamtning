@@ -23,7 +23,7 @@ export default class SelectionsViewModel {
 
     selectionsIsValid() {
         let isValid = true;
-        if(this.selectionsModel.hemma = Hemma.nej) {
+        if(this.selectionsModel.hemma == Hemma.nej) {
             if(!this.selectionsModel.personnummer) isValid = false;
             if(!this.selectionsModel.anvisning) isValid = false;
         }

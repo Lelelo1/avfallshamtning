@@ -29,8 +29,8 @@ export default class TimeSelection extends React.Component {
         const model = SelectionsViewModel.get().selectionsModel;
         autorun(() => {
             const selectionsViewModel = SelectionsViewModel.get();
-            const show = selectionsViewModel.shouldDisplayTextFieldsStatus// <-- just to trigger change. Might separate into difference variables
-            formViewModel.setStyle(this.timeTextField.current, model.tid, show);
+            // const show = selectionsViewModel.shouldDisplayTextFieldsStatus// <-- just to trigger change. Might separate into difference variables
+            // formViewModel.setStyle(this.timeTextField.current, model.tid, show);
         })
 
     }

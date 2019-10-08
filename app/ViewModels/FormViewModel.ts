@@ -44,7 +44,7 @@ export default class FormViewModel {
         this.hidden = false;
         this.hidden = true;
     }
-
+    /*  there is some strange bug that this has to opened and saved to work */ 
     setStyle(textField: TextField, modelProperty: string | number, show: boolean ) {  
 
         // other checks - like is of email format etc

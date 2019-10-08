@@ -94,7 +94,7 @@ class AppContainer extends React.Component {
                             <$Button
                                 text={"skicka begäran"} 
                                 onTap={(ev) => {
-                                    /*
+                                    
                                     if(!FormViewModel.get().formIsValid() || !SelectionsViewModel.get().selectionsIsValid()) {
                                         // show a toast "uppgifter saknas" or something like it
                                         
@@ -109,7 +109,7 @@ class AppContainer extends React.Component {
                                         }
                                         return;
                                     }
-                                    */
+                                    
                                     const formModel = FormViewModel.get().formModel;
                                     const selectionsModel = SelectionsViewModel.get().selectionsModel;
 
@@ -119,7 +119,7 @@ class AppContainer extends React.Component {
                                             email.compose(
                                                 {
                                                     subject : "app test",
-                                                    body: JSON.stringify(test1 + ""),
+                                                    body: postModel(null, null),
                                                     to: ["leo.w.se@hotmail.com"]
 
                                                 }
