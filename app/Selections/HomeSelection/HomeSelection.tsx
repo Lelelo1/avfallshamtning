@@ -60,10 +60,11 @@ export default class HomeSelection extends React.Component {
             <$StackLayout ref={this.cardContainerRef}>
                 <$FlexboxLayout margin={cardStyle.contentMargin} flexDirection={"column"}>
                     <$Label
-                        alignSelf={"center"}
                         text={"Är du hemma vid hämtningstillfället?"}
                         fontSize={cardStyle.titleSize}
                         margin={cardStyle.childrenSpacing}
+                        textWrap={true}
+                        textAlignment={"center"}
                     />
                     <SelectorComponent buttonContents={[this._yesButton(), this._noButton()]} margin={cardStyle.childrenSpacing}/>
                     {
@@ -101,7 +102,7 @@ export default class HomeSelection extends React.Component {
             if(selectionsModel.hemma == Hemma.ja) {
                 const description = model.Avfallshamtning.placePayment;
                 console.log("payment: " + description);
-                return <$Label alignSelf={"center"} text={description} fontSize={cardStyle.descriptionSize} margin={cardStyle.childrenSpacing}/>
+                return <$Label text={description} fontSize={cardStyle.descriptionSize} margin={cardStyle.childrenSpacing} textWrap={true} textAlignment={"center"} />
             } else if (selectionsModel.hemma == Hemma.nej) {
                 const description = model.Avfallshamtning.awayPayment;
                 console.log("payment: " + description);

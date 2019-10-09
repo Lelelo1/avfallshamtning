@@ -69,10 +69,12 @@ export default class AwayPayment extends React.Component<{description: string, f
                     margin={cardStyle.childrenSpacing}
                 />
                 <$Label 
-                    horizontalAlignment={"center"}
                     text={"och en anvisning till var avfallet kommer att finnas"}
                     fontSize={12}
                     margin={cardStyle.littleDescriptionSpacing}
+                    textWrap={true}
+                    textAlignment={"center"}
+                    
                 />
                 <$TextField 
                     ref={this.anvisningTextFieldRef}

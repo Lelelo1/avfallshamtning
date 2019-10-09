@@ -50,10 +50,11 @@ export default class TimeSelection extends React.Component {
             <$StackLayout ref={this.cardContainerRef} className={"form"} >
                 <$FlexboxLayout flexDirection={"column"} margin={cardStyle.contentMargin}>
                     <$Label
-                        alignSelf={"center"}
                         text={"Ange önskad hämtningsdag och ca tid"}
                         fontSize={cardStyle.titleSize}
                         margin={cardStyle.childrenSpacing}
+                        textWrap={true}
+                        textAlignment={"center"}
                     />
                     <$TextField
                         ref={this.timeTextField}
@@ -70,26 +71,13 @@ export default class TimeSelection extends React.Component {
                         }}
                         margin={cardStyle.childrenSpacing}
                         />
-                    <$TextView
-                        textAlignment={"center"}
-                        editable={false}
+                    <$Label
                         text={"så återkommer till dig inom 2 arbetsdagar med en bokningsbekräftelse"}
                         fontSize={cardStyle.descriptionSize}
-                        onLoaded={(ev) => {
-                            const textView = ev.object as TextView;
-                            // disabliing scroll
-                            textView.scrollEnabled(false);
-                            if(device.os == "Android") {
-                                const editText = textView.android as android.widget.EditText;
-                                // removes line under text
-                                editText.setBackground(null);
-                            }
-                        
-                            // removing default margin set (ios)
-                            textView.noMargin();
-                        }}
                         margin={cardStyle.littleDescriptionSpacing}
-                        />
+                        textWrap={true}
+                        textAlignment={"center"}
+                    />
                 </$FlexboxLayout>
             </$StackLayout>
         );
