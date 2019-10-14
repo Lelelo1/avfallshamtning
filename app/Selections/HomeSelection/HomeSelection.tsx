@@ -16,7 +16,7 @@ import AwayPayment from "./AwayPayment";
 import { Hemma } from "~/Models/SelectionsModel";
 
 @observer
-export default class HomeSelection extends React.Component {
+export default class HomeSelection extends React.Component<> {
 
     private cardContainerRef = React.createRef<StackLayout>();
     /*
@@ -58,7 +58,10 @@ export default class HomeSelection extends React.Component {
     render() {
         return (
             <$StackLayout ref={this.cardContainerRef}>
-                <$FlexboxLayout margin={cardStyle.contentMargin} flexDirection={"column"}>
+                <$FlexboxLayout
+                    margin={cardStyle.contentMargin}
+                    flexDirection={"column"}
+                >
                     <$Label
                         text={"Är du hemma vid hämtningstillfället?"}
                         fontSize={cardStyle.titleSize}

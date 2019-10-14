@@ -86,6 +86,7 @@ export default class AwayPayment extends React.Component<{description: string, f
                         SelectionsViewModel.get().selectionsModel.anvisning = textField.text;
                     }}
                     margin={cardStyle.childrenSpacing}
+                    
                 />
             </$StackLayout>
             

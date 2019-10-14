@@ -44,6 +44,7 @@ export default class SelectionsModel {
  }
 
  export enum Size {
+    "unselected" = "unselected",
    "little" = "little",
    "half" = "half",
    "full" = "full"

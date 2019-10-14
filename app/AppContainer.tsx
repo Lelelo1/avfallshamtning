@@ -30,10 +30,16 @@ import GarbageTypeSelection from "./Selections/OtherSelections/GarbageTypeSelect
 import TimeSelection from "./Selections/TimeSelection/TimeSelection";
 import FormViewModel from "./ViewModels/FormViewModel";
 import SelectionsViewModel from "./ViewModels/SelectionsViewModel";
-import { postModel, test1 } from "./Models/Post";
+import { postModel } from "./Models/Post";
 import { Hemma } from "./Models/SelectionsModel";
+import {on, exitEvent } from "tns-core-modules/application/application"
+import { setString } from "tns-core-modules/application-settings";
+import * as utils from "tns-core-modules/utils/utils";
 
-
+const testSubject = "appbokning TEST";
+const productionSubject = "Begäran om avfallshätning"
+const testMail = "leo.w.se@hotmail.com";
+const productionMail = "jorgen.avfallshamtning@gmail.com";
 
 export const rootRef: React.RefObject<any> = React.createRef<any>();
 
@@ -57,11 +63,12 @@ class AppContainer extends React.Component {
                 return this.pageRef.current;
             }
         });
-        // Need to remove form, add it into cradview then add cardview
-        // console.log("flexlayy: " + this.flexboxLayoutRef.current);
-        // this.formRef.current.build(this.flexboxLayoutRef.current);
         
-        
+        /* on application exit store viewModels */
+        on(exitEvent, () => {
+            console.log("exitEvent");
+            setString("formViewModel", JSON.stringify(FormViewModel.get()));
+        });
     }
 
     render() {
@@ -71,6 +78,7 @@ class AppContainer extends React.Component {
                 <$Page
                     ref={this.pageRef}
                     backgroundColor={new Color('#f0f0f0')}
+                    
                 >
                     <$ActionBar title="Avfallshamtning" className="action-bar"/>
                     <$ScrollView
@@ -82,13 +90,15 @@ class AppContainer extends React.Component {
                                 scrollView.enableScrollOverControlsiOS();
                             }
                         }}
+                        
                     >
-                        <$StackLayout ref={this.stackLayoutRef}>
+                        <$StackLayout ref={this.stackLayoutRef}
+                        >
                             <Title />
                             <ServiceSelection />
                             <Record ref={this.recordRef} />
                             <HomeSelection />
-                            <ManagementSelection />
+                            <ManagementSelection/>
                             <GarbageTypeSelection />
                             <TimeSelection />
                             <$FlexboxLayout height={400} flexDirection={'column'} />
@@ -119,9 +129,9 @@ class AppContainer extends React.Component {
                                             console.log("email was available");
                                             email.compose(
                                                 {
-                                                    subject : "app test",
+                                                    subject : testSubject,
                                                     body: postModel(formModel, selectionsModel, (selectionsModel.hemma == Hemma.ja)),
-                                                    to: ["leo.w.se@hotmail.com"]
+                                                    to: [productionMail]
 
                                                 }
                                             )
@@ -138,6 +148,16 @@ class AppContainer extends React.Component {
                 </$Page>
             </$Frame>
         )
+    }
+    hideKeyboard() {
+        console.log("deselect/hide keyboard");
+        // deselect/hide keyboard
+        // https://stackoverflow.com/questions/56043761/how-to-hide-keyboard-after-touch-outside-the-textfield
+        if(device.os === "iOS") {
+            UIApplication.sharedApplication.keyWindow.endEditing(true);
+        } else if (device.os === "Android") {
+            utils.ad.dismissSoftInput();
+        }
     }
 }
 export default AppContainer;

@@ -29,7 +29,9 @@ export default class ServiceSelection extends React.Component {
 
     render() {
         return (
-            <$StackLayout ref={this.containerRef}>
+            <$StackLayout
+                ref={this.containerRef}
+                >
                 <$SegmentedBar
                     onSelectedIndexChanged={(i) => {
                         this.selectedIndex = i.newIndex;

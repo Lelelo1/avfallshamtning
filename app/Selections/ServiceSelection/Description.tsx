@@ -7,7 +7,7 @@ import { CardView } from "@nstudio/nativescript-cardview";
 import ViewModel from "../../ViewModels/ViewModel";
 import { observer } from "mobx-react";
 import { PercentLength, Color } from "tns-core-modules/ui/page/page";
-import { observable } from "mobx";
+import { observable, autorun } from "mobx";
 import "../../Extensions";
 import { device } from "tns-core-modules/platform/platform";
 import { CheckBox } from '@nstudio/nativescript-checkbox';
@@ -17,13 +17,14 @@ import { TouchGestureEventData } from "tns-core-modules/ui/gestures/gestures";
 import "../../Styles";
 import { Size } from "../../Models/SelectionsModel"
 import { cardStyle } from "../cardStyles";
+import SelectionsViewModel from "~/ViewModels/SelectionsViewModel";
 @observer
 export default class Description extends React.Component <{ size: Size }> {
     
     private containerRef = React.createRef<StackLayout>();
     private bottomContainer = React.createRef<FlexboxLayout>();
     private checkBoxContainerRef = React.createRef<StackLayout>();
-
+    private checkBox = new CheckBox();
 
     build(parent: StackLayout) {
         const container = this.containerRef.current;
@@ -45,16 +46,26 @@ export default class Description extends React.Component <{ size: Size }> {
     marginBottom = 10;
     marginSide = 15;
     private _buildCheckBox(): void {
-        
-        const checkBox = new CheckBox();
-        checkBox.verticalAlignment = "middle";
-        checkBox.borderColor = new Color('black');
+        this.checkBox.on("onTap", () => {
+            const selectedSize = SelectionsViewModel.get().selectionsModel.tjänst;
+            if(selectedSize == this.props.size) {
+                console.log("unselected");
+                SelectionsViewModel.get().selectionsModel.tjänst = Size.unselected;
+            } else {
+                console.log("selected " + this.props.size);
+                SelectionsViewModel.get().selectionsModel.tjänst = this.props.size;
+            }
+            
+        })
+        this.checkBox.verticalAlignment = "middle";
+        this.checkBox.borderColor = new Color('black');
 
-        checkBox.scaleX = 1.4;
-        checkBox.scaleY = 1.4;
+        this.checkBox.scaleX = 1.4;
+        this.checkBox.scaleY = 1.4;
         
+
         const checkBoxContainer = this.checkBoxContainerRef.current;
-        checkBoxContainer.insertChild(checkBox, 0);
+        checkBoxContainer.insertChild(this.checkBox, 0);
     }
     imageButtonSize = 30;
     imageButtonColor = new Color('purple');
@@ -114,6 +125,16 @@ export default class Description extends React.Component <{ size: Size }> {
        */
     }
     render() {
+        const selectedSize = SelectionsViewModel.get().selectionsModel.tjänst;
+        if(this.props.size === selectedSize) {
+            setTimeout(() => {
+                this.checkBox.checked = true;
+            }, 0.000001);
+        } else {
+            setTimeout(() => {
+                this.checkBox.checked = false;
+            }, 0.000001);
+        }
         return (
             <$StackLayout
                 ref={this.containerRef}
@@ -205,7 +226,7 @@ export default class Description extends React.Component <{ size: Size }> {
         const viewModel = ViewModel.get();
         const model = viewModel.model;
         if(model) {
-            console.log("mzz: " + JSON.stringify(model));
+            // console.log("mzz: " + JSON.stringify(model));
             const size = this.props.size;
             const fastAvgift = viewModel.model.Avfallshamtning.startAvgift;
             if (size == Size.little) {

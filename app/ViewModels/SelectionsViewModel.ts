@@ -13,7 +13,7 @@ export default class SelectionsViewModel {
     constructor() {
         console.log("contructing selectionsViewModel");
         this.selectionsModel = new SelectionsModel();
-        this.selectionsModel.tjänst = Size.little
+        this.selectionsModel.tjänst = Size.unselected;
     }
 
     selectionsModel: SelectionsModel;

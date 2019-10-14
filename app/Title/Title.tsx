@@ -72,7 +72,7 @@ export default class Title extends React.Component {
 
         return (
             <$StackLayout ref={this.container}>
-                <$GridLayout rows={[]} columns={[]}>
+                <$GridLayout rows={[]} columns={[]} onTap={this.props.hideKeyboard}>
                 
                 </$GridLayout>
             </$StackLayout>
