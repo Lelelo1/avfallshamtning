@@ -1,6 +1,6 @@
 
 import * as React from "react";
-import { $FlexboxLayout, $Label, $TextView, $StackLayout, $Button, $Image } from "react-nativescript";
+import { $FlexboxLayout, $Label, $TextView, $StackLayout, $Button, $Image, $FormattedString, $Span } from "react-nativescript";
 import { FlexboxLayout, StackLayout, TextView, GridLayout, Image, ActionItem } from "react-nativescript/dist/client/ElementRegistry";
 import { Button } from "tns-core-modules/ui/button/button";
 import { CardView } from "@nstudio/nativescript-cardview";
@@ -39,7 +39,6 @@ export default class Description extends React.Component <{ size: Size }> {
 
     _buildBottom() {
         this._buildCheckBox();
-        this._buildImageButton();
     }
 
     marginTop = 5;
@@ -69,61 +68,6 @@ export default class Description extends React.Component <{ size: Size }> {
     }
     imageButtonSize = 30;
     imageButtonColor = new Color('purple');
-    private _buildImageButton() {
-        
-        const imageButton = new GridLayout();
-        const image = new Image();
-        image.src = "res://van";
-        const size = this.imageButtonSize;
-        image.width = size
-        image.height = size
-        
-        const button = new Button();
-        button.width = size * 1.5;
-        button.height = size * 1.2;
-        button.borderRadius = 10;
-        button.backgroundColor = this.imageButtonColor;
-        button.opacity = 0.5;
-
-        button.addEventListener("touch", (event: TouchGestureEventData) => {
-            if(event.action == "down") {
-                button.backgroundColor = new Color("transparent");
-                image.opacity = 0;
-            } else {
-                button.backgroundColor = this.imageButtonColor;
-                image.opacity = 1;
-            }
-        });
-        imageButton.addChild(image);
-        imageButton.addChild(button);
-        imageButton.horizontalAlignment = "right";
-        this.bottomContainer.current.addChild(imageButton);
-        
-       /*
-        const actionItem = new ActionItem();
-        actionItem.icon = "src://van";
-        actionItem.effectiveWidth = 30;
-        this.bottomContainer.current.addChild(actionItem);
-        */
-       /*
-       const fab = new Fab();
-       fab.icon = "res://van";
-       fab.width = 40;
-       fab.height = 40;
-// alpha color
-       this.bottomContainer.current.addChild(fab);
-       fab.addEventListener("onTap", () => {
-           console.log(" tapp");
-       })
-       */
-        // trye // tns plugin add nativescript-floatingactionbutton
-       /*
-        const button = new Button();
-        const formattedtext = new FormattedString();
-        const span = new Span();
-        span
-       */
-    }
     render() {
         const selectedSize = SelectionsViewModel.get().selectionsModel.tjänst;
         if(this.props.size === selectedSize) {
@@ -188,7 +132,13 @@ export default class Description extends React.Component <{ size: Size }> {
                                 }}
                             >
                             </$Label>
-                        </$StackLayout>                    
+                            
+                        </$StackLayout>
+                            <$Button backgroundColor={new Color("#d895de")} borderRadius={25} width={44} height={30}>
+                                <$FormattedString>
+                                    <$Span  color={new Color("black")} className={"car"} text={"\ue800"} fontSize={30}/>
+                                </$FormattedString>
+                            </$Button>                 
                     </$FlexboxLayout>
             </$StackLayout>
         );
