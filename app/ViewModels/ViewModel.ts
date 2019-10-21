@@ -86,7 +86,7 @@ export enum Region {
     blekinge = "Blekinge"
 }
 const res = {
-    model: "https://avfallshamtningstoragea.blob.core.windows.net/avfallshamtningblob/avfallshamtning.json";
+    model: "https://avfallshamtningstoragea.blob.core.windows.net/avfallshamtningblob/avfallshamtning.json"
 }
 
 // code2flow visualera 

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { $SegmentedBar, $SegmentedBarItem ,$StackLayout, $Label,  } from "react-nativescript";
-import { StackLayout, FlexboxLayout, SegmentedBar } from "react-nativescript/dist/client/ElementRegistry";
+import { StackLayout, FlexboxLayout, SegmentedBar, Color } from "react-nativescript/dist/client/ElementRegistry";
 import { SegmentedBarItem } from "tns-core-modules/ui/segmented-bar/segmented-bar";
 import Description from "./Description";
 import { Size } from "../../Models/SelectionsModel"
@@ -31,11 +31,13 @@ export default class ServiceSelection extends React.Component {
         return (
             <$StackLayout
                 ref={this.containerRef}
+                backgroundColor={new Color("#e8e8e8")}
                 >
                 <$SegmentedBar
                     onSelectedIndexChanged={(i) => {
                         this.selectedIndex = i.newIndex;
                     }}
+                    margin={10}
                 >
                     <$SegmentedBarItem title={"Mindre hämtning"} />
                     <$SegmentedBarItem title={"Halv bil"} />

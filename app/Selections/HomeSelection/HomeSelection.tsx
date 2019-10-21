@@ -16,7 +16,7 @@ import AwayPayment from "./AwayPayment";
 import { Hemma } from "~/Models/SelectionsModel";
 
 @observer
-export default class HomeSelection extends React.Component<> {
+export default class HomeSelection extends React.Component {
 
     private cardContainerRef = React.createRef<StackLayout>();
     /*

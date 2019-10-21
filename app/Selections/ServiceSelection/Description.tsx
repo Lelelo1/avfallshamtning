@@ -41,8 +41,8 @@ export default class Description extends React.Component <{ size: Size }> {
         this._buildCheckBox();
     }
 
-    marginTop = 5;
-    marginBottom = 10;
+    marginTop = 0;
+    marginBottom = 0;
     marginSide = 15;
     private _buildCheckBox(): void {
         this.checkBox.on("onTap", () => {
@@ -109,7 +109,8 @@ export default class Description extends React.Component <{ size: Size }> {
                         // removing default margin set (ios)
                         textView.noMargin();
                     }}
-
+                    marginLeft={5}
+                    marginRight={5}
                     />
                     <$FlexboxLayout justifyContent={"space-between"}
                         ref={this.bottomContainer}
@@ -134,7 +135,11 @@ export default class Description extends React.Component <{ size: Size }> {
                             </$Label>
                             
                         </$StackLayout>
-                            <$Button backgroundColor={new Color("#d895de")} borderRadius={25} width={44} height={30}>
+                            <$Button
+                                borderRadius={45}
+                                height={device.os === "iOS" ? 30 : null}
+                                width={30}
+                            >
                                 <$FormattedString>
                                     <$Span  color={new Color("black")} className={"car"} text={"\ue800"} fontSize={30}/>
                                 </$FormattedString>

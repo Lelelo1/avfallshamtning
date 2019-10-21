@@ -36,8 +36,16 @@ import {on, exitEvent } from "tns-core-modules/application/application"
 import { setString } from "tns-core-modules/application-settings";
 import * as utils from "tns-core-modules/utils/utils";
 
+// hide keyboard when tap outsode textfield
+if(device.os == "iOS") {
+    const manager = IQKeyboardManager.sharedManager()
+    manager.shouldResignOnTouchOutside = true;
+    manager.enableAutoToolbar = false;
+    manager.shouldShowTextFieldPlaceholder = false;
+}
+
 const testSubject = "appbokning TEST";
-const productionSubject = "Begäran om avfallshätning"
+const productionSubject = "Begäran om avfallshämtning"
 const testMail = "leo.w.se@hotmail.com";
 const productionMail = "jorgen.avfallshamtning@gmail.com";
 
@@ -92,7 +100,11 @@ class AppContainer extends React.Component {
                         }}
                         
                     >
-                        <$StackLayout ref={this.stackLayoutRef}
+                        <$StackLayout ref={this.stackLayoutRef} onTap={() => {
+                            if(device.os === "Android") {
+                                utils.ad.dismissSoftInput();
+                            }
+                        }}
                         >
                             <Title />
                             <ServiceSelection />
@@ -148,16 +160,6 @@ class AppContainer extends React.Component {
                 </$Page>
             </$Frame>
         )
-    }
-    hideKeyboard() {
-        console.log("deselect/hide keyboard");
-        // deselect/hide keyboard
-        // https://stackoverflow.com/questions/56043761/how-to-hide-keyboard-after-touch-outside-the-textfield
-        if(device.os === "iOS") {
-            UIApplication.sharedApplication.keyWindow.endEditing(true);
-        } else if (device.os === "Android") {
-            utils.ad.dismissSoftInput();
-        }
     }
 }
 export default AppContainer;

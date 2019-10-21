@@ -5,7 +5,7 @@
       "version": "6.0.1"
     },
     "tns-android": {
-      "version": "6.0.0"
+      "version": "6.1.2"
     }
   },
   "main": "app.js",
@@ -21,6 +21,7 @@
     "nativescript-contacts": "^1.6.2",
     "nativescript-email": "^1.5.5",
     "nativescript-floatingactionbutton": "^5.1.0",
+    "nativescript-iqkeyboardmanager": "^1.5.1",
     "nativescript-theme-core": "^1.0.6",
     "react": "^16.9.0",
     "react-nativescript": "^0.12.0",
