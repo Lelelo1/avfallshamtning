@@ -41,8 +41,8 @@ export default class Description extends React.Component <{ size: Size }> {
         this._buildCheckBox();
     }
 
-    marginTop = 0;
-    marginBottom = 5;
+    marginTop = 10;
+    marginBottom = 10;
     marginSide = 15;
     private _buildCheckBox(): void {
         this.checkBox.on("onTap", () => {
@@ -57,7 +57,7 @@ export default class Description extends React.Component <{ size: Size }> {
             
         })
         this.checkBox.borderColor = new Color('black');
-
+        this.checkBox.verticalAlignment = "middle";
         this.checkBox.scaleX = 1.4;
         this.checkBox.scaleY = 1.4;
         

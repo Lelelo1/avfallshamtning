@@ -15,7 +15,7 @@ import Selection from "./Selections/ServiceSelection/ServiceSelection";
 import Record from "./Form/Record";
 import { FlexboxLayout, ScrollView } from "react-nativescript/dist/client/ElementRegistry";
 import Title from "./Title/Title";
-import { reaction } from "mobx";
+import { reaction, autorun } from "mobx";
 
 import viewModel, { Region } from "./ViewModels/ViewModel";
 import ServiceSelection from "./Selections/ServiceSelection/ServiceSelection";
@@ -35,6 +35,8 @@ import { Hemma } from "./Models/SelectionsModel";
 import {on, exitEvent } from "tns-core-modules/application/application"
 import { setString } from "tns-core-modules/application-settings";
 import * as utils from "tns-core-modules/utils/utils";
+import { Toasty, ToastDuration, ToastPosition } from 'nativescript-toasty';
+import { Observer, observer } from "mobx-react";
 
 // hide keyboard when tap outsode textfield
 if(device.os == "iOS") {
@@ -50,7 +52,7 @@ const testMail = "leo.w.se@hotmail.com";
 const productionMail = "jorgen.avfallshamtning@gmail.com";
 
 export const rootRef: React.RefObject<any> = React.createRef<any>();
-
+@observer
 class AppContainer extends React.Component { 
     pageRef = React.createRef<Page>();
 
@@ -77,6 +79,17 @@ class AppContainer extends React.Component {
             console.log("exitEvent");
             setString("formViewModel", JSON.stringify(FormViewModel.get()));
         });
+
+        autorun(() => {
+            if(SelectionsViewModel.get().showServiceNotSelected) {
+                const toast = new Toasty({text: "Vad god välj tjänst"});
+                toast.setToastDuration(ToastDuration.LONG);
+                toast.setToastPosition(ToastPosition.CENTER)
+                toast.show();
+
+                this.scrollViewRef.current.scrollToVerticalOffset(-400, true);
+            }
+        })
     }
 
     render() {

@@ -21,13 +21,16 @@ export default class SelectionsViewModel {
     @observable
     shouldDisplayTextFieldsStatus = false;
 
+    @observable
+    showServiceNotSelected = false;
     selectionsIsValid() {
         let isValid = true;
-        if(this.selectionsModel.hemma == Hemma.nej) {
+        if(this.selectionsModel.hemma === Hemma.nej) {
             if(!this.selectionsModel.personnummer) isValid = false;
             if(!this.selectionsModel.anvisning) isValid = false;
         }
         if(!this.selectionsModel.tid) isValid = false;
+        if(this.selectionsModel.tjänst === Size.unselected) isValid = false; this.showServiceNotSelected = !this.showServiceNotSelected;
         return isValid;
     }
 }

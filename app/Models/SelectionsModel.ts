@@ -3,7 +3,7 @@ import { observable } from "mobx";
  
 export default class SelectionsModel {
    @observable 
-   tjänst: Size; // 1/4 bil eller mindrehämtning,  halvbil, helbil
+   tjänst: Size = Size.unselected // 1/4 bil eller mindrehämtning,  halvbil, helbil
    
    @observable
    hemma: Hemma = Hemma.ja;
