@@ -21,10 +21,10 @@ TextField.prototype.applyStyle = function(this: TextField, modelProperty: string
     if(device.os == "iOS") {
         this.className = iosStyle.className;
     } else if (device.os == "Android") {
-        
+        this.borderWidth = commonStyle.androidBorderWidth;
     }
     console.log("style applied");
 }
 
 const iosStyle = { className: "input input-rounded m-t-10" };
-export const commonStyle = { backgroundColor: new Color('#ededed'), borderColor: ('#787878'), margin : 2, marginLeft : 10, marginRight: 10 };
+export const commonStyle = { backgroundColor: new Color('#ededed'), borderColor: ('#787878'), margin : 2, marginLeft : 10, marginRight: 10, androidBorderWidth: 0.5 };

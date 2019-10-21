@@ -4,6 +4,7 @@ import { observable } from "mobx";
 import { TextField, Color } from "react-nativescript/dist/client/ElementRegistry";
 import { commonStyle } from "../Form/FormStyles";
 import { getString } from "tns-core-modules/application-settings/application-settings"
+import { device } from "tns-core-modules/platform/platform";
 export default class FormViewModel {
     private static viewModel: FormViewModel = null;
     static get(): FormViewModel {

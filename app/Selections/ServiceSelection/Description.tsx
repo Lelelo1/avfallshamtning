@@ -42,7 +42,7 @@ export default class Description extends React.Component <{ size: Size }> {
     }
 
     marginTop = 0;
-    marginBottom = 0;
+    marginBottom = 5;
     marginSide = 15;
     private _buildCheckBox(): void {
         this.checkBox.on("onTap", () => {
@@ -56,7 +56,6 @@ export default class Description extends React.Component <{ size: Size }> {
             }
             
         })
-        this.checkBox.verticalAlignment = "middle";
         this.checkBox.borderColor = new Color('black');
 
         this.checkBox.scaleX = 1.4;
@@ -118,19 +117,19 @@ export default class Description extends React.Component <{ size: Size }> {
                         marginBottom={this.marginBottom}
                         marginLeft={this.marginSide}
                         marginRight={this.marginSide}
-                        
+                        alignContent={"center"}
                     >    
                         <$StackLayout orientation={"horizontal"}
                             ref={this.checkBoxContainerRef}
                         >
                             <$Label
-                                verticalAlignment={"middle"}
                                 marginLeft={3}
                                 text={"Välj"}
                                 formattedText={this._getFormattedText()}
                                 onLoaded={() => {
                                 
                                 }}
+                                verticalAlignment={"middle"}
                             >
                             </$Label>
                             
@@ -139,10 +138,13 @@ export default class Description extends React.Component <{ size: Size }> {
                                 borderRadius={45}
                                 height={device.os === "iOS" ? 30 : null}
                                 width={30}
+                                margin={0}
+                                
                             >
                                 <$FormattedString>
-                                    <$Span  color={new Color("black")} className={"car"} text={"\ue800"} fontSize={30}/>
+                                    <$Span  color={new Color("black")} className={"car"} text={"\ue800"} fontSize={30} />
                                 </$FormattedString>
+                                
                             </$Button>                 
                     </$FlexboxLayout>
             </$StackLayout>
