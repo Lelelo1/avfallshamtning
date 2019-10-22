@@ -13,7 +13,7 @@ import { device } from "tns-core-modules/platform/platform";
 @observer
 export default class Title extends React.Component {
 
-    private container = React.createRef<StackLayout>();
+    container = React.createRef<StackLayout>();
     private imageRef = React.createRef<Image>();
     private labelRef = React.createRef<Label>();
     labelText = "Västra Götaland";

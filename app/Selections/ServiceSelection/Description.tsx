@@ -58,6 +58,7 @@ export default class Description extends React.Component <{ size: Size }> {
         })
         this.checkBox.borderColor = new Color('black');
 
+        this.checkBox.verticalAlignment = "middle";
         this.checkBox.scaleX = 1.4;
         this.checkBox.scaleY = 1.4;
         

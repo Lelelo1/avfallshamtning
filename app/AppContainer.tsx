@@ -15,7 +15,7 @@ import Selection from "./Selections/ServiceSelection/ServiceSelection";
 import Record from "./Form/Record";
 import { FlexboxLayout, ScrollView } from "react-nativescript/dist/client/ElementRegistry";
 import Title from "./Title/Title";
-import { reaction } from "mobx";
+import { reaction, autorun } from "mobx";
 
 import viewModel, { Region } from "./ViewModels/ViewModel";
 import ServiceSelection from "./Selections/ServiceSelection/ServiceSelection";
@@ -35,6 +35,10 @@ import { Hemma } from "./Models/SelectionsModel";
 import {on, exitEvent } from "tns-core-modules/application/application"
 import { setString } from "tns-core-modules/application-settings";
 import * as utils from "tns-core-modules/utils/utils";
+import { observer } from "mobx-react";
+
+import { Toasty, ToastDuration, ToastPosition } from 'nativescript-toasty';
+
 
 // hide keyboard when tap outsode textfield
 if(device.os == "iOS") {
@@ -51,12 +55,15 @@ const productionMail = "jorgen.avfallshamtning@gmail.com";
 
 export const rootRef: React.RefObject<any> = React.createRef<any>();
 
+@observer
 class AppContainer extends React.Component { 
     pageRef = React.createRef<Page>();
 
     scrollViewRef = React.createRef<ScrollView>();
     stackLayoutRef = React.createRef<StackLayout>();
     recordRef = React.createRef<Record>();
+
+    private titleRef = React.createRef<Title>();
 
     constructor(props) {
         super(props);
@@ -77,6 +84,21 @@ class AppContainer extends React.Component {
             console.log("exitEvent");
             setString("formViewModel", JSON.stringify(FormViewModel.get()));
         });
+
+        autorun(() => {
+            const trigger = SelectionsViewModel.get().showToast;
+            console.log("trigger : " + trigger);
+            const scrollUp = this.scrollViewRef.current.scrollableHeight;
+            const scrollTo = this.titleRef.current.container.current.getActualSize().height;
+            console.log("scrollUp: " + scrollUp);
+            console.log("scrollTo: " + scrollTo);
+            this.scrollViewRef.current.scrollToVerticalOffset(-scrollUp + scrollTo, true);
+            // form has to be hidden for scroll to be possible 
+            const toast = new Toasty({ text: "Var god ange en tjänst"});
+            toast.setToastDuration(ToastDuration.SHORT);
+            toast.setToastPosition(ToastPosition.CENTER);
+            toast.show();
+        })
     }
 
     render() {
@@ -106,7 +128,7 @@ class AppContainer extends React.Component {
                             }
                         }}
                         >
-                            <Title />
+                            <Title ref={this.titleRef}/>
                             <ServiceSelection />
                             <Record ref={this.recordRef} />
                             <HomeSelection />
@@ -149,7 +171,7 @@ class AppContainer extends React.Component {
                                             )
                                             
                                         } else {
-                                            console.log("emailwas not available");
+                                            console.log("email was not available");
                                         }
                                     })
                                     

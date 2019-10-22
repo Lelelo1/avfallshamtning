@@ -21,12 +21,15 @@ export default class SelectionsViewModel {
     @observable
     shouldDisplayTextFieldsStatus = false;
 
+    @observable
+    showToast = false;
     selectionsIsValid() {
         let isValid = true;
         if(this.selectionsModel.hemma == Hemma.nej) {
             if(!this.selectionsModel.personnummer) isValid = false;
             if(!this.selectionsModel.anvisning) isValid = false;
         }
+        if(this.selectionsModel.tjänst = Size.unselected) isValid = false; this.showToast = !this.showToast;
         if(!this.selectionsModel.tid) isValid = false;
         return isValid;
     }
