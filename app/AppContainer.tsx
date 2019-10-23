@@ -15,7 +15,7 @@ import Selection from "./Selections/ServiceSelection/ServiceSelection";
 import Record from "./Form/Record";
 import { FlexboxLayout, ScrollView } from "react-nativescript/dist/client/ElementRegistry";
 import Title from "./Title/Title";
-import { reaction, autorun } from "mobx";
+import { reaction, autorun, toJS } from "mobx";
 
 import viewModel, { Region } from "./ViewModels/ViewModel";
 import ServiceSelection from "./Selections/ServiceSelection/ServiceSelection";
@@ -82,25 +82,48 @@ class AppContainer extends React.Component {
         /* on application exit store viewModels */
         on(exitEvent, () => {
             console.log("exitEvent");
-            setString("formViewModel", JSON.stringify(FormViewModel.get()));
+            setString("formViewModel", JSON.stringify(toJS(FormViewModel.get())));
         });
 
         autorun(() => {
             const trigger = SelectionsViewModel.get().showToast;
-            console.log("trigger : " + trigger);
-            const scrollUp = this.scrollViewRef.current.scrollableHeight;
-            const scrollTo = this.titleRef.current.container.current.getActualSize().height;
-            console.log("scrollUp: " + scrollUp);
-            console.log("scrollTo: " + scrollTo);
-            this.scrollViewRef.current.scrollToVerticalOffset(-scrollUp + scrollTo, true);
-            // form has to be hidden for scroll to be possible 
-            const toast = new Toasty({ text: "Var god ange en tjänst"});
-            toast.setToastDuration(ToastDuration.SHORT);
-            toast.setToastPosition(ToastPosition.CENTER);
-            toast.show();
+            
+            if(trigger) {
+                SelectionsViewModel.get().showToast = false;
+
+                const formViewModel = FormViewModel.get();
+            
+                // might not need this after fixing so that form is conditionaly rendered. It should also solve problem with textfield onTextChanged not firing close -> open form
+                if(!formViewModel.isHidden) {
+                    console.log("was open");
+                    setTimeout(() => {
+                        formViewModel.isHidden = true;
+                        setTimeout(() => {
+                            this._scroll();
+                            setTimeout(() => {
+                                formViewModel.isHidden = false;
+                            }, 0.0000000001);
+                        }, 0.000000000001)
+
+                    }, 0.000000000001)
+                
+                } else {
+                    this._scroll();
+                }
+                const toast = new Toasty({ text: "Var god ange en tjänst"});
+                toast.setToastDuration(ToastDuration.SHORT);
+                toast.setToastPosition(ToastPosition.CENTER);
+                toast.show();
+            }
+            
         })
     }
-
+    _scroll = () => {
+        console.log("scroll");
+        const scrollUp = this.scrollViewRef.current.scrollableHeight;
+        const scrollTo = this.titleRef.current.container.current.getActualSize().height;
+        this.scrollViewRef.current.scrollToVerticalOffset(-scrollUp + scrollTo, true);
+    }
     render() {
         return (
             <$Frame ref={rootRef}>
@@ -146,6 +169,12 @@ class AppContainer extends React.Component {
                                         if(!SelectionsViewModel.get().selectionsIsValid()) {
                                             SelectionsViewModel.get().shouldDisplayTextFieldsStatus = true;
                                             console.log("selectionsViewModel was not valid");
+                                            if(SelectionsViewModel.get().serviceNotSelected()) {
+                                                SelectionsViewModel.get().showToast = true;
+                                                return;
+                                            }
+
+                                            // check anvisning and personnummer no filled.
                                         }
                                         if(!FormViewModel.get().formIsValid()) {
                                             // scroll to form button open form 

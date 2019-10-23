@@ -1,6 +1,6 @@
 import PersonInfoModel from "~/Models/FormModel";
 import FormModel from "~/Models/FormModel";
-import { observable } from "mobx";
+import { observable, decorate } from "mobx";
 import { TextField, Color } from "react-nativescript/dist/client/ElementRegistry";
 import { commonStyle } from "../Form/FormStyles";
 import { getString } from "tns-core-modules/application-settings/application-settings"
@@ -9,8 +9,12 @@ export default class FormViewModel {
     private static viewModel: FormViewModel = null;
     static get(): FormViewModel {
         if(FormViewModel.viewModel == null) {
+            FormViewModel.viewModel = new FormViewModel();
             const savedForm = getString("formViewModel");
-            FormViewModel.viewModel = savedForm ? JSON.parse(savedForm) : new FormViewModel();
+            if(savedForm) {
+                const from = JSON.parse(savedForm) as FormViewModel;
+                Object.assign(FormViewModel.viewModel.formModel, from.formModel);
+            };
         }
         return FormViewModel.viewModel;
     }
@@ -18,9 +22,8 @@ export default class FormViewModel {
     constructor() {
         console.log("contructing formViewModel");
         this.formModel = new FormModel();
-        
+        this.isHidden = true;
     }
-
     formModel: FormModel
 
     getTextFieldNotFilledText() {
@@ -39,16 +42,11 @@ export default class FormViewModel {
              }
         return false;
     }
-
     @observable
-    hidden = true; 
-    hide(): void { // <-- use
-        this.hidden = false;
-        this.hidden = true;
-    }
+    isHidden = true;
+
     /*  there is some strange bug that this has to opened and saved to work */ 
     setStyle(textField: TextField, modelProperty: string | number, show: boolean ) {  
-
         // other checks - like is of email format etc
         //const evaluateProperty = modelProperty != null && modelProperty != undefined; && modelProperty != ""
         if(modelProperty && show) {

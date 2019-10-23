@@ -14,9 +14,16 @@ import { PercentLength, EventData } from "tns-core-modules/ui/page/page";
 import FormViewModel from "../ViewModels/FormViewModel";
 import { observer } from "mobx-react";
 import { when, reaction, autorun } from "mobx";
+import { Reactified } from "rns-reactify/Reactified/Reactified";
+import { commonStyle, iosStyle } from "./FormStyles";
+import { device } from "tns-core-modules/platform/platform";
+
+const $CardView = Reactified(CardView, "cardView");
 
 @observer
 export default class Form extends React.Component<{},{}>{
+    cardViewRef = React.createRef<CardView>();
+
     stackLayoutRef = React.createRef<StackLayout>();
     
     private nameTextFieldRef = React.createRef<TextField>();
@@ -47,8 +54,10 @@ export default class Form extends React.Component<{},{}>{
         // ios.
         // ios.delegate.textFieldShouldChangeCharactersInRangeReplacementString(ios, NSRange(interop.Pointer), "");
         const container = this.stackLayoutRef.current;
+        
     }
 
+    /*
      build(parent: StackLayout): CardView {
         // https://www.nativescript.org/blog/adding-a-material-design-cardview-to-a-nativescript-app
         const form = this.stackLayoutRef.current;
@@ -60,25 +69,24 @@ export default class Form extends React.Component<{},{}>{
         cardView.applyStyle();
         cardView.shadowOffsetHeight = 2;
         cardView.shadowOffsetWidth = 1;
-        /*
-        cardView.margin = 10;
-        cardView.borderBottomWidth = 4;
-        */
         parent.addChild(cardView);
-        /*
-        cardView.margin = 10;
-        cardView.borderWidth = 4;
-        cardView.borderLeftWidth = 10;
-        */
-        //parent.addChild(cardView);
-        
         return cardView;
     }
-
+*/
+    build(cardView: CardView) {
+        
+    }
+    _getBorderWidth = (): number => {
+        return device.os === "Android" ? commonStyle.androidBorderWidth : null;
+    }
+    _getStyle = (): string => {
+        return device.os === "iOS" ? iosStyle.className : null
+    }
     render() {
 
         return (
-            <$StackLayout
+            
+                <$StackLayout
                 ref={this.stackLayoutRef}
                 className={"form"}
                 backgroundColor={new Color("#fdfff0")}
@@ -95,7 +103,6 @@ export default class Form extends React.Component<{},{}>{
                     onLoaded={(ev) => {
                         const textField = ev.object as TextField;
                         textField.setAutofillHintContentType(AutofillHintContentType.name);
-                        textField.applyStyle(FormViewModel.get().formModel.namn);
                     }}
                     hint={"Namn"}
                     text={FormViewModel.get().formModel.namn}
@@ -103,13 +110,18 @@ export default class Form extends React.Component<{},{}>{
                         const textField = event.object as TextField;
                         FormViewModel.get().formModel.namn = textField.text;
                     }}
+                    backgroundColor={commonStyle.backgroundColor}
+                    borderWidth={this._getBorderWidth()}
+                    margin={commonStyle.margin}
+                    marginLeft={commonStyle.marginLeft}
+                    marginRight={commonStyle.marginRight}
+                    className={this._getStyle()}
                 />
                 <$TextField
                     ref={this.surnnameTextFieldRef}
                     onLoaded={(ev) => {
                         const textField = ev.object as TextField;
                         textField.setAutofillHintContentType(AutofillHintContentType.surname);
-                        textField.applyStyle(FormViewModel.get().formModel.efternamn);
                     }}
                     hint={"Efternamn"}
                     text={FormViewModel.get().formModel.efternamn}
@@ -117,13 +129,18 @@ export default class Form extends React.Component<{},{}>{
                         const textField = event.object as TextField;
                         FormViewModel.get().formModel.efternamn = textField.text;
                     }}
+                    backgroundColor={commonStyle.backgroundColor}
+                    borderWidth={this._getBorderWidth()}
+                    margin={commonStyle.margin}
+                    marginLeft={commonStyle.marginLeft}
+                    marginRight={commonStyle.marginRight}
+                    className={this._getStyle()}
                 />
                 <$TextField 
                     ref={this.mobileNumberTextFieldRef}
                     onLoaded={(ev) => {
                         const textField = ev.object as TextField;
                         textField.setAutofillHintContentType(AutofillHintContentType.mobileNumber);
-                        textField.applyStyle(FormViewModel.get().formModel.mobilnummer);
                     }}
                     hint={"Mobilnummer"}
                     text={FormViewModel.get().formModel.mobilnummer}
@@ -132,6 +149,12 @@ export default class Form extends React.Component<{},{}>{
                         // const number = Number(textField.text); // when undefined creates appropirat effect / is handled
                         FormViewModel.get().formModel.mobilnummer = textField.text;
                     }}
+                    backgroundColor={commonStyle.backgroundColor}
+                    borderWidth={this._getBorderWidth()}
+                    margin={commonStyle.margin}
+                    marginLeft={commonStyle.marginLeft}
+                    marginRight={commonStyle.marginRight}
+                    className={this._getStyle()}
                 />
                 {/* 
                     <$TextField
@@ -155,7 +178,6 @@ export default class Form extends React.Component<{},{}>{
                     onLoaded={(ev) => {
                         const textField = ev.object as TextField;
                         textField.setAutofillHintContentType(AutofillHintContentType.address);
-                        textField.applyStyle(FormViewModel.get().formModel.epostaddress);
                     }}
                     hint={"Gatuadress"}
                     text={FormViewModel.get().formModel.gatuaddress}
@@ -163,13 +185,18 @@ export default class Form extends React.Component<{},{}>{
                         const textField = event.object as TextField;
                         FormViewModel.get().formModel.gatuaddress = textField.text;
                     }}
+                    backgroundColor={commonStyle.backgroundColor}
+                    borderWidth={this._getBorderWidth()}
+                    margin={commonStyle.margin}
+                    marginLeft={commonStyle.marginLeft}
+                    marginRight={commonStyle.marginRight}
+                    className={this._getStyle()}
                 />
                 <$TextField 
                     ref={this.postalCodeTextFieldRef}
                     onLoaded={(ev) => {
                         const textField = ev.object as TextField;
                         textField.setAutofillHintContentType(AutofillHintContentType.postalCode);
-                        textField.applyStyle(FormViewModel.get().formModel.postnummer);
                     }}
                     hint={"Post nr"}
                     text={FormViewModel.get().formModel.postnummer}
@@ -179,21 +206,33 @@ export default class Form extends React.Component<{},{}>{
 
                         FormViewModel.get().formModel.postnummer = textField.text;
                     }}
+                    backgroundColor={commonStyle.backgroundColor}
+                    borderWidth={this._getBorderWidth()}
+                    margin={commonStyle.margin}
+                    marginLeft={commonStyle.marginLeft}
+                    marginRight={commonStyle.marginRight}
+                    className={this._getStyle()}
                 />
                 <$TextField 
                     ref={this.placeTextFieldRef}
                     onLoaded={(ev) => {
                         const textField = ev.object as TextField;
                         textField.setAutofillHintContentType(AutofillHintContentType.place);
-                        textField.applyStyle(FormViewModel.get().formModel.ort);
                     }}
                     hint={"Ort"}
                     text={FormViewModel.get().formModel.ort}
                     onTextChange={(event) => {
                         const textField = event.object as TextField;
-                        FormViewModel.get().formModel.ort = textField.text;
                         console.log("textField ort text: " + textField.text);
+                        FormViewModel.get().formModel.ort = textField.text;
+                        
                     }}
+                    backgroundColor={commonStyle.backgroundColor}
+                    borderWidth={this._getBorderWidth()}
+                    margin={commonStyle.margin}
+                    marginLeft={commonStyle.marginLeft}
+                    marginRight={commonStyle.marginRight}
+                    className={this._getStyle()}
                 />
                 <$StackLayout>
                     <$Button
@@ -201,7 +240,7 @@ export default class Form extends React.Component<{},{}>{
                         horizontalAlignment={"right"}
                         onTap={() => {
                             if(FormViewModel.get().formIsValid()) {
-                                FormViewModel.get().hide();
+                                FormViewModel.get().isHidden = true;
                                 FormViewModel.get().shouldDisplayTextFieldsStatus = false;
                             } else {
                                 FormViewModel.get().shouldDisplayTextFieldsStatus = true;
@@ -210,6 +249,7 @@ export default class Form extends React.Component<{},{}>{
                         }}
                     />
                 </$StackLayout>
+                
             </$StackLayout>
         );
     }
@@ -219,6 +259,8 @@ export function numberToString(number: number) {
     if(!number) return "";
     return String(number);
 }
+
+/* text is not triggered the when form is open the second time */
 
 // might use https://github.com/nabil-mansouri/nativescript-nbmaterial/
 

@@ -29,8 +29,11 @@ export default class SelectionsViewModel {
             if(!this.selectionsModel.personnummer) isValid = false;
             if(!this.selectionsModel.anvisning) isValid = false;
         }
-        if(this.selectionsModel.tjänst = Size.unselected) isValid = false; this.showToast = !this.showToast;
+        if(this.selectionsModel.tjänst == Size.unselected) isValid = false;
         if(!this.selectionsModel.tid) isValid = false;
         return isValid;
+    }
+    serviceNotSelected() {
+        if(this.selectionsModel.tjänst == Size.unselected) return true;
     }
 }

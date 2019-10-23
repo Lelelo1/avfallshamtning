@@ -13,54 +13,56 @@ import FormViewModel from "~/ViewModels/FormViewModel";
 import { autorun } from "mobx";
 import { observer } from "mobx-react";
 
+import { Reactified } from "rns-reactify/Reactified/Reactified";
+import { cardStyle } from "~/Selections/cardStyles";
+
+class $CardView  extends Reactified(CardView, "cardView") {};
+
 @observer
 export default class Record extends React.Component {
 
     containerRef = React.createRef<StackLayout>();
 
+    private cardViewRef = React.createRef<CardView>();
     private recordButtonRef = React.createRef<Button>();
     private formRef = React.createRef<Form>();
 
-    private card: CardView = null;
 
     componentDidMount() {
-        this.card = this.formRef.current.build(this.containerRef.current);
-        this.cardHeight = PercentLength.toDevicePixels(this.card.height);
-        // this.containerRef.current.removeChild(this.card);
-        const button = this.recordButtonRef.current;
-        button.addEventListener("tap",() => { // the jsx/tsx tap does not trigger
-            this.record(null);
-        });
-        autorun(() => {
-            const hidden = FormViewModel.get().hidden;
-            if(hidden) {
-                this._triggerTap();
-            }
-        })
+        console.log("cardview: " + this.cardViewRef.current);
+        // this.containerRef.current.removeChild(this.formRef.current.stackLayoutRef.current);
+
     }
 
     render() {
+        console.log("erere");
         return (
             <$StackLayout ref={this.containerRef} backgroundColor={new Color("#c4c4c4")}>
-                <$Button ref={this.recordButtonRef} text={"Personuppgifter"} />
-                <Form ref={this.formRef} />
+                <$Button ref={this.recordButtonRef} text={"Personuppgifter"} onTap={() => {
+                    console.log("settin: " + !FormViewModel.get().isHidden);
+                    FormViewModel.get().isHidden = !FormViewModel.get().isHidden;
+                }}
+                />
+                {this.renderForm()}
+                
+                
             </$StackLayout>
         )
     }
-    _triggerTap(): void {
-        this.recordButtonRef.current.notify({eventName: "tap", object: this.recordButtonRef.current});
-    }
-    cardHeight = -1;
-    record = (event: GestureEventData) => {
-        // Might request contact info here
-        const container = this.containerRef.current;
-        console.log("taped");
-        if(this.containerRef.current.getChildIndex(this.card) == -1) {
-            container.addChild(this.card);
-            /* play animation */
+    renderForm() {
+        console.log("renderrr");
+        return FormViewModel.get().isHidden ? null : ( 
+            <$CardView
+                forwardedRef={this.cardViewRef}
+                margin={10}
+                borderWidth={2} 
+                shadowOffsetHeight={2}
+                shadowOffsetWidth={1}
+                className={"cardStyle"}
+            >
+                <Form ref={this.formRef} />
+            </$CardView>
             
-        } else {
-            container.removeChild(this.card);
-        } 
+        );
     }
 }

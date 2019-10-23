@@ -10,7 +10,7 @@ declare module "tns-core-modules/ui/text-field/text-field" {
         applyStyle(modelProperty: string | number): void;
     }
 }
-
+/* don't use in forms*/
 TextField.prototype.applyStyle = function(this: TextField, modelProperty: string | number) {
     this.backgroundColor = commonStyle.backgroundColor;
     // this.borderColor = commonStyle.borderColor; <-- handled by dynamic style in Form.tsx
@@ -26,5 +26,5 @@ TextField.prototype.applyStyle = function(this: TextField, modelProperty: string
     console.log("style applied");
 }
 
-const iosStyle = { className: "input input-rounded m-t-10" };
+export const iosStyle = { className: "input input-rounded m-t-10" };
 export const commonStyle = { backgroundColor: new Color('#ededed'), borderColor: ('#787878'), margin : 2, marginLeft : 10, marginRight: 10, androidBorderWidth: 0.5 };

@@ -26,6 +26,7 @@
     "nativescript-toasty": "^2.0.1",
     "react": "^16.9.0",
     "react-nativescript": "^0.12.0",
+    "rns-reactify": "git+https://github.com/Lelelo1/rns-reactify.git",
     "tns-core-modules": "6.0.1",
     "tns-platform-declarations": "^6.0.6"
   },
