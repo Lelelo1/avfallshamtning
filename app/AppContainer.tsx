@@ -54,7 +54,6 @@ const testMail = "leo.w.se@hotmail.com";
 const productionMail = "jorgen.avfallshamtning@gmail.com";
 
 export const rootRef: React.RefObject<any> = React.createRef<any>();
-
 @observer
 class AppContainer extends React.Component { 
     pageRef = React.createRef<Page>();
@@ -119,9 +118,10 @@ class AppContainer extends React.Component {
         })
     }
     _scroll = () => {
-        console.log("scroll");
+        
         const scrollUp = this.scrollViewRef.current.scrollableHeight;
         const scrollTo = this.titleRef.current.container.current.getActualSize().height;
+        console.log("scroll: " + scrollUp + " and " + scrollTo);
         this.scrollViewRef.current.scrollToVerticalOffset(-scrollUp + scrollTo, true);
     }
     render() {
@@ -158,7 +158,6 @@ class AppContainer extends React.Component {
                             <ManagementSelection/>
                             <GarbageTypeSelection />
                             <TimeSelection />
-                            <$FlexboxLayout height={400} flexDirection={'column'} />
                             <$Button
                                 text={"skicka begäran"} 
                                 onTap={(ev) => {
