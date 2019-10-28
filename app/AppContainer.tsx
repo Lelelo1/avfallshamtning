@@ -32,7 +32,7 @@ import FormViewModel from "./ViewModels/FormViewModel";
 import SelectionsViewModel from "./ViewModels/SelectionsViewModel";
 import { postModel } from "./Models/Post";
 import { Hemma } from "./Models/SelectionsModel";
-import {on, exitEvent } from "tns-core-modules/application/application"
+import * as application from "tns-core-modules/application/application"
 import { setString } from "tns-core-modules/application-settings";
 import * as utils from "tns-core-modules/utils/utils";
 import { observer } from "mobx-react";
@@ -77,13 +77,12 @@ class AppContainer extends React.Component {
                 return this.pageRef.current;
             }
         });
-        
-        /* on application exit store viewModels */
-        on(exitEvent, () => {
-            console.log("exitEvent");
+
+        /* on application exit store viewModels */ 
+        application.on(application.suspendEvent, () => { // can no longer use application.suspendEvent
+            console.log("suspendedEvent");
             setString("formViewModel", JSON.stringify(toJS(FormViewModel.get())));
         });
-
         autorun(() => {
             const trigger = SelectionsViewModel.get().showToast;
             
