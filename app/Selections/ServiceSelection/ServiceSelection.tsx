@@ -10,7 +10,7 @@ import { observer } from "mobx-react";
 @observer
 export default class ServiceSelection extends React.Component {
 
-    private containerRef = React.createRef<StackLayout>(); 
+    containerRef = React.createRef<StackLayout>(); 
     private carInfoRef = React.createRef<Description>();
     @observable
     selectedIndex = 0;

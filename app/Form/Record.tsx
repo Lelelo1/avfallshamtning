@@ -10,11 +10,12 @@ import { CardView } from "@nstudio/nativescript-cardview";
 import { PercentLength } from "tns-core-modules/ui/page/page";
 import { GestureEventData } from "tns-core-modules/ui/gestures/gestures";
 import FormViewModel from "~/ViewModels/FormViewModel";
-import { autorun } from "mobx";
+import { autorun, reaction } from "mobx";
 import { observer } from "mobx-react";
 
 import { Reactified } from "rns-reactify/Reactified/Reactified";
 import { cardStyle } from "~/Selections/cardStyles";
+import { ScrollView } from "tns-core-modules/ui/scroll-view/scroll-view";
 
 class $CardView  extends Reactified(CardView, "cardView") {};
 
@@ -27,11 +28,9 @@ export default class Record extends React.Component {
     private recordButtonRef = React.createRef<Button>();
     private formRef = React.createRef<Form>();
 
-
     componentDidMount() {
         console.log("cardview: " + this.cardViewRef.current);
         // this.containerRef.current.removeChild(this.formRef.current.stackLayoutRef.current);
-
     }
 
     render() {

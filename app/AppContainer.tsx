@@ -13,7 +13,7 @@ import { Button } from "tns-core-modules/ui/button/button";
 
 import Selection from "./Selections/ServiceSelection/ServiceSelection";
 import Record from "./Form/Record";
-import { FlexboxLayout, ScrollView } from "react-nativescript/dist/client/ElementRegistry";
+import { FlexboxLayout, ActionBar, ScrollView } from "react-nativescript/dist/client/ElementRegistry";
 import Title from "./Title/Title";
 import { reaction, autorun, toJS } from "mobx";
 
@@ -34,14 +34,15 @@ import { postModel } from "./Models/Post";
 import { Hemma } from "./Models/SelectionsModel";
 import * as application from "tns-core-modules/application/application"
 import { setString } from "tns-core-modules/application-settings";
-import * as utils from "tns-core-modules/utils/utils";
+
 import { observer } from "mobx-react";
+
+import * as utils from "tns-core-modules/utils/utils";
 
 import { Toasty, ToastDuration, ToastPosition } from 'nativescript-toasty';
 
-
 // hide keyboard when tap outsode textfield
-if(device.os == "iOS") {
+if (device.os == "iOS") {
     const manager = IQKeyboardManager.sharedManager()
     manager.shouldResignOnTouchOutside = true;
     manager.enableAutoToolbar = false;
@@ -55,13 +56,14 @@ const productionMail = "jorgen.avfallshamtning@gmail.com";
 
 export const rootRef: React.RefObject<any> = React.createRef<any>();
 @observer
-class AppContainer extends React.Component { 
+class AppContainer extends React.Component {
+    actionBarRef = React.createRef<ActionBar>();
     pageRef = React.createRef<Page>();
 
     scrollViewRef = React.createRef<ScrollView>();
     stackLayoutRef = React.createRef<StackLayout>();
     recordRef = React.createRef<Record>();
-
+    serviceSelectionRef = React.createRef<ServiceSelection>();
     private titleRef = React.createRef<Title>();
 
     constructor(props) {
@@ -73,26 +75,26 @@ class AppContainer extends React.Component {
     componentDidMount() {
         console.log("didmount");
         rootRef.current.navigate({
-            create:() => {
+            create: () => {
                 return this.pageRef.current;
             }
         });
 
-        /* on application exit store viewModels */ 
+        /* on application exit store viewModels */
         application.on(application.suspendEvent, () => { // can no longer use application.suspendEvent
             console.log("suspendedEvent");
             setString("formViewModel", JSON.stringify(toJS(FormViewModel.get())));
         });
         autorun(() => {
+            // scroll to top show toast 
             const trigger = SelectionsViewModel.get().showToast;
-            
-            if(trigger) {
+            if (trigger) {
                 SelectionsViewModel.get().showToast = false;
 
                 const formViewModel = FormViewModel.get();
-            
+
                 // might not need this after fixing so that form is conditionaly rendered. It should also solve problem with textfield onTextChanged not firing close -> open form
-                if(!formViewModel.isHidden) {
+                if (!formViewModel.isHidden) {
                     console.log("was open");
                     setTimeout(() => {
                         formViewModel.isHidden = true;
@@ -104,20 +106,38 @@ class AppContainer extends React.Component {
                         }, 0.000000000001)
 
                     }, 0.000000000001)
-                
+
                 } else {
                     this._scroll();
                 }
-                const toast = new Toasty({ text: "Var god ange en tjänst"});
+                const toast = new Toasty({ text: "Var god ange en tjänst" });
                 toast.setToastDuration(ToastDuration.SHORT);
                 toast.setToastPosition(ToastPosition.CENTER);
                 toast.show();
             }
-            
+        });
+        /* when tapping record button or tapped ok - scroll to  */
+        reaction(() => FormViewModel.get().isHidden, () => {
+            const isHidden = FormViewModel.get().isHidden;
+            console.log("isHidden fired: " + isHidden);
+            const scrollUp = this.scrollViewRef.current.scrollableHeight;
+            let scrollDown = this.titleRef.current.container.current.getActualSize().height +
+                this.serviceSelectionRef.current.containerRef.current.getActualSize().height;
+
+            // due to overflow safe area remove appbar and status bar
+            if (device.os == "iOS") {
+                const statusBarHeight = UIApplication.sharedApplication.statusBarFrame.size.height;
+                const actionBarHeight = this.actionBarRef.current.getActualSize().height;
+                scrollDown -= statusBarHeight + actionBarHeight;
+            }
+            console.log("scrollTo: " + scrollDown);
+            const animate = !isHidden;
+            this.scrollViewRef.current.scrollToVerticalOffset(scrollDown, animate);
         })
+
     }
     _scroll = () => {
-        
+
         const scrollUp = this.scrollViewRef.current.scrollableHeight;
         const scrollTo = this.titleRef.current.container.current.getActualSize().height;
         console.log("scroll: " + scrollUp + " and " + scrollTo);
@@ -126,82 +146,83 @@ class AppContainer extends React.Component {
     render() {
         return (
             <$Frame ref={rootRef}>
-                
+
                 <$Page
                     ref={this.pageRef}
                     backgroundColor={new Color('#f0f0f0')}
-                    
+
                 >
-                    <$ActionBar title="Avfallshamtning" className="action-bar"/>
+                    <$ActionBar ref={this.actionBarRef} title="Avfallshamtning" className="action-bar" />
                     <$ScrollView
                         ref={this.scrollViewRef}
                         onLoaded={(ev) => {
                             const scrollView = ev.object as ScrollView;
-                            if(device.os == "iOS") {
+                            if (device.os == "iOS") {
                                 // scrollView.addMissingTouchEffectiOS(); // can't be set simulatiously with  enableScrollOverControls: https://stackoverflow.com/questions/57872731/unable-to-scroll-over-some-components-like-buttons-and-textfield-in-nativescript 
                                 scrollView.enableScrollOverControlsiOS();
                             }
                         }}
-                        
+
                     >
                         <$StackLayout ref={this.stackLayoutRef} onTap={() => {
-                            if(device.os === "Android") {
+                            if (device.os === "Android") {
                                 utils.ad.dismissSoftInput();
                             }
                         }}
                         >
-                            <Title ref={this.titleRef}/>
-                            <ServiceSelection />
-                            <Record ref={this.recordRef} />
+                            <Title ref={this.titleRef} />
+                            <ServiceSelection ref={this.serviceSelectionRef} />
+                            <Record ref={this.recordRef}
+                            />
                             <HomeSelection />
-                            <ManagementSelection/>
+                            <ManagementSelection />
                             <GarbageTypeSelection />
                             <TimeSelection />
                             <$Button
-                                text={"skicka begäran"} 
+                                text={"skicka begäran"}
                                 onTap={(ev) => {
-                                    
-                                    if(!FormViewModel.get().formIsValid() || !SelectionsViewModel.get().selectionsIsValid()) {
+
+                                    if (!FormViewModel.get().formIsValid() || !SelectionsViewModel.get().selectionsIsValid()) {
                                         // show a toast "uppgifter saknas" or something like it
-                                        
-                                        if(!SelectionsViewModel.get().selectionsIsValid()) {
+
+                                        if (!SelectionsViewModel.get().selectionsIsValid()) {
                                             SelectionsViewModel.get().shouldDisplayTextFieldsStatus = true;
                                             console.log("selectionsViewModel was not valid");
-                                            if(SelectionsViewModel.get().serviceNotSelected()) {
+                                            if (SelectionsViewModel.get().serviceNotSelected()) {
                                                 SelectionsViewModel.get().showToast = true;
                                                 return;
                                             }
 
                                             // check anvisning and personnummer no filled.
                                         }
-                                        if(!FormViewModel.get().formIsValid()) {
+                                        if (!FormViewModel.get().formIsValid()) {
                                             // scroll to form button open form 
                                             FormViewModel.get().shouldDisplayTextFieldsStatus = true;
                                             console.log("form was not valid");
                                         }
                                         return;
                                     }
-                                    
+
                                     const formModel = FormViewModel.get().formModel;
                                     const selectionsModel = SelectionsViewModel.get().selectionsModel;
 
                                     email.available().then((available) => {
-                                        if(available) {
+                                        if (available) {
                                             console.log("email was available");
                                             email.compose(
                                                 {
-                                                    subject : testSubject,
+                                                    subject: testSubject,
                                                     body: postModel(formModel, selectionsModel, (selectionsModel.hemma == Hemma.ja)),
                                                     to: [productionMail]
 
                                                 }
                                             )
-                                            
+
                                         } else {
                                             console.log("email was not available");
                                         }
                                     })
-                                    
+
                                 }}
                             />
                         </$StackLayout>
@@ -221,15 +242,15 @@ export default AppContainer;
 // style={{ width: PercentLength.parse('100%'), height: PercentLength.parse('20%') , backgroundColor: new Color('green') }}
 // style={{ width: PercentLength.parse('100%'), height: PercentLength.parse('20%') , backgroundColor: new Color('blue') }}
 /* Frame and Page ios is initialized */
-        /*
-       const frame = rootRef.current as Frame;
-       console.log("rootRef ios: " + frame.ios.controller);
-       */
-       // console.log("page current: " + this.pageRef.current.ios);
-       
-        // needed oterwise blank screen
+/*
+const frame = rootRef.current as Frame;
+console.log("rootRef ios: " + frame.ios.controller);
+*/
+// console.log("page current: " + this.pageRef.current.ios);
 
-{/*<ComponentExample />*/}
+// needed oterwise blank screen
+
+{/*<ComponentExample />*/ }
 // probelm with $FlexboxLayout. can't contain $Label
 
 /*
@@ -250,7 +271,7 @@ It can also be noted that the crash (...`undefined is not an object (evaluating 
                         <$Button ref={this.buttonRef}
                         />
 
-                        <$Switch 
+                        <$Switch
                         />
                     </$StackLayout>
                     */
