@@ -17,6 +17,7 @@ import FormViewModel from "~/ViewModels/FormViewModel";
 import { autorun, observable } from "mobx";
 import { observer } from "mobx-react";
 import { device } from "tns-core-modules/platform/platform";
+import ViewModel from "~/ViewModels/ViewModel";
 
 @observer
 export default class TimeSelection extends React.Component {
@@ -56,6 +57,13 @@ export default class TimeSelection extends React.Component {
                         textWrap={true}
                         textAlignment={"center"}
                     />
+                    <$Label 
+                        text={this.getExtraFeeText()}
+                        fontSize={12}
+                        margin={cardStyle.childrenSpacing}
+                        textWrap={true}
+                        textAlignment={"center"}
+                    />
                     <$TextField
                         ref={this.timeTextField}
                         hint={"hämtningsdag och ca tid"}
@@ -81,5 +89,12 @@ export default class TimeSelection extends React.Component {
                 </$FlexboxLayout>
             </$StackLayout>
         );
+    }
+    getExtraFeeText() {
+        const model = ViewModel.get().model;
+        if(model) {
+            return model.Avfallshamtning.hamtningEfter18;
+        } 
+        return null;
     }
 }

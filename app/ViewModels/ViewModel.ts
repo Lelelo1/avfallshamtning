@@ -72,7 +72,6 @@ export default class ViewModel {
     selectedSize: Size = null;
 
 
-
     // https://docs.nativescript.org/ui/professional-ui-components/DataForm/GettingStarted/dataform-start-source
 
     /* make a observable PersonInfoModel object */
