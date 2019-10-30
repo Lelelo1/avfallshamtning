@@ -21,10 +21,13 @@ if(module.hot){
 import * as React from "react";
 import * as ReactNativeScript from "react-nativescript";
 
-/* HMR no longer supprted
-import HotApp, { rootRef } from "./AppContainer";
-ReactNativeScript.start(React.createElement(HotApp, {}, null), rootRef);
-*/
+
+export enum Configuration {
+    "debug" = "debug",
+    "release" = "release"
+}
+
+export const config = Configuration.debug;
 
 import AppContainer, { rootRef } from './AppContainer';
 ReactNativeScript.start(React.createElement(AppContainer, {}, null), rootRef);

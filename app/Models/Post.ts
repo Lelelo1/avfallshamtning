@@ -1,5 +1,5 @@
 import PersonInfoModel from "./FormModel";
-import SelectionsModel from "./SelectionsModel";
+import SelectionsModel, { Hemma } from "./SelectionsModel";
 
 class Property {
     key: string;
@@ -23,7 +23,7 @@ const test1: Property[] = [
     new Property("Jag är hemma när ni kommer?", "Nej")
 ];
 
-export const postModel = (person: PersonInfoModel, selections: SelectionsModel, isHome = true ) => {
+export const postModel = (person: PersonInfoModel, selections: SelectionsModel ) => {
     const postPropertyList: Property[] = [
         new Property("Namn", person.namn),
         new Property("Efternamn", person.efternamn),
@@ -33,11 +33,12 @@ export const postModel = (person: PersonInfoModel, selections: SelectionsModel, 
         new Property("Post nr", person.postnummer),
         new Property("Ort", person.ort),
         new Property("Jag vill boka", selections.formattedTjänst()),
-        new Property("Hämtningen innehåller farligt avfall", selections.formattedAvfall()),
+        new Property("Hämtningen innehåller farligt avfall?", selections.formattedAvfall()),
+        new Property("Hur önskar du att vi hanterar ditt avfall?", selections.formattedHantering()),
         new Property("Ange önskad hämtningsdag och ca tid" , selections.formattedTid()),
         new Property("Jag är hemma när ni kommer?", selections.formattedHemma())
     ];
-    if(!isHome) {
+    if(selections.hemma == Hemma.nej) {
         postPropertyList.push(
             new Property("Ge en anvisning om var vi kan hitta avfallet", selections.anvisning)
             );

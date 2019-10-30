@@ -40,6 +40,7 @@ import { observer } from "mobx-react";
 import * as utils from "tns-core-modules/utils/utils";
 
 import { Toasty, ToastDuration, ToastPosition } from 'nativescript-toasty';
+import { config, Configuration } from "./app";
 
 // hide keyboard when tap outsode textfield
 if (device.os == "iOS") {
@@ -49,10 +50,23 @@ if (device.os == "iOS") {
     manager.shouldShowTextFieldPlaceholder = false;
 }
 
-const testSubject = "appbokning TEST";
-const productionSubject = "Begäran om avfallshämtning"
-const testMail = "leo.w.se@hotmail.com";
-const productionMail = "jorgen.avfallshamtning@gmail.com";
+class Mail {
+    subject: string;
+    mail: string;
+    constructor(subject: string, mail: string) {
+        this.subject = subject;
+        this.mail = mail;
+    }
+}
+
+
+const getMail = (): Mail => {
+    if(config == Configuration.debug) {
+        return new Mail("appbokning TEST", "leo.w.se@hotmail.com");
+    } else if (config == Configuration.release) {
+        return new Mail("Begäran om avfallshämtning", "jorgen.avfallshamtning@gmail.com");
+    }
+}
 
 export const rootRef: React.RefObject<any> = React.createRef<any>();
 @observer
@@ -211,9 +225,9 @@ class AppContainer extends React.Component {
                                             console.log("email was available");
                                             email.compose(
                                                 {
-                                                    subject: testSubject,
-                                                    body: postModel(formModel, selectionsModel, (selectionsModel.hemma == Hemma.ja)),
-                                                    to: [productionMail]
+                                                    subject: getMail().subject,
+                                                    body: postModel(formModel, selectionsModel),
+                                                    to: [getMail().mail]
 
                                                 }
                                             )

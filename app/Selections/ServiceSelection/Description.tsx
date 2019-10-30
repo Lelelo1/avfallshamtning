@@ -1,13 +1,13 @@
 
 import * as React from "react";
 import { $FlexboxLayout, $Label, $TextView, $StackLayout, $Button, $Image, $FormattedString, $Span } from "react-nativescript";
-import { FlexboxLayout, StackLayout, TextView, GridLayout, Image, ActionItem } from "react-nativescript/dist/client/ElementRegistry";
+import { FlexboxLayout, StackLayout, TextView, GridLayout, Image, ActionItem, Label } from "react-nativescript/dist/client/ElementRegistry";
 import { Button } from "tns-core-modules/ui/button/button";
 import { CardView } from "@nstudio/nativescript-cardview";
 import ViewModel from "../../ViewModels/ViewModel";
 import { observer } from "mobx-react";
 import { PercentLength, Color } from "tns-core-modules/ui/page/page";
-import { observable, autorun } from "mobx";
+import { autorun, observable, } from "mobx";
 import "../../Extensions";
 import { device } from "tns-core-modules/platform/platform";
 import { CheckBox } from '@nstudio/nativescript-checkbox';
@@ -18,9 +18,20 @@ import "../../Styles";
 import { Size } from "../../Models/SelectionsModel"
 import { cardStyle } from "../cardStyles";
 import SelectionsViewModel from "~/ViewModels/SelectionsViewModel";
+
+// for showing carinfo
+import { CFAlertDialog,
+    DialogOptions,
+    CFAlertGravity,
+    CFAlertActionAlignment,
+    CFAlertActionStyle,
+    CFAlertStyle } from 'nativescript-cfalert-dialog';
+
 @observer
 export default class Description extends React.Component <{ size: Size }> {
-    
+    @observable
+    private shouldDisplayCarInfo = false;
+
     private containerRef = React.createRef<StackLayout>();
     private bottomContainer = React.createRef<FlexboxLayout>();
     private checkBoxContainerRef = React.createRef<StackLayout>();
@@ -139,14 +150,26 @@ export default class Description extends React.Component <{ size: Size }> {
                                 height={device.os === "iOS" ? 30 : null}
                                 width={30}
                                 margin={0}
-                                
+                                onTap={() => {
+                                    console.log("tap carInfo");
+                                    const options: DialogOptions = {
+                                        dialogStyle: CFAlertStyle.BOTTOM_SHEET,
+                                        title: "Bilen",
+                                        textAlignment: CFAlertGravity.CENTER_HORIZONTAL,
+                                        backgroundColor: "#1A000000",
+                                        message: this._displayCarInfo()
+                                      }
+                                    let cfalertDialog = new CFAlertDialog();
+                                    cfalertDialog.show(options);
+                                }}
                             >
                                 <$FormattedString>
                                     <$Span  color={new Color("black")} className={"car"} text={"\ue800"} fontSize={30} />
                                 </$FormattedString>
                                 
-                            </$Button>                 
+                            </$Button>
                     </$FlexboxLayout>
+                    
             </$StackLayout>
         );
     }
@@ -192,6 +215,12 @@ export default class Description extends React.Component <{ size: Size }> {
             } else {
                 return viewModel.getDescription(size) + `. Där grundavgift på ${fastAvgift} kr ingår priset`;
             }
+        }
+    }
+    _displayCarInfo() {
+        const model = ViewModel.get().model;
+        if(model) {
+            return model.Avfallshamtning.carInfo;
         }
     }
 }

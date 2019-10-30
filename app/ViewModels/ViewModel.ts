@@ -36,13 +36,6 @@ export default class ViewModel {
         }
         return this.model;
     } 
-
-    @observable
-    private _address: string = null;
-    get address(): string {
-        return this._address;
-    }
-
     /*
     set address(string address): string {
         // return this._address;
