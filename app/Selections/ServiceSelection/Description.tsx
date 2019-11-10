@@ -20,12 +20,15 @@ import { cardStyle } from "../cardStyles";
 import SelectionsViewModel from "~/ViewModels/SelectionsViewModel";
 
 // for showing carinfo
-import { CFAlertDialog,
+import { 
+    CFAlertDialog,
     DialogOptions,
     CFAlertGravity,
     CFAlertActionAlignment,
     CFAlertActionStyle,
-    CFAlertStyle } from 'nativescript-cfalert-dialog';
+    CFAlertStyle
+} from 'nativescript-cfalert-dialog';
+
 
 @observer
 export default class Description extends React.Component <{ size: Size }> {
@@ -56,17 +59,6 @@ export default class Description extends React.Component <{ size: Size }> {
     marginBottom = 10;
     marginSide = 15;
     private _buildCheckBox(): void {
-        this.checkBox.on("onTap", () => {
-            const selectedSize = SelectionsViewModel.get().selectionsModel.tjänst;
-            if(selectedSize == this.props.size) {
-                console.log("unselected");
-                SelectionsViewModel.get().selectionsModel.tjänst = Size.unselected;
-            } else {
-                console.log("selected " + this.props.size);
-                SelectionsViewModel.get().selectionsModel.tjänst = this.props.size;
-            }
-            
-        })
         this.checkBox.borderColor = new Color('black');
         this.checkBox.verticalAlignment = "middle";
         this.checkBox.scaleX = 1.4;
@@ -92,7 +84,6 @@ export default class Description extends React.Component <{ size: Size }> {
         return (
             <$StackLayout
                 ref={this.containerRef}
-                
             >
                 <$Label
                     horizontalAlignment={"center"}
@@ -126,12 +117,22 @@ export default class Description extends React.Component <{ size: Size }> {
                         ref={this.bottomContainer}
                         marginTop={this.marginTop}
                         marginBottom={this.marginBottom}
-                        marginLeft={this.marginSide}
                         marginRight={this.marginSide}
                         alignContent={"center"}
                     >    
                         <$StackLayout orientation={"horizontal"}
                             ref={this.checkBoxContainerRef}
+                            paddingLeft={this.marginSide}
+                            onTap={() => {
+                                const selectedSize = SelectionsViewModel.get().selectionsModel.tjänst;
+                                if(selectedSize == this.props.size) {
+                                    console.log("unselected");
+                                    SelectionsViewModel.get().selectionsModel.tjänst = Size.unselected;
+                                } else {
+                                    console.log("selected " + this.props.size);
+                                    SelectionsViewModel.get().selectionsModel.tjänst = this.props.size;
+                                }
+                            }}
                         >
                             <$Label
                                 marginLeft={3}
