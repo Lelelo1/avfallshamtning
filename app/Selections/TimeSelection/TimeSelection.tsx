@@ -80,7 +80,7 @@ export default class TimeSelection extends React.Component {
                         margin={cardStyle.childrenSpacing}
                         />
                     <$Label
-                        text={"så återkommer till dig inom 2 arbetsdagar med en bokningsbekräftelse"}
+                        text={"så återkommer vi till dig inom 2 arbetsdagar med en bokningsbekräftelse"}
                         fontSize={cardStyle.descriptionSize}
                         margin={cardStyle.littleDescriptionSpacing}
                         textWrap={true}
@@ -91,10 +91,11 @@ export default class TimeSelection extends React.Component {
         );
     }
     getExtraFeeText() {
-        const model = ViewModel.get().model;
+        const model = ViewModel.get().getModel();
         if(model) {
             return model.Avfallshamtning.hamtningEfter18;
         } 
-        return null;
+        // below needed for $Label to fill all space needed
+        return "undefineddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd";
     }
 }

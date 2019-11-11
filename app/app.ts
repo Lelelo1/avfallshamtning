@@ -27,7 +27,7 @@ export enum Configuration {
     "release" = "release"
 }
 
-export const config = Configuration.debug;
+export const config: Configuration = Configuration.release;
 
 import AppContainer, { rootRef } from './AppContainer';
 ReactNativeScript.start(React.createElement(AppContainer, {}, null), rootRef);
