@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <resources>
+    <string name="app_name">Avfallshämtning</string>
+    <string name="title_activity_kimera">Avfallshämtning</string>
+</resources>
+
+<!-- added the file to rename app on android: https://stackoverflow.com/questions/39832980/how-to-change-application-name-in-nativescript-->

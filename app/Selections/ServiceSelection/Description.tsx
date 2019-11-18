@@ -20,7 +20,7 @@ import { cardStyle } from "../cardStyles";
 import SelectionsViewModel from "~/ViewModels/SelectionsViewModel";
 
 // for showing carinfo
-import { 
+import {
     CFAlertDialog,
     DialogOptions,
     CFAlertGravity,
@@ -31,7 +31,7 @@ import {
 
 
 @observer
-export default class Description extends React.Component <{ size: Size }> {
+export default class Description extends React.Component<{ size: Size }> {
     @observable
     private shouldDisplayCarInfo = false;
 
@@ -63,7 +63,8 @@ export default class Description extends React.Component <{ size: Size }> {
         this.checkBox.verticalAlignment = "middle";
         this.checkBox.scaleX = 1.4;
         this.checkBox.scaleY = 1.4;
-        
+
+        if (device.os == "Android") this.checkBox.on("onTap", this._selectService);
 
         const checkBoxContainer = this.checkBoxContainerRef.current;
         checkBoxContainer.insertChild(this.checkBox, 0);
@@ -72,7 +73,7 @@ export default class Description extends React.Component <{ size: Size }> {
     imageButtonColor = new Color('purple');
     render() {
         const selectedSize = SelectionsViewModel.get().selectionsModel.tjänst;
-        if(this.props.size === selectedSize) {
+        if (this.props.size === selectedSize) {
             setTimeout(() => {
                 this.checkBox.checked = true;
             }, 0.000001);
@@ -101,78 +102,79 @@ export default class Description extends React.Component <{ size: Size }> {
                         const textView = ev.object as TextView;
                         // disabliing scroll
                         textView.scrollEnabled(false);
-                        if(device.os == "Android") {
+                        if (device.os == "Android") {
                             const editText = textView.android as android.widget.EditText;
                             // removes line under text
                             editText.setBackground(null);
                         }
-                        
+
                         // removing default margin set (ios)
                         textView.noMargin();
                     }}
                     marginLeft={5}
                     marginRight={5}
-                    />
-                    <$FlexboxLayout justifyContent={"space-between"}
-                        ref={this.bottomContainer}
-                        marginTop={this.marginTop}
-                        marginBottom={this.marginBottom}
-                        marginRight={this.marginSide}
-                        alignContent={"center"}
-                    >    
-                        <$StackLayout orientation={"horizontal"}
-                            ref={this.checkBoxContainerRef}
-                            paddingLeft={this.marginSide}
-                            onTap={() => {
-                                const selectedSize = SelectionsViewModel.get().selectionsModel.tjänst;
-                                if(selectedSize == this.props.size) {
-                                    console.log("unselected");
-                                    SelectionsViewModel.get().selectionsModel.tjänst = Size.unselected;
-                                } else {
-                                    console.log("selected " + this.props.size);
-                                    SelectionsViewModel.get().selectionsModel.tjänst = this.props.size;
-                                }
+                />
+                <$FlexboxLayout justifyContent={"space-between"}
+                    ref={this.bottomContainer}
+                    marginTop={this.marginTop}
+                    marginBottom={this.marginBottom}
+                    marginRight={this.marginSide}
+                    alignContent={"center"}
+                >
+                    <$StackLayout orientation={"horizontal"}
+                        ref={this.checkBoxContainerRef}
+                        paddingLeft={this.marginSide}
+                        onTap={device.os == "iOS" ? this._selectService : undefined}
+                    >
+                        <$Label
+                            marginLeft={3}
+                            text={"Välj"}
+                            formattedText={this._getFormattedText()}
+                            onLoaded={() => {
+
                             }}
+                            verticalAlignment={"middle"}
                         >
-                            <$Label
-                                marginLeft={3}
-                                text={"Välj"}
-                                formattedText={this._getFormattedText()}
-                                onLoaded={() => {
-                                
-                                }}
-                                verticalAlignment={"middle"}
-                            >
-                            </$Label>
-                            
-                        </$StackLayout>
-                            <$Button
-                                borderRadius={45}
-                                height={device.os === "iOS" ? 30 : null}
-                                width={30}
-                                margin={0}
-                                onTap={() => {
-                                    console.log("tap carInfo");
-                                    const options: DialogOptions = {
-                                        dialogStyle: CFAlertStyle.BOTTOM_SHEET,
-                                        title: "Bilen",
-                                        textAlignment: CFAlertGravity.CENTER_HORIZONTAL,
-                                        backgroundColor: "#1A000000",
-                                        message: this._displayCarInfo()
-                                      }
-                                    let cfalertDialog = new CFAlertDialog();
-                                    cfalertDialog.show(options);
-                                }}
-                            >
-                                <$FormattedString>
-                                    <$Span  color={new Color("black")} className={"car"} text={"\ue800"} fontSize={30} />
-                                </$FormattedString>
-                                
-                            </$Button>
-                    </$FlexboxLayout>
-                    
+                        </$Label>
+
+                    </$StackLayout>
+                    <$Button
+                        borderRadius={45}
+                        height={device.os === "iOS" ? 30 : null}
+                        width={30}
+                        margin={0}
+                        onTap={() => {
+                            console.log("tap carInfo");
+                            const options: DialogOptions = {
+                                dialogStyle: CFAlertStyle.BOTTOM_SHEET,
+                                title: "Bilen",
+                                textAlignment: CFAlertGravity.CENTER_HORIZONTAL,
+                                backgroundColor: "#1A000000",
+                                message: this._displayCarInfo()
+                            }
+                            let cfalertDialog = new CFAlertDialog();
+                            cfalertDialog.show(options);
+                        }}
+                    >
+                        <$FormattedString>
+                            <$Span color={new Color("black")} className={"car"} text={"\ue800"} fontSize={30} />
+                        </$FormattedString>
+
+                    </$Button>
+                </$FlexboxLayout>
+
             </$StackLayout>
         );
+    }
+    _selectService = () => {
+        const selectedSize = SelectionsViewModel.get().selectionsModel.tjänst;
+        if (selectedSize == this.props.size) {
+            console.log("unselected");
+            SelectionsViewModel.get().selectionsModel.tjänst = Size.unselected;
+        } else {
+            console.log("selected " + this.props.size);
+            SelectionsViewModel.get().selectionsModel.tjänst = this.props.size;
+        }
     }
     // to set fontwieght bold // https://www.telerik.com/forums/bold-text-in-label
     _getFormattedText() {
@@ -184,12 +186,12 @@ export default class Description extends React.Component <{ size: Size }> {
         span.color = new Color('black');
         return formattedText;
     }
-    _displayPrice() {  
+    _displayPrice() {
         const viewModel = ViewModel.get();
-        if(viewModel.model) {
+        if (viewModel.model) {
             const startAvgift = Number(viewModel.model.Avfallshamtning.startAvgift);
             const price = viewModel.getPrice(this.props.size);
-            if(this.props.size == Size.little) {
+            if (this.props.size == Size.little) {
                 return price + " kr/m3";
             } else {
                 return price + " kr";
@@ -206,12 +208,12 @@ export default class Description extends React.Component <{ size: Size }> {
     _displayDescription() {
         const viewModel = ViewModel.get();
         const model = viewModel.model;
-        if(model) {
+        if (model) {
             // console.log("mzz: " + JSON.stringify(model));
             const size = this.props.size;
             const fastAvgift = viewModel.model.Avfallshamtning.startAvgift;
             if (size == Size.little) {
-                 // note 
+                // note 
                 return viewModel.getDescription(size) + `. Till priset tillkommer en grundavgift på ${fastAvgift} kr`;
             } else {
                 return viewModel.getDescription(size) + `. Där grundavgift på ${fastAvgift} kr ingår priset`;
@@ -220,14 +222,14 @@ export default class Description extends React.Component <{ size: Size }> {
     }
     _displayCarInfo() {
         const model = ViewModel.get().model;
-        if(model) {
+        if (model) {
             return model.Avfallshamtning.carInfo;
         }
     }
 }
 
 /*
-    <$Image 
+    <$Image
                             src={"res://van"}
                             stretch={"fill"}
                             height={30}

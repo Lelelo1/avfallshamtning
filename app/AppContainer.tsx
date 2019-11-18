@@ -166,7 +166,7 @@ class AppContainer extends React.Component {
                     backgroundColor={new Color('#f0f0f0')}
 
                 >
-                    <$ActionBar ref={this.actionBarRef} title="Avfallshamtning" className="action-bar" />
+                    <$ActionBar ref={this.actionBarRef} title="Avfallshämtning" className="action-bar" />
                     <$ScrollView
                         ref={this.scrollViewRef}
                         onLoaded={(ev) => {

@@ -34,6 +34,7 @@ export default class SelectionsViewModel {
         return isValid;
     }
     serviceNotSelected() {
+        console.log("service was: " + this.selectionsModel.tjänst);
         if(this.selectionsModel.tjänst == Size.unselected) return true;
     }
 }
