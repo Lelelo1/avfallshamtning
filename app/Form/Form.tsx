@@ -95,7 +95,7 @@ export default class Form extends React.Component<{},{}>{
                 <$StackLayout>
                     {/* to left/ in he middle display status. icke ifyll - * ickeifylld with a checkbox icon */}
                     {/*<$TextArea text={() => FormViewModel.get()}/>*/}
-                    <$Button text={"Auto"} horizontalAlignment={"right"}/>
+                    {/* <$Button text={"Auto"} horizontalAlignment={"right"}/>/*/}
                 </$StackLayout>
                 
                 <$TextField
@@ -115,6 +115,8 @@ export default class Form extends React.Component<{},{}>{
                     margin={commonStyle.margin}
                     marginLeft={commonStyle.marginLeft}
                     marginRight={commonStyle.marginRight}
+                    // needed after auto button removal
+                    marginTop={commonStyle.marginLeft}
                     className={this._getStyle()}
                 />
                 <$TextField
