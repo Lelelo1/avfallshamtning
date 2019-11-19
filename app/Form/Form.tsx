@@ -1,22 +1,20 @@
 import * as React from "react";
-import { $StackLayout, $Button, $TextField, $FlexboxLayout, $Label } from "react-nativescript";
-import { Color } from "tns-core-modules/color/color";
-import { Button } from "tns-core-modules/ui/button/button";
+import { $StackLayout, $Button, $TextField } from "react-nativescript";
+
 import { AutofillHintContentType } from "../Extensions";
-import { StackLayout } from "tns-core-modules/ui/layouts/stack-layout/stack-layout";
-import { FlexboxLayout, TextField } from "react-nativescript/dist/client/ElementRegistry";
 import { CardView } from "@nstudio/nativescript-cardview";
-import FromViewModel from "../ViewModels/FormViewModel";
 import "../Styles";
 import "./FormStyles";
 
-import { PercentLength, EventData } from "tns-core-modules/ui/page/page";
 import FormViewModel from "../ViewModels/FormViewModel";
 import { observer } from "mobx-react";
-import { when, reaction, autorun } from "mobx";
+import { autorun } from "mobx";
 import { Reactified } from "rns-reactify/Reactified/Reactified";
 import { commonStyle, iosStyle } from "./FormStyles";
-import { device } from "tns-core-modules/platform/platform";
+import { StackLayout } from "@nativescript/core/ui/layouts/stack-layout/stack-layout";
+import { TextField } from "@nativescript/core/ui/text-field/";
+import { device } from "@nativescript/core/platform/platform";
+import { Color } from "@nativescript/core/color/color";
 
 const $CardView = Reactified(CardView, "cardView");
 

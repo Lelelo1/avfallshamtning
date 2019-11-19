@@ -1,19 +1,16 @@
 
 import * as React from "react";
 import { CardView } from "@nstudio/nativescript-cardview";
-import { $StackLayout, $Label, $Switch, $FlexboxLayout, $Button, $TextField } from "react-nativescript";
-import { Switch } from "tns-core-modules/ui/switch/switch";
-import { StackLayout, FlexboxLayout, Label, Color, TextField } from "react-nativescript/dist/client/ElementRegistry";
+import { $StackLayout, $Label, $FlexboxLayout} from "react-nativescript";
 import ViewModel from "~/ViewModels/ViewModel";
 import SelectionsViewModel from "~/ViewModels/SelectionsViewModel";
 import { observer } from "mobx-react";
 import SelectorComponent, { Content } from "~/Components/SelectorComponent";
-import { autorun } from "mobx";
-
 import { cardStyle } from "../cardStyles";
-
 import AwayPayment from "./AwayPayment"; 
 import { Hemma } from "~/Models/SelectionsModel";
+import { StackLayout } from "@nativescript/core/ui/layouts/stack-layout/stack-layout";
+import { TextField } from "@nativescript/core/ui/text-field/";
 
 @observer
 export default class HomeSelection extends React.Component {

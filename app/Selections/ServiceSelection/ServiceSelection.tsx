@@ -1,11 +1,12 @@
+
 import * as React from "react";
-import { $SegmentedBar, $SegmentedBarItem ,$StackLayout, $Label,  } from "react-nativescript";
-import { StackLayout, FlexboxLayout, SegmentedBar, Color } from "react-nativescript/dist/client/ElementRegistry";
-import { SegmentedBarItem } from "tns-core-modules/ui/segmented-bar/segmented-bar";
+import { $SegmentedBar, $SegmentedBarItem ,$StackLayout } from "react-nativescript";
 import Description from "./Description";
 import { Size } from "../../Models/SelectionsModel"
 import { observable } from "mobx";
 import { observer } from "mobx-react";
+import { StackLayout } from "@nativescript/core/ui/layouts/stack-layout/stack-layout";
+import { Color } from "@nativescript/core/color/color";
 
 @observer
 export default class ServiceSelection extends React.Component {

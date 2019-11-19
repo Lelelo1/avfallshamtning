@@ -1,17 +1,16 @@
 
 import * as React from "react";
 import { $TextField, $StackLayout, $Label, $FlexboxLayout } from "react-nativescript";
-import { TextField, Color } from "react-nativescript/dist/client/ElementRegistry";
 import { commonStyle } from "../../Form/FormStyles";
-import { AutofillHintContentType } from "../../Extensions";
 import FormViewModel from "../../ViewModels/FormViewModel";
 import { autorun } from "mobx";
 import { observer } from "mobx-react";
 
 import { cardStyle } from "../cardStyles";
 import { numberToString } from "~/Form/Form";
-import SelectionsViewModel from "~/ViewModels/SelectionsViewModel";
 import { Hemma } from "~/Models/SelectionsModel";
+import { TextField } from "@nativescript/core/ui/text-field/";
+import SelectionsViewModel from "~/ViewModels/SelectionsViewModel";
 
 
 @observer

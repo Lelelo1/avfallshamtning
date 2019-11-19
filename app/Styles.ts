@@ -1,5 +1,4 @@
 import { CardView } from "@nstudio/nativescript-cardview";
-import { TextView } from "react-nativescript/dist/client/ElementRegistry";
 
 
 declare module "@nstudio/nativescript-cardview" {

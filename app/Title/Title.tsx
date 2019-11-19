@@ -1,14 +1,15 @@
 import * as React from "react";
-import { $FlexboxLayout, $Image, $StackLayout, $Label, $AbsoluteLayout, $GridLayout, $Button } from "react-nativescript";
-import { Image } from "tns-core-modules/ui/image/image";
-import { Label } from "tns-core-modules/ui/label/label";
+import { $StackLayout, } from "react-nativescript";
 
-import { PercentLength, Color } from "tns-core-modules/ui/page/page";
-import { FlexboxLayout, ScrollView, StackLayout, GridLayout, AbsoluteLayout } from "react-nativescript/dist/client/ElementRegistry";
 import viewModel, { Region } from "../ViewModels/ViewModel";
 import { observer } from "mobx-react";
 import { Carousel, CarouselItem } from "nativescript-carousel";
 import { device } from "tns-core-modules/platform/platform";
+import { StackLayout } from "@nativescript/core/ui/layouts/stack-layout/stack-layout";
+import { Label } from "@nativescript/core/ui/label/label";
+import { Image } from "@nativescript/core/ui/image";
+import { GridLayout } from "@nativescript/core/ui/layouts/grid-layout/grid-layout";
+import { Color } from "@nativescript/core/color/color";
 // import { ItemSpec } from "tns-core-modules/ui/layouts/grid-layout/grid-layout";
 @observer
 export default class Title extends React.Component {

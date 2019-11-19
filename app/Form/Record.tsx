@@ -1,21 +1,15 @@
 import * as React from "react";
 import { $StackLayout, $Button } from "react-nativescript";
-import { StackLayout } from "tns-core-modules/ui/layouts/stack-layout/stack-layout";
 import Form from "./Form";
-import { Color } from "tns-core-modules/color/color";
-import { FlexboxLayout } from "tns-core-modules/ui/layouts/flexbox-layout/flexbox-layout";
-import { Button } from "tns-core-modules/ui/button/button";
 
 import { CardView } from "@nstudio/nativescript-cardview";
-import { PercentLength } from "tns-core-modules/ui/page/page";
-import { GestureEventData } from "tns-core-modules/ui/gestures/gestures";
 import FormViewModel from "~/ViewModels/FormViewModel";
-import { autorun, reaction } from "mobx";
 import { observer } from "mobx-react";
 
 import { Reactified } from "rns-reactify/Reactified/Reactified";
-import { cardStyle } from "~/Selections/cardStyles";
-import { ScrollView } from "tns-core-modules/ui/scroll-view/scroll-view";
+import { StackLayout } from "@nativescript/core/ui/layouts/stack-layout/stack-layout";
+import { Button } from "@nativescript/core/ui/button/button";
+import { Color } from "@nativescript/core/color/color";
 
 class $CardView  extends Reactified(CardView, "cardView") {};
 

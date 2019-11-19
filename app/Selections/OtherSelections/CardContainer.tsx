@@ -1,8 +1,8 @@
 import * as React from "react";
 import { CardView } from "@nstudio/nativescript-cardview";
 import { $StackLayout } from "react-nativescript";
-import { StackLayout } from "react-nativescript/dist/client/ElementRegistry";
 import "../../Styles";
+import { StackLayout } from "@nativescript/core/ui/layouts/stack-layout/stack-layout";
 
 export default class CardContainer extends React.Component {
     cardContainerRef = React.createRef<StackLayout>();

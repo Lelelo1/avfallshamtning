@@ -1,12 +1,12 @@
 
 import * as React from "react";
 import { $StackLayout, $FlexboxLayout, $Label } from "react-nativescript";
-import { StackLayout } from "react-nativescript/dist/client/ElementRegistry";
 import { CardView } from "@nstudio/nativescript-cardview";
 import { cardStyle } from "../cardStyles";
 import SelectorComponent, { Content } from "~/Components/SelectorComponent";
 import SelectionsViewModel from "~/ViewModels/SelectionsViewModel";
 import { Avfall } from "~/Models/SelectionsModel";
+import { StackLayout } from "@nativescript/core/ui/layouts/stack-layout/stack-layout";
 export default class GarbageTypeSelection extends React.Component {
     cardContainerRef = React.createRef<StackLayout>();
 

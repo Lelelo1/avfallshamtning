@@ -1,27 +1,19 @@
-import { Frame, Page, Color, PercentLength } from "tns-core-modules/ui/frame/frame";
+
 import * as React from "react";
-import { $Frame, $Page, $StackLayout, $Label, $TextField, $Switch, $Button, $FlexboxLayout, $Slider, $ScrollView, $ActionBar } from "react-nativescript";
-import { hot } from 'react-nativescript-hot-loader/root';
-import { TextField } from "tns-core-modules/ui/text-field/text-field";
-import { StackLayout } from "tns-core-modules/ui/layouts/stack-layout/stack-layout";
-import { Switch } from "tns-core-modules/ui/switch/switch";
-import { Button } from "tns-core-modules/ui/button/button";
+import { $Frame, $Page, $StackLayout, $Button, $ScrollView, $ActionBar } from "react-nativescript";
+
 // import * as Platform from "tns-core-modules/platform";
 // export const rootRef: React.RefObject<Frame> = React.createRef<Frame>(); // ReactNativeScript.start needs a ref
 // See the testComponents directory for many examples of components (and ref-forwarding).
 //where p is props s is state
 
-import Selection from "./Selections/ServiceSelection/ServiceSelection";
+
 import Record from "./Form/Record";
-import { FlexboxLayout, ActionBar, ScrollView } from "react-nativescript/dist/client/ElementRegistry";
 import Title from "./Title/Title";
 import { reaction, autorun, toJS } from "mobx";
-
 import viewModel, { Region } from "./ViewModels/ViewModel";
 import ServiceSelection from "./Selections/ServiceSelection/ServiceSelection";
-
 import "./Extensions";
-
 import * as email from "nativescript-email";
 import { device } from "tns-core-modules/platform/platform";
 import ManagementSelection from "./Selections/OtherSelections/ManagementSelection";
@@ -31,16 +23,16 @@ import TimeSelection from "./Selections/TimeSelection/TimeSelection";
 import FormViewModel from "./ViewModels/FormViewModel";
 import SelectionsViewModel from "./ViewModels/SelectionsViewModel";
 import { postModel } from "./Models/Post";
-import { Hemma } from "./Models/SelectionsModel";
 import * as application from "tns-core-modules/application/application"
 import { setString } from "tns-core-modules/application-settings";
-
 import { observer } from "mobx-react";
-
 import * as utils from "tns-core-modules/utils/utils";
-
 import { Toasty, ToastDuration, ToastPosition } from 'nativescript-toasty';
 import { config, Configuration } from "./app";
+import { ActionBar } from "@nativescript/core/ui/action-bar/action-bar";
+import { Page, Color } from "@nativescript/core/ui/page/page";
+import { ScrollView } from "@nativescript/core/ui/scroll-view/scroll-view";
+import { StackLayout } from "@nativescript/core/ui/layouts/stack-layout/stack-layout";
 
 // hide keyboard when tap outsode textfield
 if (device.os == "iOS") {

@@ -1,11 +1,11 @@
 import * as React from "react";
-import { $StackLayout, $FlexboxLayout, $Label, $Switch } from "react-nativescript";
+import { $StackLayout, $FlexboxLayout, $Label } from "react-nativescript";
 import SelectorComponent, { Content } from "~/Components/SelectorComponent";
-import { StackLayout, Color } from "react-nativescript/dist/client/ElementRegistry";
 import { CardView } from "@nstudio/nativescript-cardview";
 import { cardStyle } from "../cardStyles";
 import SelectionsViewModel from "~/ViewModels/SelectionsViewModel";
 import { Hantering } from "~/Models/SelectionsModel";
+import { StackLayout } from "@nativescript/core/ui/layouts/stack-layout/stack-layout";
 
 export default class ManagementSelection extends React.Component {
 

@@ -1,11 +1,11 @@
 {
   "nativescript": {
     "id": "org.nativescript.avfallshamtning",
-    "tns-android": {
-      "version": "6.1.2"
-    },
     "tns-ios": {
-      "version": "6.1.1"
+      "version": "6.2.0"
+    },
+    "tns-android": {
+      "version": "6.2.0"
     }
   },
   "main": "app.js",
@@ -26,9 +26,9 @@
     "nativescript-theme-core": "^1.0.6",
     "nativescript-toasty": "^2.0.1",
     "react": "^16.9.0",
-    "react-nativescript": "^0.12.0",
+    "react-nativescript": "^0.15.0",
     "rns-reactify": "git+https://github.com/Lelelo1/rns-reactify.git",
-    "tns-core-modules": "6.0.1",
+    "tns-core-modules": "~6.2.0",
     "tns-platform-declarations": "^6.0.6"
   },
   "devDependencies": {
@@ -39,7 +39,7 @@
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.6",
     "fork-ts-checker-webpack-plugin": "^1.3.7",
-    "nativescript-dev-webpack": "1.0.1",
+    "nativescript-dev-webpack": "~1.3.0",
     "react-nativescript-hot-loader": "git+https://github.com/shirakaba/react-nativescript-hot-loader.git",
     "typescript": "3.4.5"
   },

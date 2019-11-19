@@ -1,10 +1,11 @@
 import PersonInfoModel from "~/Models/FormModel";
 import FormModel from "~/Models/FormModel";
 import { observable, decorate } from "mobx";
-import { TextField, Color } from "react-nativescript/dist/client/ElementRegistry";
 import { commonStyle } from "../Form/FormStyles";
 import { getString } from "tns-core-modules/application-settings/application-settings"
 import { device } from "tns-core-modules/platform/platform";
+import { TextField } from "@nativescript/core/ui/text-field/text-field";
+import { Color } from "@nativescript/core/color/color";
 export default class FormViewModel {
     private static viewModel: FormViewModel = null;
     static get(): FormViewModel {

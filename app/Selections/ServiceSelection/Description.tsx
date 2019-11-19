@@ -1,19 +1,15 @@
 
+
 import * as React from "react";
-import { $FlexboxLayout, $Label, $TextView, $StackLayout, $Button, $Image, $FormattedString, $Span } from "react-nativescript";
-import { FlexboxLayout, StackLayout, TextView, GridLayout, Image, ActionItem, Label } from "react-nativescript/dist/client/ElementRegistry";
-import { Button } from "tns-core-modules/ui/button/button";
+import { $FlexboxLayout, $Label, $TextView, $StackLayout, $Button, $FormattedString, $Span } from "react-nativescript";
 import { CardView } from "@nstudio/nativescript-cardview";
 import ViewModel from "../../ViewModels/ViewModel";
 import { observer } from "mobx-react";
-import { PercentLength, Color } from "tns-core-modules/ui/page/page";
-import { autorun, observable, } from "mobx";
+import { observable, } from "mobx";
 import "../../Extensions";
 import { device } from "tns-core-modules/platform/platform";
 import { CheckBox } from '@nstudio/nativescript-checkbox';
-import { FormattedString, Span } from "tns-core-modules/text/formatted-string";
 import { Fab } from "nativescript-floatingactionbutton";
-import { TouchGestureEventData } from "tns-core-modules/ui/gestures/gestures";
 import "../../Styles";
 import { Size } from "../../Models/SelectionsModel"
 import { cardStyle } from "../cardStyles";
@@ -28,6 +24,11 @@ import {
     CFAlertActionStyle,
     CFAlertStyle
 } from 'nativescript-cfalert-dialog';
+import { StackLayout } from "@nativescript/core/ui/layouts/stack-layout/stack-layout";
+import { FlexboxLayout } from "@nativescript/core/ui/layouts/flexbox-layout/flexbox-layout";
+import { Color } from "@nativescript/core/color/color";
+import { TextView } from "@nativescript/core/ui/text-view/text-view";
+import { FormattedString, Span } from "@nativescript/core/text/formatted-string";
 
 
 @observer

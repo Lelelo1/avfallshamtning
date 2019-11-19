@@ -1,10 +1,12 @@
 
-import { TextField } from "tns-core-modules/ui/text-field/text-field";
-import { device } from "tns-core-modules/platform/platform";
-import { Color } from "tns-core-modules/color/color";
-import FormViewModel from "~/ViewModels/FormViewModel";
 
-declare module "tns-core-modules/ui/text-field/text-field" {
+
+
+import { TextField } from "@nativescript/core/ui/text-field/text-field";
+import { device } from "@nativescript/core/platform/platform";
+import { Color } from "@nativescript/core/color/color";
+
+declare module "@nativescript/core/ui/text-field/text-field" {
     
     interface TextField {
         applyStyle(modelProperty: string | number): void;

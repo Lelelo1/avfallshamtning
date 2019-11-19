@@ -1,10 +1,11 @@
-import { TextField } from "tns-core-modules/ui/text-field/text-field"
+
 import { device } from "tns-core-modules/platform/platform";
+import { TextField } from "@nativescript/core/ui/text-field/text-field";
+import { TextView } from "@nativescript/core/ui/text-view/text-view";
+import { Button } from "@nativescript/core/ui/button/button";
+import { ScrollView } from "@nativescript/core/ui/scroll-view/scroll-view";
 // import { $TextField } from "react-nativescript";
-import { $TextField } from "react-nativescript/dist/client/ReactNativeScript";
-import { TextView } from "react-nativescript/dist/client/ElementRegistry";
-import { Button } from "tns-core-modules/ui/button/button";
-import { ScrollView } from "tns-core-modules/ui/scroll-view/scroll-view";
+
 export enum AutofillHintContentType {
     name = "name",
     surname = "surname",
@@ -16,7 +17,7 @@ export enum AutofillHintContentType {
     personnummer = "personnummer"
 }
 
-declare module "tns-core-modules/ui/text-field/text-field" {
+declare module "@nativescript/core/ui/text-field/" {
     interface TextField {
         // setPlaceholder(placeholder: string);
         setAutofillHintContentType(contentType: AutofillHintContentType);
@@ -129,7 +130,7 @@ TextField.prototype.setAutofillHintContentType = function(this: TextField, conte
 // autofiltlHints
 // https://developer.android.com/reference/android/view/View.html#setAutofillHints(java.lang.String...) 
 
-declare module "react-nativescript/dist/client/ElementRegistry" {
+declare module "@nativescript/core/ui/text-view/text-view" {
     interface TextView {
         scrollEnabled(yes: boolean): void;
         noMargin() : void
@@ -156,7 +157,7 @@ TextView.prototype.noMargin = function(this: TextView ) {
     }
 }
 
-declare module "tns-core-modules/ui/button/button" {
+declare module "@nativescript/core/ui/button/button" {
     interface Button {
         setTextTransparent(): void
     }
@@ -175,7 +176,7 @@ Button.prototype.setTextTransparent = function(this: Button) {
     })
 }
 
-declare module "tns-core-modules/ui/scroll-view/scroll-view" {
+declare module "@nativescript/core/ui/scroll-view/scroll-view" {
     interface ScrollView {
         addMissingTouchEffectiOS(): void;
         enableScrollOverControlsiOS(): void

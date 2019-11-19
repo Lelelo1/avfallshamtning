@@ -6,18 +6,17 @@
 
 
 import * as React from "react";
-import { $StackLayout, $FlexboxLayout, $Label, $TextField, $TextView} from "react-nativescript";
-
+import { $StackLayout, $FlexboxLayout, $Label, $TextField } from "react-nativescript";
 import { CardView } from "@nstudio/nativescript-cardview";
 import { cardStyle } from "../cardStyles";
-import SelectorComponent, { Content } from "~/Components/SelectorComponent";
 import SelectionsViewModel from "~/ViewModels/SelectionsViewModel";
-import { StackLayout, TextField, Color, TextView } from "react-nativescript/dist/client/ElementRegistry";
 import FormViewModel from "~/ViewModels/FormViewModel";
 import { autorun, observable } from "mobx";
 import { observer } from "mobx-react";
-import { device } from "tns-core-modules/platform/platform";
 import ViewModel from "~/ViewModels/ViewModel";
+import { StackLayout } from "@nativescript/core/ui/layouts/stack-layout/stack-layout";
+import { TextField } from "@nativescript/core/ui/text-field/text-field";
+import "../../Extensions";
 
 @observer
 export default class TimeSelection extends React.Component {

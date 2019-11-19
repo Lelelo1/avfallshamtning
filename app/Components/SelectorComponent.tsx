@@ -1,12 +1,11 @@
+
 import * as React from "react" ;
-import { $FlexboxLayout, $Button, $Label, $FormattedString, $Span } from "react-nativescript";
-import { FlexboxLayout, Button, Label, StackLayout, Image, Color } from "react-nativescript/dist/client/ElementRegistry";
-import { FormattedString, Span } from "tns-core-modules/text/formatted-string";
-import { fromAsset } from "tns-core-modules/image-source/image-source";
+import { $FlexboxLayout, $Button, $FormattedString, $Span } from "react-nativescript";
 import { observable, autorun } from "mobx";
 import { observer } from "mobx-react";
-import { EventData } from "tns-core-modules/ui/frame/frame";
-import { Fragment } from "react";
+import { FlexboxLayout } from "@nativescript/core/ui/layouts/flexbox-layout/flexbox-layout";
+import { Button } from "@nativescript/core/ui/button/button";
+import { Color } from "@nativescript/core/color/color";
 
 export class Content {
     text: string;
