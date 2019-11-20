@@ -1,5 +1,5 @@
 import * as React from "react";
-import { $StackLayout, $Button } from "react-nativescript";
+import { $StackLayout, $Button, $ContentView } from "react-nativescript";
 import Form from "./Form";
 
 import { CardView } from "@nstudio/nativescript-cardview";
@@ -10,6 +10,8 @@ import { Reactified } from "rns-reactify/Reactified/Reactified";
 import { StackLayout } from "@nativescript/core/ui/layouts/stack-layout/stack-layout";
 import { Button } from "@nativescript/core/ui/button/button";
 import { Color } from "@nativescript/core/color/color";
+import { reaction, autorun } from "mobx";
+import { ContentView } from "react-nativescript/dist/client/ElementRegistry";
 
 class $CardView  extends Reactified(CardView, "cardView") {};
 
@@ -18,15 +20,35 @@ export default class Record extends React.Component {
 
     containerRef = React.createRef<StackLayout>();
 
-    private cardViewRef = React.createRef<CardView>();
     private recordButtonRef = React.createRef<Button>();
+
+    private formContainer = React.createRef<ContentView>();
     private formRef = React.createRef<Form>();
 
+    private cardView = new CardView();
     componentDidMount() {
-        console.log("cardview: " + this.cardViewRef.current);
-        // this.containerRef.current.removeChild(this.formRef.current.stackLayoutRef.current);
-    }
 
+        // this.containerRef.current.removeChild(this.formRef.current.stackLayoutRef.current);
+        
+        autorun(() => {
+            const isHidden = FormViewModel.get().isHidden;
+            if(isHidden) {
+                this.containerRef.current.removeChild(this.formContainer.current);
+            } else {
+                this.containerRef.current.addChild(this.formContainer.current);
+            }
+        });
+        
+        this._buildCardView();
+        
+    }
+    private _buildCardView() {
+        this.cardView.margin = 10;
+        this.cardView.borderWidth = 2;
+        this.cardView.shadowOffsetHeight = 2;
+        this.cardView.shadowOffsetWidth = 1;
+        this.cardView.className = "cardStyle";
+    }
     render() {
         console.log("erere");
         return (
@@ -36,17 +58,17 @@ export default class Record extends React.Component {
                     FormViewModel.get().isHidden = !FormViewModel.get().isHidden;
                 }}
                 />
-                {this.renderForm()}
-                
-                
+                <$ContentView ref={this.formContainer}>
+                    <Form ref={this.formRef} />
+                </$ContentView>
             </$StackLayout>
         )
     }
     renderForm() {
         console.log("renderrr");
+        
         return FormViewModel.get().isHidden ? null : ( 
             <$CardView
-                forwardedRef={this.cardViewRef}
                 margin={10}
                 borderWidth={2} 
                 shadowOffsetHeight={2}

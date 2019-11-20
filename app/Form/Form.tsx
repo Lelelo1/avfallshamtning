@@ -9,14 +9,11 @@ import "./FormStyles";
 import FormViewModel from "../ViewModels/FormViewModel";
 import { observer } from "mobx-react";
 import { autorun } from "mobx";
-import { Reactified } from "rns-reactify/Reactified/Reactified";
 import { commonStyle, iosStyle } from "./FormStyles";
 import { StackLayout } from "@nativescript/core/ui/layouts/stack-layout/stack-layout";
 import { TextField } from "@nativescript/core/ui/text-field/";
 import { device } from "@nativescript/core/platform/platform";
 import { Color } from "@nativescript/core/color/color";
-
-const $CardView = Reactified(CardView, "cardView");
 
 @observer
 export default class Form extends React.Component<{},{}>{

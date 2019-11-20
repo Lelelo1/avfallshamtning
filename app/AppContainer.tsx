@@ -123,6 +123,7 @@ class AppContainer extends React.Component {
             }
         });
         /* when tapping record button or tapped ok - scroll to  */
+        
         reaction(() => FormViewModel.get().isHidden, () => {
             const isHidden = FormViewModel.get().isHidden;
             console.log("isHidden fired: " + isHidden);
@@ -140,7 +141,7 @@ class AppContainer extends React.Component {
             const animate = !isHidden;
             this.scrollViewRef.current.scrollToVerticalOffset(scrollDown, animate);
         })
-
+        
     }
     _scroll = () => {
 
@@ -158,7 +159,7 @@ class AppContainer extends React.Component {
                     backgroundColor={new Color('#f0f0f0')}
 
                 >
-                    <$ActionBar ref={this.actionBarRef} title="Avfallshämtning" className="action-bar" />
+                    <$ActionBar ref={this.actionBarRef} title="Avfallshämtning11" className="action-bar" />
                     <$ScrollView
                         ref={this.scrollViewRef}
                         onLoaded={(ev) => {
