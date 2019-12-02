@@ -5,7 +5,8 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Avfallshämtning</string> <!--changed from ${PRODUCT_NAME} to Avfallshämtning: https://stackoverflow.com/questions/39832980/how-to-change-application-name-in-nativescript-->
+	<string>${PRODUCT_NAME}</string> <!--changed from ${PRODUCT_NAME} to Avfallshämtning: https://stackoverflow.com/questions/39832980/how-to-change-application-name-in-nativescript-->
+	
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -13,7 +14,7 @@
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
-	<string>APPL</string>
+	<string>APPL</string> <!-- APPL -->
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleSignature</key>

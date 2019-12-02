@@ -1,10 +1,13 @@
 {
   "nativescript": {
-    "id": "org.nativescript.avfallshamtning",
-    "tns-ios": {
-      "version": "6.2.0"
+    "id": {
+      "ios": "org.reactnativescript.avfallshamtning",
+      "android": "org.nativescript.avfallshamtning"
     },
     "tns-android": {
+      "version": "6.2.0"
+    },
+    "tns-ios": {
       "version": "6.2.0"
     }
   },

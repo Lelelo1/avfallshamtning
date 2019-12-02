@@ -20,12 +20,24 @@ export default class ServiceSelection extends React.Component {
     }
 
     getSize(): Size {
-        console.log("getSize");
+        let size = Size.unselected;
+        /*
         switch(this.selectedIndex) {
-            case 0: { return Size.little; }
-            case 1: { return Size.half; }
-            case 2: { return Size.full; }
+            case 0: { size = Size.little; }
+            case 1: { size = Size.half; }
+            case 2: { size = Size.full; }
         }
+        */
+        if(this.selectedIndex === 0) {
+            size = Size.little;
+        } else if (this.selectedIndex === 1) {
+            size = Size.half;
+        } else if (this.selectedIndex === 2) {
+            size = Size.full;
+        }
+        console.log("selectedIndex: " + this.selectedIndex);
+        console.log("getSize: " + size);
+        return size;
     }
 
     render() {
