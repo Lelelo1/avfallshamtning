@@ -76,12 +76,22 @@ export default class Description extends React.Component<{ size: Size }> {
         const selectedSize = SelectionsViewModel.get().selectionsModel.tjänst;
         if (this.props.size === selectedSize) {
             setTimeout(() => {
-                this.checkBox.checked = true;
-            }, 0.000001);
+                if(device.os === "iOS") {
+                    this.checkBox.checked = true;
+                } else if(device.os === "Android") {
+                    // this.checkBox.toggle();
+                    if(!this.checkBox.checked) this.checkBox.toggle();
+                }
+            }, 200);
         } else {
             setTimeout(() => {
-                this.checkBox.checked = false;
-            }, 0.000001);
+                if(device.os === "iOS") {
+                    this.checkBox.checked = false;
+                } else if(device.os === "Android") {
+                    // this.checkBox.toggle();
+                    if(this.checkBox.checked) this.checkBox.toggle();
+                }
+            }, 200);
         }
         return (
             <$StackLayout
