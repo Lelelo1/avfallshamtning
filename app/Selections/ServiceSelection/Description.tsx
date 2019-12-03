@@ -66,14 +66,37 @@ export default class Description extends React.Component<{ size: Size }> {
         this.checkBox.scaleY = 1.4;
 
         if (device.os == "Android") this.checkBox.on("onTap", this._selectService);
-
+        // Due to tap event is passed through the checkbox and received on stacklayout on iOS, the state of the checkbox can be handled completely manually handled
+        // on android the tap listener doen't fire and the check box looks different if enabled is set to false
+        if(device.os == "iOS") this.checkBox.isEnabled = false;  
         const checkBoxContainer = this.checkBoxContainerRef.current;
+
         checkBoxContainer.insertChild(this.checkBox, 0);
     }
     imageButtonSize = 30;
     imageButtonColor = new Color('purple');
     render() {
         const selectedSize = SelectionsViewModel.get().selectionsModel.tjänst;
+        
+        if(device.os == "iOS") {
+            if (this.props.size === selectedSize) {
+                // this.checkBox.checked = true;
+                if(!this.checkBox.checked) this.checkBox.toggle();
+            } else {
+                // this.checkBox.checked = false;
+                if(this.checkBox.checked) this.checkBox.toggle();
+            }
+        } else if (device.os == "Android") {
+            // needed as having to use the tap event handler on the checkbox on android
+            setTimeout(() => {
+                if (this.props.size === selectedSize) { 
+                    if(!this.checkBox.checked) this.checkBox.toggle();
+                } else {
+                    if(this.checkBox.checked) this.checkBox.toggle();
+                }
+            }, 200);
+        }
+        /*
         if (this.props.size === selectedSize) {
             setTimeout(() => {
                 if(device.os === "iOS") {
@@ -93,6 +116,7 @@ export default class Description extends React.Component<{ size: Size }> {
                 }
             }, 200);
         }
+        */
         return (
             <$StackLayout
                 ref={this.containerRef}
